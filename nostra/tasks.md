@@ -1,46 +1,38 @@
-Written on Thursday, November 20, 2025, 15:20:46 KST.
+Written on Tue Nov 25 14:07:53 KST 2025
 
 # Summary
-This is the list of additional tasks in response to your latest implementation of the detail page. Your workspace should be in the `/Users/jay/work/nostra-server` and `/Users/jay/work/nostra-contracts` folders.
+This is the list of additional tasks in response to your latest implementation of the detail page. Your workspace should be in the `/Users/jay/work/nostra-server`, `/Users/jay/work/nostra-contracts`, and `/Users/jay/work/task` folders. You don't need to check the folder `/Users/jay/work/web` that you acutally have to avoid.
 
 # Prerequisites
-Before checking the Tasks, you should review the "Basic" sections to avoid confusing the UI representation with the underlying process. Keep this in mind when implementing the detail page.
 
-# Task-1: Implement Option 3 Hybrid
-For this question
-```
-Option 1: Server redeems tokens automatically (complex, requires approvals)
-Option 2: Users redeem tokens themselves (simpler, requires frontend UI)
-Option 3: Hybrid - server marks resolved, users claim rewards
 
-Full analysis saved to: 
-/Users/jay/work/tasks/nostra/finalize-market-analysis.md
+# Task-1
+Verify Order Cancel functionality.
 
-Would you like me to:
+Check if the Order Cancel feature works correctly.
 
-Implement proper blockchain-based resolution?
-Create a redemption workflow?
-Both?
-```
+# Task-2
+Fix issue where Limit Sell price is not displayed on the button in the Trading section.
 
-I think Option 3 would be great as you recommended. I want both for the last question.
+The button should show the price, but currently does not.
 
-![Portfolio](image-1.png) 
-This two button is to go into the Portfolio page. I don't the the name Portfolio is good or not. You can find the proper name for that, which I will use for stakeholders when presenting the project.
+# Task-3
+"undefined" text appearing in the message box when executing a Sell. 
 
-The portfolio is for the page where user see his portfolio. The portfolio should show the current market prices and the resolved payout values. The resolved payout values are calculated based on the resolved outcome and the current market prices.
+It looks something went wrong but actually not. Show the correct error message.
 
-User will can claim the payout by clicking the "Claim" button. The claim function will call the resolve API endpoint to properly resolve the market and distribute payouts.
+# Task-4
+Fix inaccurate data display in the top "My Position" section. 
 
-The Portfolio page would be like this:
-![alt text](image-2.png)
+The "My Position" area at the top is not showing the correct value.
 
-But I don't know the name of the page which you should recommend me.
+# Task-5
+Implement UI distinctions for "Resolved" state.
 
-# Task-2: Merge db:reset-all and provision:all scripts
-I should these two scripts continuously before the trading feautre is beyond some stable state which means trading and resultion and results are all working. 
+When resolved: display resolution details, disable editing/make read-only, and remove from the Market page.
+
 
 # After Tasks Done
-You can summarize the what you've done and the changes you've made to the codebase in the file named summary-xxx.md in which xxx is date and time when the summary was created. If there is already the same file, you can add some number to the file name. In the last part of the file you should add the original request of the tasks described in this file with some vivid separation. I don't think you must change the codebase, but you can just plan the implementation or recommend something after a review and research. Any summary is OK because I can try to have you do something after a review.
+You can summarize the what you've done and the changes you've made to the codebase in the file named summary-xxx.md in which xxx is date and time when the summary was created. The file should go to `~/work/task/nostra/dev-logs` folder. If there is already the same file, you can add some number to the file name. In the last part of the file you should add the original request of the tasks described in this file with some vivid separation. I don't think you must change the codebase, but you can just plan the implementation or recommend something after a review and research. Any summary is OK because I can try to have you do something after a review.
 
 Go ahead and thanks in advance!
