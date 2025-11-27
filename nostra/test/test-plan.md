@@ -20,7 +20,8 @@ TRADER_10       1,000.00 mUSDC
 
 # Trade Tests
 
-## Test 1
+## Test 1: DONE!
+
 World Cup 2026
 
 ### Steps
@@ -94,7 +95,7 @@ Brazil Wins
 
 <br>
 
-## Test 2
+## Test 2: DONE!
 World Cup 2026
 
 ### Steps
@@ -157,7 +158,7 @@ Brazil Wins
 ### Limit Order Test Verification
 ✅ **Expected**: Trader 1's Limit Sell order (Maker) for 20 shares gets filled by Trader 2's Market Buy (Taker).
 
-## Test 3
+## Test 3: DONE!
 Order Cancellation (Safety Check)
 ### Objective
 Verify that funds are correctly locked when placing an order and fully refunded when cancelling it.
@@ -181,7 +182,7 @@ Verify that funds are correctly locked when placing an order and fully refunded 
 ### Expected Result
 ✅ Funds are temporarily locked and then 100% returned. No gas/fees should be lost (except testnet gas).
 
-## Test 4
+## Test 4: DONE!
 Market Sell (Hitting the Bid)
 ### Objective
 Verify that a user can exit a position by selling shares into existing liquidity (Seed Bids).
@@ -208,7 +209,7 @@ Verify that a user can exit a position by selling shares into existing liquidity
 ✅ **Final Balance**: **~$998.02** (Initial $1000 -> Buy $50 -> Sell $48.02 -> Loss $1.98).
 
 
-## Test 5
+## Test 5: DONE!
 Sweeping the Orderbook (Multi-Level Fill)
 ### Objective
 Verify that a large Market Order correctly sweeps through multiple price levels until filled or liquidity is exhausted, and that all partial fills are correctly recorded.
@@ -236,7 +237,7 @@ Verify that a large Market Order correctly sweeps through multiple price levels 
 
 <br>
 
-## Test 6
+## Test 6: DONE!
 Redemption (Claiming Winnings)
 ### Objective
 Verify that a user can claim their winnings after a market resolves, and that the payout calculation (including fees) is correct.
@@ -308,7 +309,7 @@ Verify the outcome when a trader buys equal amounts of both outcomes (Yes and No
 
 <br>
 
-## Test 8
+## Test 8: DONE!
 Market Trading (Buying Both Sides with Dollar Amount)
 ### Objective
 Verify the outcome when a trader executes Market Buys for a specific dollar amount ($30) on both outcomes.
