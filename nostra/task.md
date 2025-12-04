@@ -3,11 +3,21 @@ Written on Tue Nov 25 14:07:53 KST 2025
 # Summary
 This is the list of additional tasks in response to your latest implementation of the detail page. Your workspace should be in the `/Users/jay/work/nostra-server`, `/Users/jay/work/nostra-contracts`, and `/Users/jay/work/task` folders. You don't need to check the folder `/Users/jay/work/web` that you acutally have to avoid.
 
-# Prerequisites
+# Heads-Up
+It's just asking for some knowledge about general development. So do change the code.
 
+# Tasks 
+## Task-1:
+We manage users by wallets. All the information is related to the wallet. Is it right to manage users by wallets? 
 
-# Task-1: Claimed or Won in History
-You remove the Claim item after a user claimed the winnings. But I think it's good for a user to see the history of their claims with the information of winnings. So you can keep the Claim item in the history but disable the claim button. 
+## Task-2: 
+ERC20 포인트 제공, 거래소 사업에서 대해서 스터디
+
+## Task-3: 
+Notion is good for project management like monday.com? Actually I don't need any special tool for project management.
+
+## Task-4: Figma and Stitch and Notion
+Is there any good way to implement in Figma something that our team discussed in Notion. 
 
 
 # After Tasks Done

@@ -1,0 +1,1520 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nostra Market Design - Comprehensive Discussion Summary</title>
+    <style>
+        :root {
+            --primary: #2563eb;
+            --secondary: #7c3aed;
+            --success: #16a34a;
+            --warning: #ea580c;
+            --danger: #dc2626;
+            --bg: #f8fafc;
+            --card-bg: #ffffff;
+            --text: #1e293b;
+            --text-muted: #64748b;
+            --border: #e2e8f0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+        }
+
+        .subtitle {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+        }
+
+        .toc {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .toc h2 {
+            font-size: 1.25rem;
+            margin-bottom: 1rem;
+            color: var(--secondary);
+        }
+
+        .toc ul {
+            list-style: none;
+            columns: 2;
+        }
+
+        .toc li {
+            margin-bottom: 0.5rem;
+        }
+
+        .toc a {
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        .toc a:hover {
+            text-decoration: underline;
+        }
+
+        section {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            font-size: 1.75rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+            border-bottom: 2px solid var(--border);
+            padding-bottom: 0.5rem;
+        }
+
+        h3 {
+            font-size: 1.25rem;
+            margin: 1.5rem 0 1rem;
+            color: var(--secondary);
+        }
+
+        h4 {
+            font-size: 1.1rem;
+            margin: 1rem 0 0.5rem;
+            color: var(--text);
+        }
+
+        p {
+            margin-bottom: 1rem;
+        }
+
+        .highlight-box {
+            background: linear-gradient(135deg, #eff6ff, #f0f9ff);
+            border-left: 4px solid var(--primary);
+            padding: 1rem 1.5rem;
+            margin: 1rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .warning-box {
+            background: linear-gradient(135deg, #fef3c7, #fef9c3);
+            border-left: 4px solid var(--warning);
+            padding: 1rem 1.5rem;
+            margin: 1rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .danger-box {
+            background: linear-gradient(135deg, #fee2e2, #fef2f2);
+            border-left: 4px solid var(--danger);
+            padding: 1rem 1.5rem;
+            margin: 1rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .success-box {
+            background: linear-gradient(135deg, #dcfce7, #f0fdf4);
+            border-left: 4px solid var(--success);
+            padding: 1rem 1.5rem;
+            margin: 1rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+        }
+
+        th,
+        td {
+            padding: 0.75rem 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+
+        th {
+            background: var(--bg);
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        tr:hover {
+            background: var(--bg);
+        }
+
+        code {
+            background: #1e293b;
+            color: #e2e8f0;
+            padding: 0.2rem 0.4rem;
+            border-radius: 4px;
+            font-family: 'Monaco', 'Menlo', monospace;
+            font-size: 0.9em;
+        }
+
+        pre {
+            background: #1e293b;
+            color: #e2e8f0;
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 1rem 0;
+            font-family: 'Monaco', 'Menlo', monospace;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        .comparison {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .comparison-item {
+            background: var(--bg);
+            padding: 1rem;
+            border-radius: 8px;
+        }
+
+        .comparison-item h4 {
+            margin-top: 0;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+
+        .badge-primary {
+            background: #dbeafe;
+            color: #1d4ed8;
+        }
+
+        .badge-success {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .badge-warning {
+            background: #fef3c7;
+            color: #b45309;
+        }
+
+        .badge-danger {
+            background: #fee2e2;
+            color: #b91c1c;
+        }
+
+        .flow-diagram {
+            background: var(--bg);
+            padding: 1.5rem;
+            border-radius: 8px;
+            text-align: center;
+            margin: 1rem 0;
+            font-family: monospace;
+            white-space: pre;
+            line-height: 1.4;
+        }
+
+        ul,
+        ol {
+            margin: 1rem 0;
+            padding-left: 1.5rem;
+        }
+
+        li {
+            margin-bottom: 0.5rem;
+        }
+
+        .decision-matrix {
+            background: linear-gradient(135deg, #f0f9ff, #e0f2fe);
+            border: 2px solid var(--primary);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .decision-matrix h4 {
+            color: var(--primary);
+            margin-top: 0;
+        }
+
+        @media (max-width: 768px) {
+            .comparison {
+                grid-template-columns: 1fr;
+            }
+
+            .toc ul {
+                columns: 1;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Nostra Market Design</h1>
+        <p class="subtitle">Comprehensive Discussion Summary - December 2024</p>
+
+        <nav class="toc">
+            <h2>Table of Contents</h2>
+            <ul>
+                <li><a href="#market-structures">1. Market Structures</a></li>
+                <li><a href="#initial-probability">2. Initial Probability Settings</a></li>
+                <li><a href="#liquidity-provision">3. Liquidity Provision</a></li>
+                <li><a href="#stuck-inventory">4. Stuck Inventory Problem</a></li>
+                <li><a href="#market-makers">5. Market Makers</a></li>
+                <li><a href="#fee-structure">6. Fee Structure</a></li>
+                <li><a href="#amm-vs-orderbook">7. AMM vs Order Book</a></li>
+                <li><a href="#platform-economics">8. Platform Economics</a></li>
+                <li><a href="#recommendations">9. Recommendations</a></li>
+                <li><a href="#implementation">10. Implementation Considerations</a></li>
+            </ul>
+        </nav>
+
+        <!-- Section 1: Market Structures -->
+        <section id="market-structures">
+            <h2>1. Market Structures</h2>
+
+            <h3>Two Main Approaches</h3>
+
+            <div class="comparison">
+                <div class="comparison-item">
+                    <h4><span class="badge badge-primary">50% Grouped Binary</span></h4>
+                    <ul>
+                        <li>Each outcome starts at 50% YES / 50% NO</li>
+                        <li>Markets are independent (not linked)</li>
+                        <li>Sum of YES can be anything (N × 50%)</li>
+                        <li>Converges to ~100% via arbitrage</li>
+                        <li>Simple to implement</li>
+                    </ul>
+                    <pre>5 outcomes at 50% each:
+Sum = 250%
+(Converges via arbitrage)</pre>
+                </div>
+
+                <div class="comparison-item">
+                    <h4><span class="badge badge-success">100/n% Binary Market</span></h4>
+                    <ul>
+                        <li>Each outcome starts at 100/N %</li>
+                        <li>Can be independent OR mechanically linked (CTF)</li>
+                        <li>Sum of YES = 100%</li>
+                        <li>No initial arbitrage opportunity</li>
+                        <li>Creator doesn't lose to arbitrageurs at start</li>
+                    </ul>
+                    <pre>5 outcomes at 20% each:
+Sum = 100%
+(No arbitrage opportunity)</pre>
+                </div>
+            </div>
+
+            <h3>CTF Multi-Outcome vs Grouped Binary</h3>
+
+            <table>
+                <tr>
+                    <th>Feature</th>
+                    <th>Grouped Binary (Nostra Current)</th>
+                    <th>CTF NegRisk (Polymarket)</th>
+                </tr>
+                <tr>
+                    <td><strong>Initial Probability</strong></td>
+                    <td>50% YES / 50% NO<br><span class="text-muted">(or 100/n%)</span></td>
+                    <td>100/N %<br><span class="text-muted">(or External Odds)</span></td>
+                </tr>
+                <tr>
+                    <td><strong>Sum of YES Prices</strong></td>
+                    <td style="color: var(--danger);"><strong>Can exceed 100%</strong><br>(Arbitrage opportunity)</td>
+                    <td style="color: var(--primary);"><strong>Always 100%</strong><br>(Mechanically enforced)</td>
+                </tr>
+                <tr>
+                    <td><strong>Market Link</strong></td>
+                    <td>Independent<br>(No link between markets)</td>
+                    <td style="color: var(--primary);"><strong>Mechanically Linked</strong><br>(Split/Merge enabled)
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>Inventory Issue</strong></td>
+                    <td style="color: var(--danger);"><strong>Major Problem</strong><br>(Stuck with losing tokens)</td>
+                    <td style="color: var(--success);"><strong>Solved</strong><br>(Can merge losing sets)</td>
+                </tr>
+                <tr>
+                    <td><strong>Implementation</strong></td>
+                    <td style="color: var(--success);"><strong>Simple</strong><br>(Standard Binary Markets)</td>
+                    <td style="color: var(--warning);"><strong>Complex</strong><br>(Requires Adapter Contract)</td>
+                </tr>
+            </table>
+
+            <h3>Polymarket's Hybrid Approach (NegRisk CTF)</h3>
+
+            <div class="highlight-box">
+                <strong>Polymarket uses different structures for different markets:</strong>
+                <ul>
+                    <li><strong>High Volume Markets (e.g., Super Bowl)</strong>: NegRisk CTF - YES + NO = 100¢ per
+                        outcome</li>
+                    <li><strong>Low Volume Markets (e.g., CFP)</strong>: Grouped Binary - YES + NO ≠ 100¢</li>
+                </ul>
+            </div>
+
+            <pre>
+Super Bowl (NegRisk CTF):
+┌────────────┬───────┬───────┬──────────┐
+│ Team       │ YES   │ NO    │ YES + NO │
+├────────────┼───────┼───────┼──────────┤
+│ Chiefs     │ 23¢   │ 77¢   │ 100¢ ✓   │
+│ Eagles     │ 19¢   │ 81¢   │ 100¢ ✓   │
+└────────────┴───────┴───────┴──────────┘
+
+CFP (Grouped Binary):
+┌────────────┬───────┬───────┬──────────┐
+│ Team       │ YES   │ NO    │ YES + NO │
+├────────────┼───────┼───────┼──────────┤
+│ Indiana    │ 93.4¢ │ 99¢   │ 192.4¢   │
+│ Ohio State │ 72¢   │ 98¢   │ 170¢     │
+└────────────┴───────┴───────┴──────────┘</pre>
+        </section>
+
+        <!-- Section 2: Initial Probability -->
+        <section id="initial-probability">
+            <h2>2. Initial Probability Settings</h2>
+
+            <h3>The Problem with 50% Initial Probability</h3>
+
+            <div class="danger-box">
+                <strong>Arbitrage Loss:</strong> If each outcome starts at 50%, the sum exceeds 100%, creating a
+                guaranteed profit for arbitrageurs at the creator's expense.
+            </div>
+
+            <pre>
+5 outcomes at 50% each:
+Sum = 250%
+
+Arbitrageurs:
+- Buy all NO tokens
+- Guaranteed profit when one outcome loses
+- Creator loses to arbitrageurs</pre>
+
+            <h3>Solution: 100/n% Initial Probability</h3>
+
+            <div class="success-box">
+                <strong>No Arbitrage:</strong> Starting at 100/n% means sum = 100% from the start. No free money for
+                arbitrageurs.
+            </div>
+
+            <pre>
+5 outcomes at 20% each:
+Sum = 100%
+
+No arbitrage opportunity at launch.
+Creator doesn't lose money to arbitrageurs.</pre>
+
+            <h3>Key Insight</h3>
+
+            <div class="highlight-box">
+                <p><strong>Both approaches converge to ~100% eventually</strong> (via trading or mechanically). The
+                    difference is:</p>
+                <ul>
+                    <li><strong>50% start</strong>: Creator loses to smart traders during convergence</li>
+                    <li><strong>100/n% start</strong>: Still loses to smart traders (see below)</li>
+                </ul>
+            </div>
+
+            <h3>Critical Clarification: 250% Sum is NOT Arbitrage</h3>
+
+            <div class="warning-box">
+                <strong>Common Misconception:</strong> The 250% sum (5 × 50%) in grouped binary markets does NOT create
+                arbitrage. Each market is independent!
+            </div>
+
+            <pre>
+Grouped Binary (5 outcomes × 50%):
+
+Market 1: Team A  YES (50¢) + NO (50¢) = $1 ✓
+Market 2: Team B  YES (50¢) + NO (50¢) = $1 ✓
+Market 3: Team C  YES (50¢) + NO (50¢) = $1 ✓
+Market 4: Team D  YES (50¢) + NO (50¢) = $1 ✓
+Market 5: Team E  YES (50¢) + NO (50¢) = $1 ✓
+
+Sum of YES = 250%... but so what?
+
+Why no arbitrage?
+• Each market is INDEPENDENT
+• You CANNOT merge tokens across different markets
+• Each market individually has YES + NO = $1 ✓
+
+The 250% → 100% convergence is just PRICE DISCOVERY,
+not arbitrage. Smart traders normalize it.</pre>
+
+            <h4>What IS Real Arbitrage?</h4>
+
+            <table>
+                <tr>
+                    <th>Case</th>
+                    <th>Condition</th>
+                    <th>Action</th>
+                    <th>Result</th>
+                </tr>
+                <tr>
+                    <td>Single Market</td>
+                    <td>YES + NO < $1</td>
+                    <td>Buy both</td>
+                    <td>Guaranteed profit</td>
+                </tr>
+                <tr>
+                    <td>Single Market</td>
+                    <td>YES + NO > $1</td>
+                    <td>Mint & sell both</td>
+                    <td>Guaranteed profit</td>
+                </tr>
+                <tr>
+                    <td>CTF Multi-Outcome</td>
+                    <td>Sum < $1</td>
+                    <td>Buy all, merge</td>
+                    <td>Guaranteed profit</td>
+                </tr>
+                <tr>
+                    <td>CTF Multi-Outcome</td>
+                    <td>Sum > $1</td>
+                    <td>Split & sell all</td>
+                    <td>Guaranteed profit</td>
+                </tr>
+                <tr>
+                    <td>Cross-Platform</td>
+                    <td>YES_A + NO_B < $1</td>
+                    <td>Buy both sides</td>
+                    <td>Guaranteed profit</td>
+                </tr>
+            </table>
+
+            <p><strong>Key:</strong> Arbitrage means <strong>zero risk, guaranteed profit</strong>. The 250% sum doesn't
+                qualify.</p>
+
+            <h3>Does 100/n% Minimize Creator's Loss?</h3>
+
+            <div class="danger-box">
+                <strong>100/n% does NOT solve the creator's loss problem.</strong> It just changes WHERE the mispricing
+                occurs.
+            </div>
+
+            <h4>Comparison: 5 Outcomes, True Probabilities: 60%, 15%, 10%, 10%, 5%</h4>
+
+            <div class="comparison">
+                <div class="comparison-item">
+                    <h4>50% Initial (Sum = 250%)</h4>
+                    <table>
+                        <tr>
+                            <th>Outcome</th>
+                            <th>Initial</th>
+                            <th>Fair</th>
+                            <th>Gap</th>
+                        </tr>
+                        <tr>
+                            <td>A (favorite)</td>
+                            <td>50¢</td>
+                            <td>60¢</td>
+                            <td style="color: var(--danger);">-10¢</td>
+                        </tr>
+                        <tr>
+                            <td>B</td>
+                            <td>50¢</td>
+                            <td>15¢</td>
+                            <td style="color: var(--success);">+35¢</td>
+                        </tr>
+                        <tr>
+                            <td>C</td>
+                            <td>50¢</td>
+                            <td>10¢</td>
+                            <td style="color: var(--success);">+40¢</td>
+                        </tr>
+                        <tr>
+                            <td>D</td>
+                            <td>50¢</td>
+                            <td>10¢</td>
+                            <td style="color: var(--success);">+40¢</td>
+                        </tr>
+                        <tr>
+                            <td>E</td>
+                            <td>50¢</td>
+                            <td>5¢</td>
+                            <td style="color: var(--success);">+45¢</td>
+                        </tr>
+                    </table>
+                    <p>Favorite: small underpricing (-10¢)<br>Underdogs: extreme overpricing (+35~45¢)</p>
+                </div>
+                <div class="comparison-item">
+                    <h4>100/n% = 20% Initial (Sum = 100%)</h4>
+                    <table>
+                        <tr>
+                            <th>Outcome</th>
+                            <th>Initial</th>
+                            <th>Fair</th>
+                            <th>Gap</th>
+                        </tr>
+                        <tr>
+                            <td>A (favorite)</td>
+                            <td>20¢</td>
+                            <td>60¢</td>
+                            <td style="color: var(--danger);">-40¢</td>
+                        </tr>
+                        <tr>
+                            <td>B</td>
+                            <td>20¢</td>
+                            <td>15¢</td>
+                            <td style="color: var(--success);">+5¢</td>
+                        </tr>
+                        <tr>
+                            <td>C</td>
+                            <td>20¢</td>
+                            <td>10¢</td>
+                            <td style="color: var(--success);">+10¢</td>
+                        </tr>
+                        <tr>
+                            <td>D</td>
+                            <td>20¢</td>
+                            <td>10¢</td>
+                            <td style="color: var(--success);">+10¢</td>
+                        </tr>
+                        <tr>
+                            <td>E</td>
+                            <td>20¢</td>
+                            <td>5¢</td>
+                            <td style="color: var(--success);">+15¢</td>
+                        </tr>
+                    </table>
+                    <p>Favorite: large underpricing (-40¢)<br>Underdogs: small overpricing (+5~15¢)</p>
+                </div>
+            </div>
+
+            <h4>Analysis</h4>
+
+            <table>
+                <tr>
+                    <th>Aspect</th>
+                    <th>50%</th>
+                    <th>100/n%</th>
+                </tr>
+                <tr>
+                    <td>Favorite mispricing</td>
+                    <td>-10¢ (small loss)</td>
+                    <td style="color: var(--danger);">-40¢ (large loss)</td>
+                </tr>
+                <tr>
+                    <td>Underdog mispricing</td>
+                    <td style="color: var(--danger);">+35~45¢ (extreme)</td>
+                    <td>+5~15¢ (small)</td>
+                </tr>
+                <tr>
+                    <td>Underdogs tradeable?</td>
+                    <td>No (too expensive)</td>
+                    <td style="color: var(--success);">Maybe (closer to fair)</td>
+                </tr>
+                <tr>
+                    <td>Favorite NO token (80¢)</td>
+                    <td>-</td>
+                    <td style="color: var(--danger);">Won't sell (too expensive)</td>
+                </tr>
+            </table>
+
+            <h4>The Real Problem: Stuck NO Tokens on Favorites</h4>
+
+            <div class="danger-box">
+                <strong>With 100/n% (20% initial):</strong>
+                <ul>
+                    <li>Favorite YES = 20¢ (way underpriced) → traders BUY → creator sells cheap</li>
+                    <li>Favorite NO = 80¢ (way overpriced) → nobody buys → creator STUCK</li>
+                </ul>
+                <p>When the favorite wins, creator holds worthless 80¢ NO tokens.</p>
+            </div>
+
+            <h4>Conclusion: Neither Solves the Problem</h4>
+
+            <div class="highlight-box">
+                <p><strong>100/n% trades one problem for another:</strong></p>
+                <ul>
+                    <li>✅ Underdogs priced closer to fair value</li>
+                    <li>❌ Favorites MORE underpriced than 50%</li>
+                    <li>❌ High-priced NO tokens (80¢) on favorites won't sell</li>
+                </ul>
+                <p><strong>Whether it minimizes loss depends on trading patterns.</strong> If more underdogs trade
+                    (because fairly priced), it might help. But the favorite's mispricing is worse.</p>
+            </div>
+
+            <h4>True Solutions Remain:</h4>
+            <ol>
+                <li><strong>CTF Multi-Outcome</strong> - No stuck inventory (can merge)</li>
+                <li><strong>Market Maker</strong> - Professional takes inventory risk</li>
+                <li><strong>No initial platform liquidity</strong> - Let market discover prices first</li>
+                <li><strong>Accept loss as bootstrap cost</strong> - Part of business</li>
+            </ol>
+        </section>
+
+        <!-- Section 3: Liquidity Provision -->
+        <section id="liquidity-provision">
+            <h2>3. Liquidity Provision</h2>
+
+            <h3>The Bootstrap Problem</h3>
+
+            <div class="flow-diagram">
+                No liquidity → No trading → No fees → No LPs attracted
+                ↓
+                Platform must break the cycle
+                ↓
+                Platform provides liquidity → Trading starts →
+                Fees generated → Volume proven → External LPs join</div>
+
+            <h3>Who Provides Liquidity?</h3>
+
+            <table>
+                <tr>
+                    <th>Provider</th>
+                    <th>Reality</th>
+                    <th>When</th>
+                </tr>
+                <tr>
+                    <td>Random traders</td>
+                    <td>Won't come to empty market</td>
+                    <td>Never initially</td>
+                </tr>
+                <tr>
+                    <td>Professional MMs</td>
+                    <td>Only for proven high-volume markets</td>
+                    <td>After volume is established</td>
+                </tr>
+                <tr>
+                    <td><strong>Platform itself</strong></td>
+                    <td><strong>Must bootstrap new markets</strong></td>
+                    <td><strong>From day 1</strong></td>
+                </tr>
+            </table>
+
+            <h3>Balanced Position Strategy</h3>
+
+            <p>For a 5-outcome market with $1000 liquidity:</p>
+
+            <pre>
+Split equally: $200 per market
+
+For each market (at 20% YES / 80% NO):
+- 200 YES @ $0.20 = $40
+- 200 NO @ $0.80 = $160
+- Total: $200 → 200 YES + 200 NO (balanced)
+
+If A wins:
+- A: 200 YES × $1 = $200
+- B: 200 NO × $1 = $200
+- C: 200 NO × $1 = $200
+- D: 200 NO × $1 = $200
+- E: 200 NO × $1 = $200
+
+Return: $1000 ✓ (break even when balanced)</pre>
+
+            <h3>Small Liquidity Problem</h3>
+
+            <div class="warning-box">
+                <strong>$500 liquidity is NOT enough for good trading:</strong>
+                <ul>
+                    <li>Wide spreads (bad prices)</li>
+                    <li>High slippage on small trades</li>
+                    <li>Can't execute large orders</li>
+                    <li>Poor user experience</li>
+                </ul>
+            </div>
+
+            <table>
+                <tr>
+                    <th>Liquidity Level</th>
+                    <th>Trading Quality</th>
+                    <th>User Experience</th>
+                </tr>
+                <tr>
+                    <td>$500/market</td>
+                    <td>Poor</td>
+                    <td>Frustrating, large slippage</td>
+                </tr>
+                <tr>
+                    <td>$5,000/market</td>
+                    <td>Okay</td>
+                    <td>Acceptable for small traders</td>
+                </tr>
+                <tr>
+                    <td>$50,000+/market</td>
+                    <td>Good</td>
+                    <td>Professional-grade</td>
+                </tr>
+            </table>
+        </section>
+
+        <!-- Section 4: Stuck Inventory Problem -->
+        <section id="stuck-inventory">
+            <h2>4. Stuck Inventory Problem</h2>
+
+            <h3>The Core Issue</h3>
+
+            <div class="danger-box">
+                <strong>In Grouped Binary markets, LP can get stuck with worthless tokens that nobody wants to
+                    buy.</strong>
+            </div>
+
+            <pre>
+Initial: Market A at 20% YES / 80% NO
+Creator holds: 200 YES + 200 NO
+
+Time passes... A becomes favorite (80% YES):
+
+Traders: "I want to BUY YES on A!"
+Creator: Sells YES, happy 😊
+
+Traders: "I don't want NO on A, A will win!"
+Creator: Can't sell NO, stuck 😰
+
+Result:
+- YES: 200 → 50 (sold 150, good!)
+- NO: 200 → 200 (nobody bought, stuck!)
+
+If A wins:
+- 50 YES × $1 = $50
+- 200 NO × $0 = $0
+Creator started with $200, ends with $50
+LOSS: $150 ❌</pre>
+
+            <h3>Why Cross-Market Selling Doesn't Help</h3>
+
+            <p>Selling NO on losing markets (B, C, D, E) does NOT compensate:</p>
+
+            <pre>
+Sell 200 NO on B @ 95¢ = $190 received
+But: If A wins, buyer gets 200 × $1 = $200
+
+Creator sold $200 value for $190 = LOSS
+
+Cross-market selling adds MORE losses, not compensation.</pre>
+
+            <h3>CTF Solves This</h3>
+
+            <div class="success-box">
+                <strong>CTF Multi-Outcome allows merging complete sets:</strong>
+                <pre>
+100 A + 100 B + 100 C + 100 D + 100 E → $100 USDC
+
+No counterparty needed!
+Always can exit via merge.
+No stuck inventory problem.</pre>
+            </div>
+
+            <h3>Worst Case Scenario for LP</h3>
+
+            <table>
+                <tr>
+                    <th>Scenario</th>
+                    <th>Fee Income</th>
+                    <th>Inventory Loss</th>
+                    <th>Total Loss</th>
+                </tr>
+                <tr>
+                    <td>Best case</td>
+                    <td>$500</td>
+                    <td>$100</td>
+                    <td>+$500 profit</td>
+                </tr>
+                <tr>
+                    <td>Average</td>
+                    <td>$200</td>
+                    <td>$350</td>
+                    <td>-$150 (15%)</td>
+                </tr>
+                <tr>
+                    <td>Bad case</td>
+                    <td>$75</td>
+                    <td>$400</td>
+                    <td>-$325 (32.5%)</td>
+                </tr>
+                <tr>
+                    <td style="color: var(--danger);">Worst case</td>
+                    <td>$75</td>
+                    <td>$860</td>
+                    <td style="color: var(--danger);">-$785 (78.5%)</td>
+                </tr>
+            </table>
+        </section>
+
+        <!-- Section 5: Market Makers -->
+        <section id="market-makers">
+            <h2>5. Market Makers (MM)</h2>
+
+            <h3>How MMs Make Profit</h3>
+
+            <h4>1. Spread (Buy Low, Sell High)</h4>
+            <pre>
+MM posts orders:
+BUY YES @ 49¢
+SELL YES @ 51¢
+
+When both sides fill:
+- Trader A buys YES @ 51¢ → MM receives 51¢
+- Trader B sells YES @ 49¢ → MM pays 49¢
+
+MM profit: 51¢ - 49¢ = 2¢ per share
+If 10,000 shares traded: Profit = $200</pre>
+
+            <h4>2. Fee Rebates</h4>
+            <pre>
+Taker (takes order): Pays 2% fee
+Maker (provides order): Receives 0.5% rebate
+
+MM always provides orders → earns rebate on every trade</pre>
+
+            <h4>3. High-Frequency Adjustments</h4>
+            <pre>
+Price moving up?
+→ Cancel BUY orders (avoid buying expensive)
+→ Raise SELL prices (sell higher)
+
+Amateur LP: Updates hourly → Gets run over
+Pro MM: Updates every second → Captures spread</pre>
+
+            <h4>4. Hedging Across Markets</h4>
+            <pre>
+Correlated markets:
+- "Chiefs win Super Bowl" (YES @ 25¢)
+- "Mahomes wins MVP" (YES @ 30¢)
+
+MM sells Chiefs YES, buys Mahomes YES (hedge)
+Net exposure: ~zero
+But: Keeps spread profit!</pre>
+
+            <h3>MM Profit Formula</h3>
+
+            <div class="highlight-box">
+                <pre>
+MM Profit = Spread Income
+          + Fee Rebates
+          + Arbitrage Gains
+          - Inventory Losses
+          - Operating Costs</pre>
+            </div>
+
+            <h3>How to Attract MMs to Nostra</h3>
+
+            <table>
+                <tr>
+                    <th>Method</th>
+                    <th>Description</th>
+                    <th>Cost to Platform</th>
+                </tr>
+                <tr>
+                    <td>Pay Monthly Fee</td>
+                    <td>$2-10K/month for liquidity</td>
+                    <td>Fixed, predictable</td>
+                </tr>
+                <tr>
+                    <td>Fee Rebates</td>
+                    <td>MM earns 0.5% on trades</td>
+                    <td>Reduced revenue</td>
+                </tr>
+                <tr>
+                    <td>Revenue Sharing</td>
+                    <td>50% of trading fees</td>
+                    <td>Variable</td>
+                </tr>
+                <tr>
+                    <td>Token Incentives</td>
+                    <td>NOSTRA tokens for liquidity</td>
+                    <td>Token dilution</td>
+                </tr>
+            </table>
+
+            <h3>Key Insight: Polymarket Model</h3>
+
+            <div class="highlight-box">
+                <strong>Polymarket has NO public LP UI.</strong> Liquidity comes from:
+                <ul>
+                    <li>Professional MMs (via API, not UI)</li>
+                    <li>Polymarket internal (hidden, behind scenes)</li>
+                    <li>Traders' limit orders</li>
+                </ul>
+                <p>Regular users just trade. They don't "provide liquidity" through UI.</p>
+            </div>
+        </section>
+
+        <!-- Section 6: Fee Structure -->
+        <section id="fee-structure">
+            <h2>6. Fee Structure</h2>
+
+            <h3>Fee Distribution Model</h3>
+
+            <div class="flow-diagram">
+                LP provides liquidity
+                ↓
+                Traders can trade
+                ↓
+                Traders pay fees
+                ↓
+                Fees go to LP as yield
+                ↓
+                LP compensated for risk
+                ↓
+                More LPs attracted → More liquidity</div>
+
+            <h3>Proposed Fee Structure</h3>
+
+            <pre>
+Trade: $100
+Fee: 2% = $2.00
+
+Distribution:
+├── LP (liquidity provider): $1.50 (75%)
+└── Platform (Nostra):       $0.50 (25%)</pre>
+
+            <h3>LP Yield Calculation</h3>
+
+            <pre>
+LP provides: $1,000 liquidity
+Market volume: $50,000/month
+Fee rate: 2%
+LP share: 75%
+
+LP earnings:
+$50,000 × 2% × 75% = $750/month
+
+LP yield:
+$750 / $1,000 = 75% monthly APY 🔥
+
+(High yield compensates for inventory risk)</pre>
+
+            <h3>The Tradeoff</h3>
+
+            <table>
+                <tr>
+                    <th>Fee Level</th>
+                    <th>LP Yield</th>
+                    <th>Trading Activity</th>
+                </tr>
+                <tr>
+                    <td>High (3%+)</td>
+                    <td>High</td>
+                    <td>Low (expensive to trade)</td>
+                </tr>
+                <tr>
+                    <td>Medium (2%)</td>
+                    <td>Medium</td>
+                    <td>Medium</td>
+                </tr>
+                <tr>
+                    <td>Low (0.5%)</td>
+                    <td>Low</td>
+                    <td>High (cheap to trade)</td>
+                </tr>
+            </table>
+
+            <h3>Can Fees Cover Losses?</h3>
+
+            <div class="warning-box">
+                <strong>Not always.</strong> If volume is low AND market moves hard in one direction:
+                <ul>
+                    <li>Fee income: small</li>
+                    <li>Inventory loss: large</li>
+                    <li>Net: significant loss</li>
+                </ul>
+                <p>Fees help but don't guarantee profit.</p>
+            </div>
+        </section>
+
+        <!-- Section 7: AMM vs Order Book -->
+        <section id="amm-vs-orderbook">
+            <h2>7. AMM vs Order Book</h2>
+
+            <h3>Fundamental Difference</h3>
+
+            <div class="comparison">
+                <div class="comparison-item">
+                    <h4><span class="badge badge-primary">Order Book</span></h4>
+                    <ul>
+                        <li>Match buyers with sellers</li>
+                        <li>Need counterparty for every trade</li>
+                        <li>Prices set by traders</li>
+                        <li>Can have no liquidity</li>
+                    </ul>
+                </div>
+                <div class="comparison-item">
+                    <h4><span class="badge badge-success">AMM</span></h4>
+                    <ul>
+                        <li>Trade against liquidity pool</li>
+                        <li>No counterparty needed</li>
+                        <li>Prices set by formula</li>
+                        <li>Always some liquidity</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h3>AMM Example: World Cup</h3>
+
+            <pre>
+LMSR AMM for 8 teams:
+
+Initial pool ($5000 liquidity):
+┌─────────────┬────────┬───────┬──────────────┐
+│ Team        │ Tokens │ Price │ Implied Odds │
+├─────────────┼────────┼───────┼──────────────┤
+│ Brazil      │ 5000   │ 12.5¢ │ 12.5%        │
+│ France      │ 5000   │ 12.5¢ │ 12.5%        │
+│ Argentina   │ 5000   │ 12.5¢ │ 12.5%        │
+│ ...         │ 5000   │ 12.5¢ │ 12.5%        │
+└─────────────┴────────┴───────┴──────────────┘
+
+Trader buys $100 Brazil:
+→ Gets ~700 Brazil tokens
+→ Pool Brazil: 5000 → 4300
+→ Brazil price: 12.5% → 25% (automatic!)</pre>
+
+            <h3>Comparison Table</h3>
+
+            <table>
+                <tr>
+                    <th>Feature</th>
+                    <th>Order Book</th>
+                    <th>AMM</th>
+                </tr>
+                <tr>
+                    <td>Always tradeable</td>
+                    <td>No (need counterparty)</td>
+                    <td><strong>Yes</strong></td>
+                </tr>
+                <tr>
+                    <td>Capital needed</td>
+                    <td>High ($50K+)</td>
+                    <td><strong>Lower ($5K)</strong></td>
+                </tr>
+                <tr>
+                    <td>Price discovery</td>
+                    <td>Order matching</td>
+                    <td>Formula</td>
+                </tr>
+                <tr>
+                    <td>Large trades</td>
+                    <td>Better (if deep)</td>
+                    <td>Higher slippage</td>
+                </tr>
+                <tr>
+                    <td>Complexity</td>
+                    <td>Medium</td>
+                    <td>Medium</td>
+                </tr>
+                <tr>
+                    <td>Pro traders prefer</td>
+                    <td><strong>Yes</strong></td>
+                    <td>No</td>
+                </tr>
+            </table>
+
+            <h3>Key Insight</h3>
+
+            <div class="warning-box">
+                <strong>Order Book and AMM don't mix.</strong> They are fundamentally different systems. You choose ONE,
+                not both.
+                <p>Nostra currently has Order Book. Switching to AMM would require significant rebuild.</p>
+            </div>
+        </section>
+
+        <!-- Section 8: Platform Economics -->
+        <section id="platform-economics">
+            <h2>8. Platform Economics</h2>
+
+            <h3>The Unavoidable Bootstrap Cost</h3>
+
+            <div class="danger-box">
+                <strong>Before external LPs/MMs are attracted, the platform MUST:</strong>
+                <ul>
+                    <li>Provide initial liquidity</li>
+                    <li>Take inventory risk</li>
+                    <li>Accept potential losses as cost of business</li>
+                </ul>
+                <p>This is unavoidable. Every marketplace subsidizes early growth.</p>
+            </div>
+
+            <h3>Budget Example</h3>
+
+            <pre>
+Nostra Year 1 Plan:
+
+Launch 50 markets
+Initial liquidity: $500 per market = $25,000
+Expected loss rate: 20%
+Expected loss: $5,000
+
+Think of it as:
+"$5,000 marketing spend to build a prediction market"
+
+Compare to:
+- Google Ads: $10,000
+- Influencer marketing: $20,000
+- Traditional marketing: $50,000+
+
+$5,000 liquidity loss = CHEAP customer acquisition</pre>
+
+            <h3>Growth Path</h3>
+
+            <div class="flow-diagram">
+                Phase 1: Platform Provides All Liquidity
+                ├── Provide $500/market
+                ├── Lose ~20% = $100/market
+                └── Build volume and reputation
+                ↓
+                Phase 2: Attract External LPs
+                ├── Show track record
+                ├── "We did $1M volume last month"
+                └── LPs see fee opportunity
+                ↓
+                Phase 3: Sustainable Model
+                ├── External LPs provide liquidity
+                ├── Platform just takes fees
+                └── Profit!</div>
+
+            <h3>Polymarket's Business Model</h3>
+
+            <table>
+                <tr>
+                    <th>Component</th>
+                    <th>Polymarket</th>
+                    <th>Risk Bearer</th>
+                </tr>
+                <tr>
+                    <td>Platform</td>
+                    <td>Takes 2% fee on winnings</td>
+                    <td>Zero inventory risk</td>
+                </tr>
+                <tr>
+                    <td>Market Makers</td>
+                    <td>Provide liquidity via API</td>
+                    <td>Bear inventory risk</td>
+                </tr>
+                <tr>
+                    <td>Users</td>
+                    <td>Trade only</td>
+                    <td>Market risk</td>
+                </tr>
+            </table>
+        </section>
+
+        <!-- Section 9: Recommendations -->
+        <section id="recommendations">
+            <h2>9. Recommendations for Nostra</h2>
+
+            <h3>Initial Probability</h3>
+
+            <div class="decision-matrix">
+                <h4>Clarification: Neither 50% nor 100/n% Prevents Loss</h4>
+                <p><strong>The 250% sum in grouped binary is NOT arbitrage.</strong> Each market is independent (YES +
+                    NO = $1 per market). Smart traders normalize prices through trading, not arbitrage.</p>
+
+                <h4>Trade-offs:</h4>
+                <table>
+                    <tr>
+                        <th>Approach</th>
+                        <th>Pros</th>
+                        <th>Cons</th>
+                    </tr>
+                    <tr>
+                        <td><strong>50%</strong></td>
+                        <td>Favorite less underpriced (-10¢)</td>
+                        <td>Underdogs extremely overpriced (+35~45¢), won't trade</td>
+                    </tr>
+                    <tr>
+                        <td><strong>100/n%</strong></td>
+                        <td>Underdogs fairly priced, may trade</td>
+                        <td>Favorite heavily underpriced (-40¢), 80¢ NO won't sell</td>
+                    </tr>
+                </table>
+
+                <p><strong>Bottom line:</strong> Creator loses either way. The only true solutions are CTF (no stuck
+                    inventory) or accepting loss as bootstrap cost.</p>
+            </div>
+
+            <h3>Market Structure</h3>
+
+            <div class="decision-matrix">
+                <h4>Short-term: Grouped Binary (Current)</h4>
+                <ul>
+                    <li>Already implemented</li>
+                    <li>Accept stuck inventory risk</li>
+                    <li>Use 100/n% to minimize losses</li>
+                </ul>
+
+                <h4>Long-term: Consider CTF Multi-Outcome</h4>
+                <ul>
+                    <li>Eliminates stuck inventory problem</li>
+                    <li>More capital efficient</li>
+                    <li>Requires contract changes</li>
+                </ul>
+            </div>
+
+            <h3>Liquidity Strategy</h3>
+
+            <div class="decision-matrix">
+                <h4>Phase 1 (MVP)</h4>
+                <pre>
+- Platform provides $500-1000 per market
+- Accept 20% loss as marketing cost
+- Focus on few markets with deeper liquidity
+- No public LP UI needed (like Polymarket)</pre>
+
+                <h4>Phase 2 (Growth)</h4>
+                <pre>
+- Partner with small MM ($2-5K/month)
+- Offload inventory risk to MM
+- Predictable cost structure</pre>
+
+                <h4>Phase 3 (Scale)</h4>
+                <pre>
+- Volume attracts more MMs naturally
+- Platform becomes fee-based business
+- Consider adding public LP feature</pre>
+            </div>
+
+            <h3>Trading System</h3>
+
+            <div class="decision-matrix">
+                <h4>Keep Order Book (Current) IF:</h4>
+                <ul>
+                    <li>Can secure $5K+ liquidity per market</li>
+                    <li>Can partner with MM</li>
+                    <li>Targeting professional traders</li>
+                </ul>
+
+                <h4>Consider AMM IF:</h4>
+                <ul>
+                    <li>Limited capital ($1-2K per market)</li>
+                    <li>No MM partnerships available</li>
+                    <li>Willing to rebuild trading system</li>
+                </ul>
+            </div>
+
+            <h3>Fee Structure</h3>
+
+            <div class="decision-matrix">
+                <h4>Recommended: 2% Fee</h4>
+                <pre>
+Distribution:
+├── Platform: 25% ($0.50 per $100 trade)
+└── Liquidity Providers: 75% ($1.50 per $100 trade)
+
+Or if platform provides liquidity:
+└── Platform keeps 100% of fees</pre>
+            </div>
+        </section>
+
+        <!-- Section 10: Implementation -->
+        <section id="implementation">
+            <h2>10. Implementation Considerations</h2>
+
+            <h3>Code Changes for 100/n% Pricing</h3>
+
+            <h4>Database Schema (No Change Needed)</h4>
+            <pre>
+// Prisma schema - currentPrice default doesn't matter
+// Price is set at market creation time
+model Outcome {
+  currentPrice Decimal @default(0.5)  // Can keep default
+  probability  Decimal @default(50)   // Set at creation
+}</pre>
+
+            <h4>Market Creation Logic</h4>
+            <pre>
+// When creating market with N outcomes
+const totalOutcomes = outcomes.length;
+const initialPrice = 1 / totalOutcomes;  // 100/n%
+const initialProbability = 100 / totalOutcomes;
+
+for (const outcome of outcomes) {
+  await outcomeRepository.create({
+    ...outcome,
+    currentPrice: initialPrice,      // 0.20 for 5 outcomes
+    probability: initialProbability, // 20% for 5 outcomes
+  });
+}</pre>
+
+            <h4>Price Update Options</h4>
+
+            <div class="comparison">
+                <div class="comparison-item">
+                    <h4>Option A: Independent (Simple)</h4>
+                    <pre>
+Buy A → A price up
+Others unchanged
+Sum drifts from 100%
+Arbitrage corrects</pre>
+                </div>
+                <div class="comparison-item">
+                    <h4>Option B: Linked (Complex)</h4>
+                    <pre>
+Buy A → A price up
+Others auto-decrease
+Sum stays at 100%
+Requires more logic</pre>
+                </div>
+            </div>
+
+            <h3>MM Bot Architecture (Optional)</h3>
+
+            <pre>
+// Auto-rebalancing market maker bot
+const MM_CONFIG = {
+  maxImbalance: 50,       // Max YES/NO difference
+  spreadBps: 400,         // 4% spread
+  rebalanceThreshold: 25  // Rebalance at 25 token imbalance
+};
+
+async function onTrade(market, side, amount) {
+  const position = getPosition(market);
+  const imbalance = Math.abs(position.yes - position.no);
+
+  if (imbalance > MM_CONFIG.rebalanceThreshold) {
+    await rebalance(market, position);
+  }
+
+  // Adjust spreads based on inventory
+  await adjustSpreads(market, position);
+}
+
+async function checkToxicInventory(market) {
+  const yesPrice = market.yesPrice;
+
+  // If YES is winning big, NO is toxic
+  if (yesPrice > 0.70) {
+    const noTokens = getPosition(market, 'NO');
+    if (noTokens > 0) {
+      // Sell at ANY price before it goes to zero
+      await placeSellOrder(market, 'NO', noTokens, yesPrice * 0.5);
+    }
+  }
+}</pre>
+
+            <h3>UI Considerations</h3>
+
+            <div class="highlight-box">
+                <strong>Following Polymarket's approach:</strong>
+                <ul>
+                    <li>❌ No public "Provide Liquidity" UI</li>
+                    <li>✅ Simple trading interface only</li>
+                    <li>✅ Admin panel for platform liquidity (internal)</li>
+                    <li>✅ API access for MM partners (later)</li>
+                </ul>
+            </div>
+
+            <h3>Risk Disclosure (Required)</h3>
+
+            <pre>
+For any LP feature (if built):
+
+⚠️ RISK WARNING
+
+Providing liquidity involves significant risk.
+
+• You may lose 30-80% of deposited funds
+• Fee income may NOT cover losses
+• Worst case: lose almost everything
+
+Only deposit what you can afford to lose.</pre>
+        </section>
+
+        <!-- Summary -->
+        <section style="background: linear-gradient(135deg, #1e40af, #7c3aed); color: white;">
+            <h2 style="color: white; border-bottom-color: rgba(255,255,255,0.3);">Summary: Key Decisions for Nostra</h2>
+
+            <table style="color: white;">
+                <tr style="border-bottom-color: rgba(255,255,255,0.2);">
+                    <th style="background: rgba(255,255,255,0.1); color: white;">Decision</th>
+                    <th style="background: rgba(255,255,255,0.1); color: white;">Recommendation</th>
+                    <th style="background: rgba(255,255,255,0.1); color: white;">Rationale</th>
+                </tr>
+                <tr style="border-bottom-color: rgba(255,255,255,0.2);">
+                    <td>Initial Probability</td>
+                    <td><strong>100/n% or 50%</strong></td>
+                    <td>Neither prevents loss; trade-offs exist</td>
+                </tr>
+                <tr style="border-bottom-color: rgba(255,255,255,0.2);">
+                    <td>Market Structure</td>
+                    <td><strong>Keep Grouped Binary</strong> (for now)</td>
+                    <td>Already implemented; CTF later</td>
+                </tr>
+                <tr style="border-bottom-color: rgba(255,255,255,0.2);">
+                    <td>Trading System</td>
+                    <td><strong>Keep Order Book</strong></td>
+                    <td>Already built; AMM requires rebuild</td>
+                </tr>
+                <tr style="border-bottom-color: rgba(255,255,255,0.2);">
+                    <td>Initial Liquidity</td>
+                    <td><strong>Platform provides</strong></td>
+                    <td>No external LPs at start</td>
+                </tr>
+                <tr style="border-bottom-color: rgba(255,255,255,0.2);">
+                    <td>Liquidity Amount</td>
+                    <td><strong>$1-5K per market</strong></td>
+                    <td>Balance between UX and risk</td>
+                </tr>
+                <tr style="border-bottom-color: rgba(255,255,255,0.2);">
+                    <td>Expected Loss</td>
+                    <td><strong>~20% of liquidity</strong></td>
+                    <td>Marketing/customer acquisition cost</td>
+                </tr>
+                <tr style="border-bottom-color: rgba(255,255,255,0.2);">
+                    <td>Fee Structure</td>
+                    <td><strong>2% fee</strong></td>
+                    <td>Industry standard</td>
+                </tr>
+                <tr style="border-bottom-color: rgba(255,255,255,0.2);">
+                    <td>Public LP UI</td>
+                    <td><strong>No</strong> (like Polymarket)</td>
+                    <td>Keep it simple; internal only</td>
+                </tr>
+                <tr style="border-bottom-color: rgba(255,255,255,0.2);">
+                    <td>MM Partnership</td>
+                    <td><strong>Phase 2 goal</strong></td>
+                    <td>After proving volume</td>
+                </tr>
+            </table>
+
+            <div style="margin-top: 2rem; padding: 1rem; background: rgba(255,255,255,0.1); border-radius: 8px;">
+                <p style="margin: 0; font-size: 1.1rem;">
+                    <strong>Bottom Line:</strong> Accept initial liquidity losses as cost of bootstrapping.
+                    Focus on building volume. External LPs and MMs will come after platform proves itself.
+                </p>
+            </div>
+        </section>
+
+        <footer style="text-align: center; color: var(--text-muted); padding: 2rem; font-size: 0.9rem;">
+            <p>Document generated: December 2024</p>
+            <p>Based on discussion about Nostra prediction market design</p>
+        </footer>
+    </div>
+</body>
+
+</html>

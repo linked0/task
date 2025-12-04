@@ -1,0 +1,1559 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prediction Market Models - CTF Multi-Outcome vs NegRisk | Nostra Design</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: #1a1a2e;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4e8ec 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        h1 {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            color: #1a1a2e;
+        }
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 40px;
+            font-size: 1.1rem;
+        }
+        .card {
+            background: white;
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+        h2 {
+            color: #2d3748;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #667eea;
+            font-size: 1.5rem;
+        }
+        h3 {
+            color: #4a5568;
+            margin: 20px 0 15px 0;
+            font-size: 1.2rem;
+        }
+        p {
+            margin-bottom: 15px;
+            color: #4a5568;
+        }
+        .highlight {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 12px;
+            margin: 20px 0;
+        }
+        .highlight h3 {
+            color: white;
+            margin-top: 0;
+        }
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        .comparison-table th, .comparison-table td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        .comparison-table th {
+            background: #f7fafc;
+            font-weight: 600;
+            color: #2d3748;
+        }
+        .comparison-table tr:hover {
+            background: #f7fafc;
+        }
+        .example-box {
+            background: #f0f4f8;
+            border-left: 4px solid #667eea;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+        }
+        .math-box {
+            background: #1a1a2e;
+            color: #a0aec0;
+            padding: 20px;
+            border-radius: 8px;
+            font-family: 'Monaco', 'Menlo', monospace;
+            font-size: 0.9rem;
+            overflow-x: auto;
+            margin: 15px 0;
+        }
+        .math-box .comment {
+            color: #68d391;
+        }
+        .math-box .keyword {
+            color: #f6ad55;
+        }
+        .math-box .value {
+            color: #63b3ed;
+        }
+        .status-yes {
+            background: #c6f6d5;
+            color: #22543d;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.85rem;
+        }
+        .status-no {
+            background: #fed7d7;
+            color: #742a2a;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.85rem;
+        }
+        .status-neutral {
+            background: #e2e8f0;
+            color: #4a5568;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.85rem;
+        }
+        .diagram {
+            background: #f7fafc;
+            border: 2px dashed #cbd5e0;
+            border-radius: 12px;
+            padding: 30px;
+            margin: 20px 0;
+            text-align: center;
+        }
+        .diagram pre {
+            font-family: 'Monaco', 'Menlo', monospace;
+            font-size: 0.85rem;
+            text-align: left;
+            display: inline-block;
+            color: #2d3748;
+        }
+        .flow-arrow {
+            font-size: 2rem;
+            color: #667eea;
+            margin: 10px 0;
+        }
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 20px 0;
+        }
+        @media (max-width: 768px) {
+            .grid-2 {
+                grid-template-columns: 1fr;
+            }
+        }
+        .mini-card {
+            background: #f7fafc;
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid #e2e8f0;
+        }
+        .mini-card h4 {
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+        .token-visual {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 10px 0;
+            flex-wrap: wrap;
+        }
+        .token {
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.85rem;
+        }
+        .token-yes {
+            background: #48bb78;
+            color: white;
+        }
+        .token-no {
+            background: #f56565;
+            color: white;
+        }
+        .token-usdc {
+            background: #4299e1;
+            color: white;
+        }
+        .equals {
+            font-size: 1.5rem;
+            color: #667eea;
+            font-weight: bold;
+        }
+        .implementation-list {
+            list-style: none;
+            padding: 0;
+        }
+        .implementation-list li {
+            padding: 15px;
+            margin: 10px 0;
+            background: #f7fafc;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .implementation-list .number {
+            background: #667eea;
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+        .difficulty {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-left: auto;
+        }
+        .difficulty-easy {
+            background: #c6f6d5;
+            color: #22543d;
+        }
+        .difficulty-medium {
+            background: #fef3c7;
+            color: #92400e;
+        }
+        .difficulty-hard {
+            background: #fed7d7;
+            color: #742a2a;
+        }
+        .summary-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 12px;
+            margin-top: 30px;
+        }
+        .summary-box h2 {
+            color: white;
+            border-bottom-color: rgba(255,255,255,0.3);
+        }
+        .summary-box ul {
+            list-style: none;
+            padding: 0;
+        }
+        .summary-box li {
+            padding: 8px 0;
+            padding-left: 25px;
+            position: relative;
+        }
+        .summary-box li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #68d391;
+            font-weight: bold;
+        }
+        /* Model Comparison Table Styles */
+        .model-comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 0.9rem;
+        }
+        .model-comparison-table th, .model-comparison-table td {
+            padding: 12px 10px;
+            text-align: center;
+            border: 1px solid #e2e8f0;
+            vertical-align: middle;
+        }
+        .model-comparison-table th {
+            background: #f7fafc;
+            font-weight: 600;
+            color: #2d3748;
+        }
+        .model-comparison-table td small {
+            display: block;
+            color: #718096;
+            font-size: 0.75rem;
+            margin-top: 2px;
+        }
+        .model-comparison-table tr:hover {
+            background: #f7fafc;
+        }
+        .category-col {
+            background: #f0f4f8 !important;
+            text-align: left !important;
+            font-weight: 500;
+            min-width: 120px;
+        }
+        .polymarket-col {
+            background: linear-gradient(135deg, #f0fff4 0%, #e6fffa 100%) !important;
+        }
+        .text-red {
+            color: #e53e3e;
+            font-weight: 500;
+        }
+        .text-green {
+            color: #38a169;
+            font-weight: 500;
+        }
+        .text-blue {
+            color: #3182ce;
+            font-weight: 500;
+        }
+        /* Section Divider Styles */
+        .section-divider {
+            text-align: center;
+            margin: 50px 0 30px 0;
+            position: relative;
+        }
+        .section-divider::before {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #667eea, transparent);
+        }
+        .section-divider h2 {
+            display: inline-block;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4e8ec 100%);
+            padding: 10px 30px;
+            border-radius: 30px;
+            font-size: 1.3rem;
+            color: #667eea;
+            border: 2px solid #667eea;
+            position: relative;
+            margin: 0;
+        }
+        .section-divider .section-subtitle {
+            display: block;
+            font-size: 0.85rem;
+            color: #718096;
+            margin-top: 10px;
+            font-weight: normal;
+        }
+        .part-ctf .card h2 {
+            border-bottom-color: #38a169;
+        }
+        .part-negrisk .card h2 {
+            border-bottom-color: #ed8936;
+        }
+        /* Styled Comparison Diagram */
+        .model-diagram-container {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 30px;
+            margin: 25px 0;
+        }
+        .model-diagram-box {
+            background: #f8fafc;
+            border-radius: 16px;
+            padding: 25px;
+            border: 2px solid #e2e8f0;
+            position: relative;
+        }
+        .model-diagram-box.ctf-multi {
+            border-color: #38a169;
+            background: linear-gradient(135deg, #f0fff4 0%, #f8fafc 100%);
+        }
+        .model-diagram-box.grouped-binary {
+            border-color: #ed8936;
+            background: linear-gradient(135deg, #fffaf0 0%, #f8fafc 100%);
+        }
+        .model-diagram-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+        .model-diagram-box.ctf-multi .model-diagram-title {
+            color: #22543d;
+        }
+        .model-diagram-box.grouped-binary .model-diagram-title {
+            color: #7b341e;
+        }
+        .model-diagram-badge {
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+        .badge-green {
+            background: #c6f6d5;
+            color: #22543d;
+        }
+        .badge-orange {
+            background: #feebc8;
+            color: #7b341e;
+        }
+        .condition-wrapper {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            border: 2px dashed #cbd5e0;
+            margin-bottom: 15px;
+        }
+        .condition-label {
+            text-align: center;
+            font-size: 0.85rem;
+            color: #4a5568;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+        .condition-label code {
+            background: #edf2f7;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-family: 'Monaco', 'Menlo', monospace;
+        }
+        .outcome-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+        }
+        .outcome-token {
+            padding: 12px 16px;
+            border-radius: 10px;
+            text-align: center;
+            min-width: 80px;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+        .outcome-token.single {
+            background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
+            color: white;
+        }
+        .outcome-token.binary {
+            background: white;
+            border: 2px solid #e2e8f0;
+        }
+        .outcome-token .country {
+            font-size: 0.85rem;
+            color: #2d3748;
+            margin-bottom: 5px;
+        }
+        .outcome-token .slot {
+            font-size: 0.7rem;
+            color: rgba(255,255,255,0.8);
+        }
+        .outcome-token.binary .yes-no {
+            display: flex;
+            gap: 5px;
+            margin-top: 5px;
+        }
+        .outcome-token.binary .yes {
+            background: #48bb78;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.7rem;
+        }
+        .outcome-token.binary .no {
+            background: #f56565;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.7rem;
+        }
+        .separate-conditions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            justify-content: center;
+        }
+        .separate-condition-box {
+            background: white;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            padding: 12px;
+            text-align: center;
+            min-width: 100px;
+        }
+        .separate-condition-box .cond-id {
+            font-size: 0.7rem;
+            color: #718096;
+            font-family: 'Monaco', 'Menlo', monospace;
+            margin-bottom: 5px;
+        }
+        .separate-condition-box .country {
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: #2d3748;
+            margin-bottom: 8px;
+        }
+        .separate-condition-box .yes-no-row {
+            display: flex;
+            gap: 5px;
+            justify-content: center;
+        }
+        .model-code-note {
+            background: #1a1a2e;
+            color: #a0aec0;
+            padding: 12px 16px;
+            border-radius: 8px;
+            font-family: 'Monaco', 'Menlo', monospace;
+            font-size: 0.8rem;
+            margin-top: 15px;
+        }
+        .model-code-note code {
+            color: #63b3ed;
+        }
+        .vs-divider {
+            text-align: center;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #667eea;
+            margin: 20px 0;
+        }
+        /* NegRisk Architecture Diagram */
+        .negrisk-arch {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin: 25px 0;
+        }
+        .arch-layer {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            border: 2px solid #e2e8f0;
+            position: relative;
+        }
+        .arch-layer.user-layer {
+            background: linear-gradient(135deg, #ebf8ff 0%, #f0f4f8 100%);
+            border-color: #3182ce;
+        }
+        .arch-layer.adapter-layer {
+            background: linear-gradient(135deg, #fffaf0 0%, #f8fafc 100%);
+            border-color: #ed8936;
+        }
+        .arch-layer.market-layer {
+            background: linear-gradient(135deg, #f0fff4 0%, #f8fafc 100%);
+            border-color: #38a169;
+        }
+        .arch-layer.ctf-layer {
+            background: linear-gradient(135deg, #faf5ff 0%, #f8fafc 100%);
+            border-color: #805ad5;
+        }
+        .arch-layer-title {
+            font-weight: 700;
+            font-size: 1rem;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .arch-layer-content {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+        }
+        .arch-func-box {
+            background: rgba(0,0,0,0.05);
+            padding: 8px 14px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-family: 'Monaco', 'Menlo', monospace;
+        }
+        .arch-arrow {
+            text-align: center;
+            font-size: 1.5rem;
+            color: #718096;
+        }
+        .arch-note {
+            font-size: 0.85rem;
+            color: #718096;
+            margin-top: 10px;
+            text-align: center;
+        }
+        /* Conversion Formula Diagram */
+        .formula-diagram {
+            background: linear-gradient(135deg, #f0f4f8 0%, #e2e8f0 100%);
+            border-radius: 12px;
+            padding: 25px;
+            margin: 20px 0;
+        }
+        .formula-title {
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: #2d3748;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        .formula-row {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin: 12px 0;
+            flex-wrap: wrap;
+        }
+        .formula-token {
+            padding: 8px 14px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.85rem;
+        }
+        .formula-token.no-token {
+            background: #f56565;
+            color: white;
+        }
+        .formula-token.value {
+            background: #4299e1;
+            color: white;
+        }
+        .formula-token.yes-token {
+            background: #48bb78;
+            color: white;
+        }
+        .formula-operator {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #667eea;
+        }
+        .formula-result {
+            background: #1a1a2e;
+            color: #68d391;
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-family: 'Monaco', 'Menlo', monospace;
+            text-align: center;
+            margin-top: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Prediction Market Models Explained</h1>
+        <p class="subtitle">CTF Multi-Outcome vs NegRisk Adapter - A Complete Guide</p>
+
+        <!-- Section 0: Model Comparison Table -->
+        <div class="card">
+            <h2>Market Model Comparison (시장 모델 비교)</h2>
+
+            <table class="model-comparison-table">
+                <thead>
+                    <tr>
+                        <th class="category-col">구분</th>
+                        <th>그룹형 바이너리<br><small style="font-weight: normal; color: #718096;">Grouped Binary (Nostra 현재)</small></th>
+                        <th>CTF 다중 결과<br><small style="font-weight: normal; color: #718096;">CTF Multi-Outcome</small></th>
+                        <th class="polymarket-col">그룹형 바이너리 + NegRisk<br><small style="font-weight: normal; color: #718096;">Polymarket</small></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="category-col"><strong>초기 확률</strong><br><small>Initial Probability</small></td>
+                        <td>자유 설정<br><small>(50% 또는 100/N% 등)</small></td>
+                        <td>자유 설정<br><small>(100/N% 또는 외부 데이터)</small></td>
+                        <td>자유 설정<br><small>(시장 결정)</small></td>
+                    </tr>
+                    <tr>
+                        <td class="category-col"><strong>YES 총합</strong><br><small>Sum of YES prices</small></td>
+                        <td class="text-red">자유 (연동 없음)<br><small>(차익거래 가능)</small></td>
+                        <td class="text-green">항상 100%<br><small>(기계적 보장)</small></td>
+                        <td class="text-green">~100%<br><small>(경제적 수렴)</small></td>
+                    </tr>
+                    <tr>
+                        <td class="category-col"><strong>시장 연동</strong><br><small>Market Linkage</small></td>
+                        <td>독립적<br><small>(연동 없음)</small></td>
+                        <td class="text-blue">기계적 연동<br><small>(분할/병합)</small></td>
+                        <td class="text-blue">어댑터 연동<br><small>(NegRisk)</small></td>
+                    </tr>
+                    <tr>
+                        <td class="category-col"><strong>재고 문제</strong><br><small>Stuck Inventory</small></td>
+                        <td class="text-red">발생함<br><small>(전환 불가)</small></td>
+                        <td class="text-green">발생하지 않음<br><small>(병합 가능)</small></td>
+                        <td class="text-green">발생하지 않음<br><small>(전환 가능)</small></td>
+                    </tr>
+                    <tr>
+                        <td class="category-col"><strong>구현 난이도</strong><br><small>Implementation</small></td>
+                        <td class="text-blue">간단함</td>
+                        <td>복잡함<br><small>(커스텀 거래소 필요)</small></td>
+                        <td>복잡함<br><small>(6-10주)</small></td>
+                    </tr>
+                    <tr>
+                        <td class="category-col"><strong>conditionId</strong><br><small>Condition ID</small></td>
+                        <td>각 outcome별 다름</td>
+                        <td class="text-blue">모두 동일 (공유)</td>
+                        <td>각 outcome별 다름<br><small>+ negRiskMarketId 공유</small></td>
+                    </tr>
+                    <tr>
+                        <td class="category-col"><strong>포지션 전환</strong><br><small>Position Conversion</small></td>
+                        <td class="text-red">불가능</td>
+                        <td class="text-green">가능 (merge)</td>
+                        <td class="text-green">가능 (adapter)</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="highlight" style="margin-top: 30px;">
+                <h3 style="margin-bottom: 15px;">Key Takeaway</h3>
+                <p><strong>Nostra 현재:</strong> 그룹형 바이너리 (Grouped Binary) - 간단하지만 포지션 전환 불가</p>
+                <p><strong>Polymarket:</strong> 그룹형 바이너리 + NegRisk - 포지션 전환 가능</p>
+                <p style="margin-top: 10px;"><strong>핵심 차이:</strong> 시장 연동 메커니즘 (없음 vs 분할/병합 vs NegRisk 어댑터)</p>
+            </div>
+        </div>
+
+        <!-- ========== PART A: CTF Multi-Outcome ========== -->
+        <div class="section-divider">
+            <h2>PART A: CTF Multi-Outcome Model
+                <span class="section-subtitle">Pure Multi-Outcome using Conditional Tokens Framework</span>
+            </h2>
+        </div>
+
+        <div class="part-ctf">
+
+        <!-- Section: CTF Multi-Outcome Explained -->
+        <div class="card">
+            <h2>A1. What is CTF Multi-Outcome? (CTF 다중 결과란?)</h2>
+
+            <p>The <strong>CTF Multi-Outcome</strong> model is the "pure" way to handle multiple mutually exclusive outcomes using the Conditional Tokens Framework. Unlike Grouped Binary where each outcome is a separate market, CTF Multi-Outcome uses a <strong>single condition</strong> with multiple outcome slots.</p>
+
+            <h3>작동 방식 (How It Works)</h3>
+
+            <div class="model-diagram-container">
+                <!-- CTF Multi-Outcome -->
+                <div class="model-diagram-box ctf-multi">
+                    <div class="model-diagram-title">
+                        <span>🟢 CTF 다중 결과 모델</span>
+                        <span class="model-diagram-badge badge-green">단일 컨디션, 다중 결과</span>
+                    </div>
+
+                    <div class="condition-wrapper">
+                        <div class="condition-label">
+                            하나의 <code>conditionId</code> (모든 결과가 공유)
+                        </div>
+                        <div class="outcome-grid">
+                            <div class="outcome-token single">
+                                <div>🇪🇸 스페인</div>
+                                <div class="slot">슬롯 0</div>
+                            </div>
+                            <div class="outcome-token single">
+                                <div>🇫🇷 프랑스</div>
+                                <div class="slot">슬롯 1</div>
+                            </div>
+                            <div class="outcome-token single">
+                                <div>🇧🇷 브라질</div>
+                                <div class="slot">슬롯 2</div>
+                            </div>
+                            <div class="outcome-token single">
+                                <div>🇦🇷 아르헨티나</div>
+                                <div class="slot">슬롯 3</div>
+                            </div>
+                            <div class="outcome-token single">
+                                <div>🏴󠁧󠁢󠁥󠁮󠁧󠁿 잉글랜드</div>
+                                <div class="slot">슬롯 4</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="model-code-note">
+                        <code>prepareCondition(oracle, questionId, outcomeSlotCount=5)</code>
+                    </div>
+                </div>
+
+                <div class="vs-divider">⚡ vs ⚡</div>
+
+                <!-- Grouped Binary -->
+                <div class="model-diagram-box grouped-binary">
+                    <div class="model-diagram-title">
+                        <span>🟠 그룹형 바이너리 모델</span>
+                        <span class="model-diagram-badge badge-orange">결과별 개별 컨디션</span>
+                    </div>
+
+                    <div class="separate-conditions">
+                        <div class="separate-condition-box">
+                            <div class="cond-id">condId_1</div>
+                            <div class="country">🇪🇸 스페인</div>
+                            <div class="yes-no-row">
+                                <span class="yes">YES</span>
+                                <span class="no">NO</span>
+                            </div>
+                        </div>
+                        <div class="separate-condition-box">
+                            <div class="cond-id">condId_2</div>
+                            <div class="country">🇫🇷 프랑스</div>
+                            <div class="yes-no-row">
+                                <span class="yes">YES</span>
+                                <span class="no">NO</span>
+                            </div>
+                        </div>
+                        <div class="separate-condition-box">
+                            <div class="cond-id">condId_3</div>
+                            <div class="country">🇧🇷 브라질</div>
+                            <div class="yes-no-row">
+                                <span class="yes">YES</span>
+                                <span class="no">NO</span>
+                            </div>
+                        </div>
+                        <div class="separate-condition-box">
+                            <div class="cond-id">condId_4</div>
+                            <div class="country">🇦🇷 아르헨티나</div>
+                            <div class="yes-no-row">
+                                <span class="yes">YES</span>
+                                <span class="no">NO</span>
+                            </div>
+                        </div>
+                        <div class="separate-condition-box">
+                            <div class="cond-id">condId_5</div>
+                            <div class="country">🏴󠁧󠁢󠁥󠁮󠁧󠁿 잉글랜드</div>
+                            <div class="yes-no-row">
+                                <span class="yes">YES</span>
+                                <span class="no">NO</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="model-code-note">
+                        각 결과마다 <code>prepareCondition(oracle, questionId_N, 2)</code> 호출
+                    </div>
+                </div>
+            </div>
+
+            <!-- Comparison Table -->
+            <table class="comparison-table" style="margin-top: 30px;">
+                <tr>
+                    <th style="width: 25%;">구분</th>
+                    <th style="width: 37.5%;">🟢 CTF 다중 결과</th>
+                    <th style="width: 37.5%;">🟠 그룹형 바이너리</th>
+                </tr>
+                <tr>
+                    <td><strong>conditionId</strong></td>
+                    <td><span class="status-yes">1개 (공유)</span></td>
+                    <td><span class="status-neutral">N개 (결과별 개별)</span></td>
+                </tr>
+                <tr>
+                    <td><strong>토큰 구조</strong></td>
+                    <td>결과당 1개 토큰<br><small>(스페인, 프랑스, 브라질...)</small></td>
+                    <td>결과당 YES/NO 쌍<br><small>(스페인 YES/NO, 프랑스 YES/NO...)</small></td>
+                </tr>
+                <tr>
+                    <td><strong>분할/병합</strong></td>
+                    <td><span class="status-yes">네이티브 CTF 기능</span></td>
+                    <td><span class="status-no">불가능</span></td>
+                </tr>
+                <tr>
+                    <td><strong>가격 총합</strong></td>
+                    <td><span class="status-yes">항상 = 100%</span></td>
+                    <td><span class="status-no">N × 50% = 250% (5팀)</span></td>
+                </tr>
+            </table>
+
+            <h3>A1.1 Split and Merge Operations</h3>
+            <p>CTF Multi-Outcome enables <strong>mechanical split/merge</strong> operations that are impossible in Grouped Binary:</p>
+
+            <div class="grid-2">
+                <div class="mini-card">
+                    <h4>Split: USDC → All Outcome Tokens</h4>
+                    <div class="token-visual">
+                        <span class="token token-usdc">$1 USDC</span>
+                        <span class="equals">→</span>
+                    </div>
+                    <div class="token-visual" style="flex-wrap: wrap; gap: 5px;">
+                        <span class="token token-yes" style="font-size: 0.75rem;">1 Spain</span>
+                        <span class="token token-yes" style="font-size: 0.75rem;">1 France</span>
+                        <span class="token token-yes" style="font-size: 0.75rem;">1 Brazil</span>
+                        <span class="token token-yes" style="font-size: 0.75rem;">1 Argentina</span>
+                        <span class="token token-yes" style="font-size: 0.75rem;">1 England</span>
+                    </div>
+                    <p style="margin-top: 10px; font-size: 0.85rem; color: #718096;">Exactly ONE will be worth $1, others worth $0</p>
+                </div>
+                <div class="mini-card">
+                    <h4>Merge: All Outcome Tokens → USDC</h4>
+                    <div class="token-visual" style="flex-wrap: wrap; gap: 5px;">
+                        <span class="token token-yes" style="font-size: 0.75rem;">1 Spain</span>
+                        <span class="token token-yes" style="font-size: 0.75rem;">1 France</span>
+                        <span class="token token-yes" style="font-size: 0.75rem;">1 Brazil</span>
+                        <span class="token token-yes" style="font-size: 0.75rem;">1 Argentina</span>
+                        <span class="token token-yes" style="font-size: 0.75rem;">1 England</span>
+                    </div>
+                    <div class="token-visual">
+                        <span class="equals">→</span>
+                        <span class="token token-usdc">$1 USDC</span>
+                    </div>
+                    <p style="margin-top: 10px; font-size: 0.85rem; color: #718096;">Guaranteed $1 regardless of outcome</p>
+                </div>
+            </div>
+
+            <h3>A1.2 Position Conversion via Merge</h3>
+            <div class="example-box">
+                <h4>Example: Convert Spain to France</h4>
+                <p><strong>You have:</strong> 100 Spain tokens @ 20¢ = $20 value</p>
+                <p><strong>You want:</strong> France tokens</p>
+
+                <div class="math-box">
+<span class="comment">// Step 1: Buy all OTHER tokens to complete a set</span>
+Buy: 100 France @ 15¢ = <span class="value">$15</span>
+Buy: 100 Brazil @ 25¢ = <span class="value">$25</span>
+Buy: 100 Argentina @ 30¢ = <span class="value">$30</span>
+Buy: 100 England @ 10¢ = <span class="value">$10</span>
+Total spent: <span class="value">$80</span>
+
+<span class="comment">// Step 2: Merge complete sets</span>
+100 Spain + 100 France + 100 Brazil + 100 Argentina + 100 England
+= <span class="keyword">100 complete sets = $100 USDC</span>
+
+<span class="comment">// Step 3: Use $100 to buy France tokens</span>
+$100 / 15¢ = <span class="value">~666 France tokens</span>
+
+<span class="comment">// Net result:</span>
+Started: 100 Spain tokens (worth $20)
+Spent: $80 on other tokens
+Got back: $100 from merge
+Bought: 666 France tokens (worth $100)
+<span class="keyword">Profit from arbitrage: $0 (prices were fair)</span>
+                </div>
+            </div>
+
+            <h3>A1.3 Why Sum Always = 100%</h3>
+            <div class="highlight">
+                <h3>Mathematical Guarantee</h3>
+                <p>In CTF Multi-Outcome, the split/merge mechanism creates a <strong>mechanical arbitrage</strong> that forces prices to sum to 100%:</p>
+                <ul style="margin-left: 20px; margin-top: 10px;">
+                    <li><strong>If sum &gt; 100%:</strong> Arbitrageurs split $1 → sell all tokens → profit from excess</li>
+                    <li><strong>If sum &lt; 100%:</strong> Arbitrageurs buy all tokens cheap → merge → profit from $1</li>
+                </ul>
+                <p style="margin-top: 15px;">This is why CTF Multi-Outcome markets <strong>always</strong> sum to ~100%, unlike Grouped Binary which can have any sum.</p>
+            </div>
+
+            <h3>A2. Polymarket이 순수 CTF Multi-Outcome을 사용하지 않는 이유</h3>
+            <div class="example-box">
+                <p>Polymarket chose <strong>Grouped Binary + NegRisk</strong> instead of pure CTF Multi-Outcome for several reasons:</p>
+                <ul style="margin-left: 20px; color: #4a5568;">
+                    <li><strong>Flexibility:</strong> Can add/remove outcomes after market creation</li>
+                    <li><strong>Familiar UX:</strong> YES/NO trading is more intuitive for users</li>
+                    <li><strong>Existing Infrastructure:</strong> Binary market exchange was already built</li>
+                    <li><strong>Liquidity:</strong> Easier to provide liquidity on YES/NO pairs</li>
+                    <li><strong>Modularity:</strong> NegRisk adapter can be upgraded separately</li>
+                </ul>
+                <p style="margin-top: 15px;"><strong>Trade-off:</strong> More complex architecture, but more operational flexibility</p>
+            </div>
+
+            <h3>A3. Nostra의 createMultipleChoiceMarket()</h3>
+            <p>Nostra's <code>MarketFactory</code> actually has a <code>createMultipleChoiceMarket()</code> function that creates pure CTF Multi-Outcome markets:</p>
+
+            <div class="math-box">
+<span class="comment">// In MarketFactory.sol</span>
+<span class="keyword">function</span> createMultipleChoiceMarket(
+    bytes32 questionId,
+    string[] calldata outcomeLabels,  <span class="comment">// ["Spain", "France", "Brazil", ...]</span>
+    ...
+) {
+    <span class="comment">// Creates ONE condition with multiple outcomes</span>
+    ctf.prepareCondition(oracle, questionId, <span class="value">outcomeLabels.length</span>);
+
+    <span class="comment">// All outcomes share the SAME conditionId</span>
+    bytes32 conditionId = getConditionId(oracle, questionId, outcomeLabels.length);
+}
+
+<span class="comment">// vs createBinaryMarket() used currently:</span>
+<span class="keyword">function</span> createBinaryMarket(...) {
+    ctf.prepareCondition(oracle, questionId, <span class="value">2</span>);  <span class="comment">// Always 2 outcomes</span>
+}
+            </div>
+
+            <p style="margin-top: 15px;"><strong>Current Status:</strong> Nostra has the capability but uses <code>createBinaryMarket()</code> in a loop instead, creating Grouped Binary markets.</p>
+        </div>
+
+        </div><!-- End of part-ctf -->
+
+        <!-- ========== PART B: NegRisk Adapter ========== -->
+        <div class="section-divider">
+            <h2>PART B: NegRisk Adapter (Polymarket's Approach)
+                <span class="section-subtitle">Linking Grouped Binary Markets with Position Conversion</span>
+            </h2>
+        </div>
+
+        <div class="part-negrisk">
+
+        <!-- Section B1: The Problem -->
+        <div class="card">
+            <h2>B1. The Problem: Stuck Inventory</h2>
+
+            <p>In <strong>Grouped Binary</strong> markets (like Nostra's current implementation), each outcome is an independent binary market. This creates a problem:</p>
+
+            <div class="example-box">
+                <h3>Example: 2026 FIFA World Cup Winner</h3>
+                <p>You believe Spain will win, so you buy:</p>
+                <div class="token-visual">
+                    <span class="token token-yes">Spain YES</span>
+                    <span>@ 17&cent; ($100 worth = 588 tokens)</span>
+                </div>
+                <p style="margin-top: 15px;"><strong>Problem:</strong> If you change your mind and want to bet on France instead, you must:</p>
+                <ol style="margin-left: 20px; color: #4a5568;">
+                    <li>Sell Spain YES on the order book (might have slippage)</li>
+                    <li>Use the USDC to buy France YES</li>
+                </ol>
+                <p style="margin-top: 10px; color: #e53e3e;"><strong>No direct conversion possible!</strong></p>
+            </div>
+
+            <h3>The Core Issue</h3>
+            <table class="comparison-table">
+                <tr>
+                    <th>Model</th>
+                    <th>Can Convert Positions?</th>
+                    <th>Stuck Inventory?</th>
+                </tr>
+                <tr>
+                    <td>Grouped Binary (Nostra now)</td>
+                    <td><span class="status-no">No</span></td>
+                    <td><span class="status-no">Yes - Major Issue</span></td>
+                </tr>
+                <tr>
+                    <td>CTF Multi-Outcome</td>
+                    <td><span class="status-yes">Yes (via merge)</span></td>
+                    <td><span class="status-yes">No</span></td>
+                </tr>
+                <tr>
+                    <td>Grouped Binary + NegRisk</td>
+                    <td><span class="status-yes">Yes (via adapter)</span></td>
+                    <td><span class="status-yes">No</span></td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- Section B2: The Key Insight -->
+        <div class="card">
+            <h2>B2. The Key Insight: NO Token Equivalence (NegRisk = Negative Risk)</h2>
+
+            <div class="highlight">
+                <h3>Mathematical Equivalence</h3>
+                <p>In a mutually exclusive market (only ONE team can win), all NO tokens have a special property:</p>
+                <p style="font-size: 1.2rem; margin-top: 15px;"><strong>If Spain wins &rarr; Spain NO = $0, but France NO = $1, Brazil NO = $1, etc.</strong></p>
+                <p style="font-size: 1.2rem;"><strong>If France wins &rarr; France NO = $0, but Spain NO = $1, Brazil NO = $1, etc.</strong></p>
+            </div>
+
+            <h3>마법의 공식 (The Magic Formula)</h3>
+            <p>N개 팀이 있는 상호 배타적 시장에서:</p>
+
+            <div class="formula-diagram">
+                <div class="formula-title">🎯 NO 토큰 보유 시나리오</div>
+
+                <div class="formula-row">
+                    <span class="formula-token no-token">🇪🇸 스페인 NO</span>
+                    <span class="formula-operator">+</span>
+                    <span class="formula-token no-token">🇫🇷 프랑스 NO</span>
+                    <span class="formula-operator">+</span>
+                    <span class="formula-token no-token">🇧🇷 브라질 NO</span>
+                    <span class="formula-operator">+</span>
+                    <span style="color: #718096;">... (모든 N개 팀)</span>
+                </div>
+
+                <div style="text-align: center; margin: 20px 0; padding: 15px; background: white; border-radius: 8px;">
+                    <div style="margin-bottom: 10px; color: #4a5568;">
+                        <strong>누가 이기든 상관없이:</strong>
+                    </div>
+                    <div style="display: flex; justify-content: center; gap: 20px; flex-wrap: wrap;">
+                        <div style="text-align: center;">
+                            <div style="font-size: 0.85rem; color: #718096;">우승팀 NO</div>
+                            <div style="font-size: 1.2rem; font-weight: 700; color: #e53e3e;">= $0</div>
+                        </div>
+                        <div style="text-align: center;">
+                            <div style="font-size: 0.85rem; color: #718096;">다른 팀들 NO</div>
+                            <div style="font-size: 1.2rem; font-weight: 700; color: #38a169;">= 각 $1</div>
+                        </div>
+                        <div style="text-align: center;">
+                            <div style="font-size: 0.85rem; color: #718096;">총 가치</div>
+                            <div style="font-size: 1.2rem; font-weight: 700; color: #3182ce;">= $(N-1)</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="formula-result">
+                    ✨ <strong>N개의 NO 토큰 (각 팀당 1개) = $(N-1) 보장</strong>
+                </div>
+            </div>
+
+            <h3>Concrete Example: 5 Teams</h3>
+            <div class="example-box">
+                <p><strong>Setup:</strong> World Cup with 5 teams (Spain, France, Brazil, Argentina, England)</p>
+                <p><strong>You hold:</strong> 1 NO token for each team (5 total)</p>
+
+                <div class="math-box">
+<span class="comment">// If Spain wins:</span>
+Spain NO = <span class="value">$0</span>
+France NO = <span class="value">$1</span>
+Brazil NO = <span class="value">$1</span>
+Argentina NO = <span class="value">$1</span>
+England NO = <span class="value">$1</span>
+<span class="keyword">Total = $4</span>
+
+<span class="comment">// If France wins:</span>
+Spain NO = <span class="value">$1</span>
+France NO = <span class="value">$0</span>
+Brazil NO = <span class="value">$1</span>
+Argentina NO = <span class="value">$1</span>
+England NO = <span class="value">$1</span>
+<span class="keyword">Total = $4</span>
+
+<span class="comment">// No matter who wins: Total = $4 (always!)</span>
+                </div>
+
+                <p style="margin-top: 15px;"><strong>Insight:</strong> 5 NO tokens = $4 guaranteed = $(N-1)</p>
+            </div>
+        </div>
+
+        <!-- Section B3: NegRisk Conversion -->
+        <div class="card">
+            <h2>B3. NegRisk 전환: 작동 원리</h2>
+
+            <p>NegRisk는 수학적 등가성을 활용하여 <strong>포지션 전환</strong>을 가능하게 합니다:</p>
+
+            <h3>전환 공식 (Conversion Formula)</h3>
+            <div class="formula-diagram">
+                <div class="formula-title">🔄 NO → YES 전환</div>
+
+                <div style="padding: 15px; background: white; border-radius: 8px; margin-bottom: 15px;">
+                    <div style="font-size: 0.9rem; color: #718096; margin-bottom: 10px;">보유 중:</div>
+                    <div class="formula-row">
+                        <span class="formula-token no-token">🇪🇸 스페인 NO</span>
+                        <span class="formula-operator">+</span>
+                        <span class="formula-token no-token">🇫🇷 프랑스 NO</span>
+                        <span class="formula-operator">+</span>
+                        <span class="formula-token no-token">🇧🇷 브라질 NO</span>
+                        <span class="formula-operator">+</span>
+                        <span class="formula-token no-token">🇦🇷 아르헨 NO</span>
+                    </div>
+                    <div style="font-size: 0.9rem; color: #718096; margin-top: 15px;">원하는 것:</div>
+                    <div class="formula-row">
+                        <span class="formula-token yes-token">🏴󠁧󠁢󠁥󠁮󠁧󠁿 잉글랜드 YES</span>
+                    </div>
+                </div>
+
+                <div style="padding: 15px; background: rgba(102, 126, 234, 0.1); border-radius: 8px; border-left: 4px solid #667eea;">
+                    <div style="font-weight: 600; color: #2d3748; margin-bottom: 10px;">✨ 전환 로직:</div>
+                    <div style="color: #4a5568;">
+                        4개의 NO 토큰 (잉글랜드 제외) = <strong style="color: #3182ce;">$3 보장 가치</strong><br>
+                        = <span style="color: #38a169; font-weight: 600;">1 잉글랜드 YES</span> + 잔여 가치
+                    </div>
+                </div>
+
+                <div class="formula-result" style="margin-top: 15px;">
+                    <div style="margin-bottom: 8px;"><strong>결과:</strong></div>
+                    <div style="display: flex; gap: 20px; justify-content: center; flex-wrap: wrap;">
+                        <div>🔥 소각: 스페인, 프랑스, 브라질, 아르헨티나 NO</div>
+                        <div>✅ 수령: 잉글랜드 YES + USDC</div>
+                    </div>
+                </div>
+            </div>
+
+            <h3>Step-by-Step Example</h3>
+            <div class="example-box">
+                <h4>Scenario: Convert Spain YES to France YES</h4>
+                <p><strong>Current prices:</strong> Spain 20%, France 15%, Brazil 25%, Argentina 30%, England 10%</p>
+
+                <p><strong>Step 1: You have 100 Spain YES tokens</strong></p>
+
+                <p><strong>Step 2: Sell Spain YES, Buy all other NO tokens</strong></p>
+                <div class="math-box">
+<span class="comment">// Sell Spain YES @ 20&cent;</span>
+100 Spain YES &rarr; <span class="value">$20 USDC</span>
+
+<span class="comment">// Buy NO tokens for other teams</span>
+<span class="comment">// NO price = 1 - YES price</span>
+France NO @ 85&cent;:   $20 &rarr; <span class="value">23.5 tokens</span>
+Brazil NO @ 75&cent;:   ...
+Argentina NO @ 70&cent;: ...
+England NO @ 90&cent;:  ...
+                </div>
+
+                <p><strong>Step 3: NegRisk Converts NO tokens to YES</strong></p>
+                <div class="math-box">
+<span class="comment">// You hold NO for: France, Brazil, Argentina, England</span>
+<span class="comment">// You want: France YES</span>
+
+<span class="keyword">NegRisk Magic:</span>
+Brazil NO + Argentina NO + England NO = <span class="value">$3 equivalent</span>
+                                       = France YES + USDC
+
+<span class="comment">// Result:</span>
+You get: France YES tokens + leftover USDC
+         (France NO was already yours, separate)
+                </div>
+            </div>
+
+            <h3>왜 이것이 작동하는가 (Why This Works)</h3>
+            <div class="grid-2">
+                <div class="mini-card">
+                    <h4>❌ NegRisk 없이</h4>
+                    <p>스페인 YES → 오더북에서 판매 → USDC → 프랑스 YES 구매</p>
+                    <p style="color: #e53e3e;"><strong>문제:</strong> 양쪽 거래에서 슬리피지, 유동성에 의존</p>
+                </div>
+                <div class="mini-card">
+                    <h4>✅ NegRisk 사용 시</h4>
+                    <p>스페인 YES → 어댑터로 전환 → 프랑스 YES</p>
+                    <p style="color: #38a169;"><strong>장점:</strong> 수학적 전환, 전환 단계에서 슬리피지 없음</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section B4: Architecture -->
+        <div class="card">
+            <h2>B4. NegRisk 아키텍처</h2>
+
+            <div class="negrisk-arch">
+                <!-- User Interface Layer -->
+                <div class="arch-layer user-layer">
+                    <div class="arch-layer-title">
+                        <span>👤</span>
+                        <span>사용자 인터페이스 (User Interface)</span>
+                    </div>
+                    <div class="arch-layer-content">
+                        <div class="arch-func-box" style="background: rgba(49, 130, 206, 0.15);">
+                            "내 스페인 YES를 프랑스 YES로 전환해줘"
+                        </div>
+                    </div>
+                </div>
+
+                <div class="arch-arrow">⬇️</div>
+
+                <!-- NegRisk Adapter Layer -->
+                <div class="arch-layer adapter-layer">
+                    <div class="arch-layer-title">
+                        <span>🔄</span>
+                        <span>NegRisk 어댑터 (NegRisk Adapter)</span>
+                    </div>
+                    <div class="arch-layer-content">
+                        <div class="arch-func-box">splitPosition()</div>
+                        <div class="arch-func-box">mergePositions()</div>
+                        <div class="arch-func-box">convertPosition()</div>
+                    </div>
+                    <div class="arch-note" style="margin-top: 15px;">
+                        <strong>핵심 기능:</strong> USDC ↔ NO 토큰 ↔ YES 토큰 변환
+                    </div>
+                    <div class="arch-layer-content" style="margin-top: 15px;">
+                        <div class="arch-func-box" style="background: rgba(237, 137, 54, 0.2);">
+                            Wrapped Collateral (wUSDC) - 원자적 변환 지원
+                        </div>
+                    </div>
+                </div>
+
+                <div class="arch-arrow">⬇️</div>
+
+                <!-- Grouped Binary Markets Layer -->
+                <div class="arch-layer market-layer">
+                    <div class="arch-layer-title">
+                        <span>📊</span>
+                        <span>그룹형 바이너리 마켓 (Grouped Binary Markets)</span>
+                    </div>
+                    <div class="separate-conditions">
+                        <div class="separate-condition-box">
+                            <div class="cond-id">condId_1</div>
+                            <div class="country">🇪🇸 스페인</div>
+                            <div class="yes-no-row">
+                                <span class="yes">YES</span>
+                                <span class="no">NO</span>
+                            </div>
+                        </div>
+                        <div class="separate-condition-box">
+                            <div class="cond-id">condId_2</div>
+                            <div class="country">🇫🇷 프랑스</div>
+                            <div class="yes-no-row">
+                                <span class="yes">YES</span>
+                                <span class="no">NO</span>
+                            </div>
+                        </div>
+                        <div class="separate-condition-box">
+                            <div class="cond-id">condId_3</div>
+                            <div class="country">🇧🇷 브라질</div>
+                            <div class="yes-no-row">
+                                <span class="yes">YES</span>
+                                <span class="no">NO</span>
+                            </div>
+                        </div>
+                        <div class="separate-condition-box">
+                            <div class="cond-id">condId_4</div>
+                            <div class="country">🇦🇷 아르헨</div>
+                            <div class="yes-no-row">
+                                <span class="yes">YES</span>
+                                <span class="no">NO</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="arch-note">
+                        모든 마켓이 <code style="background: #c6f6d5; padding: 2px 6px; border-radius: 4px;">negRiskMarketId</code>로 연결됨
+                    </div>
+                </div>
+
+                <div class="arch-arrow">⬇️</div>
+
+                <!-- CTF Layer -->
+                <div class="arch-layer ctf-layer">
+                    <div class="arch-layer-title">
+                        <span>🔗</span>
+                        <span>Conditional Tokens Framework (CTF)</span>
+                    </div>
+                    <div class="arch-note" style="font-size: 0.9rem;">
+                        모든 토큰 작업의 기반 레이어 (Base layer for all token operations)
+                    </div>
+                </div>
+            </div>
+
+            <h3>핵심 컨트랙트 (Key Contracts)</h3>
+            <table class="comparison-table">
+                <tr>
+                    <th>컨트랙트</th>
+                    <th>목적</th>
+                    <th>Nostra 보유?</th>
+                </tr>
+                <tr>
+                    <td><strong>NegRiskAdapter</strong></td>
+                    <td>Main conversion logic (NO &rarr; YES)</td>
+                    <td><span class="status-no">No</span></td>
+                </tr>
+                <tr>
+                    <td><strong>NegRiskOperator</strong></td>
+                    <td>Admin functions, oracle integration</td>
+                    <td><span class="status-no">No</span></td>
+                </tr>
+                <tr>
+                    <td><strong>WrappedCollateral</strong></td>
+                    <td>Wrapped USDC for atomic operations</td>
+                    <td><span class="status-no">No</span></td>
+                </tr>
+                <tr>
+                    <td><strong>NegRiskFeeModule</strong></td>
+                    <td>Fee collection on conversions</td>
+                    <td><span class="status-no">No</span></td>
+                </tr>
+                <tr>
+                    <td>ConditionalTokens (CTF)</td>
+                    <td>Base token framework</td>
+                    <td><span class="status-yes">Yes</span></td>
+                </tr>
+                <tr>
+                    <td>MarketFactory</td>
+                    <td>Create binary markets</td>
+                    <td><span class="status-yes">Yes</span></td>
+                </tr>
+                <tr>
+                    <td>CTFExchange</td>
+                    <td>Order book trading</td>
+                    <td><span class="status-yes">Yes</span></td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- Section B5: What Nostra Needs -->
+        <div class="card">
+            <h2>B5. NegRisk 구현을 위해 필요한 것</h2>
+
+            <ul class="implementation-list">
+                <li>
+                    <span class="number">1</span>
+                    <div>
+                        <strong>WrappedCollateral.sol</strong>
+                        <p style="color: #718096; font-size: 0.9rem;">ERC20 wrapper around USDC for internal accounting</p>
+                    </div>
+                    <span class="difficulty difficulty-easy">Easy</span>
+                </li>
+                <li>
+                    <span class="number">2</span>
+                    <div>
+                        <strong>NegRiskAdapter.sol</strong>
+                        <p style="color: #718096; font-size: 0.9rem;">Core conversion logic: splitPosition, mergePositions, convertPosition</p>
+                    </div>
+                    <span class="difficulty difficulty-hard">Hard</span>
+                </li>
+                <li>
+                    <span class="number">3</span>
+                    <div>
+                        <strong>NegRiskOperator.sol</strong>
+                        <p style="color: #718096; font-size: 0.9rem;">Market group management, links binary markets together</p>
+                    </div>
+                    <span class="difficulty difficulty-medium">Medium</span>
+                </li>
+                <li>
+                    <span class="number">4</span>
+                    <div>
+                        <strong>Database: negRiskMarketId field</strong>
+                        <p style="color: #718096; font-size: 0.9rem;">Link markets in the same group</p>
+                    </div>
+                    <span class="difficulty difficulty-easy">Easy</span>
+                </li>
+                <li>
+                    <span class="number">5</span>
+                    <div>
+                        <strong>API: /api/negrisk/convert endpoint</strong>
+                        <p style="color: #718096; font-size: 0.9rem;">Handle conversion requests from frontend</p>
+                    </div>
+                    <span class="difficulty difficulty-medium">Medium</span>
+                </li>
+                <li>
+                    <span class="number">6</span>
+                    <div>
+                        <strong>Frontend: Convert Position UI</strong>
+                        <p style="color: #718096; font-size: 0.9rem;">Button to convert between outcomes in the same group</p>
+                    </div>
+                    <span class="difficulty difficulty-medium">Medium</span>
+                </li>
+            </ul>
+
+            <h3>Estimated Effort</h3>
+            <table class="comparison-table">
+                <tr>
+                    <th>Component</th>
+                    <th>Time</th>
+                    <th>Complexity</th>
+                </tr>
+                <tr>
+                    <td>Smart Contracts (1-3)</td>
+                    <td>2-3 weeks</td>
+                    <td>High (security critical)</td>
+                </tr>
+                <tr>
+                    <td>Backend API (4-5)</td>
+                    <td>3-5 days</td>
+                    <td>Medium</td>
+                </tr>
+                <tr>
+                    <td>Frontend UI (6)</td>
+                    <td>3-5 days</td>
+                    <td>Medium</td>
+                </tr>
+                <tr>
+                    <td>Testing & Audit</td>
+                    <td>2-4 weeks</td>
+                    <td>Critical</td>
+                </tr>
+                <tr>
+                    <td><strong>Total</strong></td>
+                    <td><strong>6-10 weeks</strong></td>
+                    <td></td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- Section B6: Alternative -->
+        <div class="card">
+            <h2>B6. Alternative: Just Use Arbitrage Bots</h2>
+
+            <p>Before implementing NegRisk, consider if you really need it:</p>
+
+            <div class="grid-2">
+                <div class="mini-card">
+                    <h4>NegRisk Adapter</h4>
+                    <ul style="margin-left: 20px; color: #4a5568;">
+                        <li>Mechanical position conversion</li>
+                        <li>No slippage on conversion</li>
+                        <li>Complex implementation</li>
+                        <li>6-10 weeks development</li>
+                        <li>Requires security audit</li>
+                    </ul>
+                </div>
+                <div class="mini-card">
+                    <h4>Arbitrage Bots (Current)</h4>
+                    <ul style="margin-left: 20px; color: #4a5568;">
+                        <li>Economic position balancing</li>
+                        <li>Some slippage possible</li>
+                        <li>Simple implementation</li>
+                        <li>Already working</li>
+                        <li>No additional audit needed</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="example-box">
+                <h4>When to Implement NegRisk?</h4>
+                <ul style="margin-left: 20px; color: #4a5568;">
+                    <li><strong>High volume:</strong> When conversion demand justifies the complexity</li>
+                    <li><strong>User complaints:</strong> When stuck inventory becomes a major issue</li>
+                    <li><strong>Competitive pressure:</strong> When users demand Polymarket-level features</li>
+                    <li><strong>Capital efficiency:</strong> When large traders need atomic conversions</li>
+                </ul>
+            </div>
+        </div>
+
+        </div><!-- End of part-negrisk -->
+
+        <!-- Summary -->
+        <div class="card summary-box">
+            <h2>Summary</h2>
+            <ul style="margin-bottom: 20px;">
+                <li><strong>PART A - CTF Multi-Outcome:</strong> Pure multi-outcome with single conditionId, native split/merge</li>
+                <li><strong>PART B - NegRisk Adapter:</strong> Links grouped binary markets via NO token equivalence</li>
+            </ul>
+            <h3 style="color: white; border-bottom: 1px solid rgba(255,255,255,0.3); padding-bottom: 10px; margin-bottom: 15px;">Key Comparisons</h3>
+            <ul>
+                <li><strong>CTF Multi-Outcome:</strong> Sum = 100% (mechanical), single conditionId, complex exchange needed</li>
+                <li><strong>NegRisk:</strong> Sum ≈ 100% (economic), separate conditionIds + negRiskMarketId, adapter layer</li>
+                <li><strong>Nostra now:</strong> Grouped Binary only (no conversion mechanism)</li>
+                <li><strong>Polymarket:</strong> Grouped Binary + NegRisk (position conversion via adapter)</li>
+            </ul>
+            <h3 style="color: white; border-bottom: 1px solid rgba(255,255,255,0.3); padding-bottom: 10px; margin: 20px 0 15px 0;">Implementation Options</h3>
+            <ul>
+                <li><strong>Option 1:</strong> Implement CTF Multi-Outcome (use existing createMultipleChoiceMarket)</li>
+                <li><strong>Option 2:</strong> Implement NegRisk Adapter (6-10 weeks, security audit required)</li>
+                <li><strong>Option 3:</strong> Continue with arbitrage bots (current approach)</li>
+            </ul>
+        </div>
+
+        <!-- Gamma API -->
+        <div class="card">
+            <h2>Appendix: What is Gamma API?</h2>
+
+            <p><code>gamma-api.polymarket.com</code> is Polymarket's public REST API for market data.</p>
+
+            <div class="math-box">
+<span class="comment">// Example: Get World Cup market data</span>
+GET https://gamma-api.polymarket.com/events?slug=2026-fifa-world-cup-winner-595
+
+<span class="comment">// Response includes:</span>
+{
+  "markets": [
+    {
+      "question": "Will Spain win the 2026 FIFA World Cup?",
+      "conditionId": "<span class="value">0x7976b8db...</span>",
+      "negRiskMarketId": "<span class="value">0xb5c32a9a...</span>",  <span class="comment">// Shared!</span>
+      "tokens": [
+        { "outcome": "Yes", "tokenId": "<span class="value">439437288...</span>" },
+        { "outcome": "No", "tokenId": "<span class="value">112680630...</span>" }
+      ]
+    },
+    ...
+  ]
+}
+            </div>
+
+            <p><strong>Nostra equivalent:</strong> <code>/api/markets</code>, <code>/api/market-groups</code></p>
+        </div>
+
+        <p style="text-align: center; color: #718096; margin-top: 30px;">
+            Nostra Design Document | Created: December 2024
+        </p>
+    </div>
+</body>
+</html>
