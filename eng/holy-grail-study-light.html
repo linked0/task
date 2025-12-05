@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Holy Grail of Crypto Privacy - EFL Study Guide</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+KR:wght@400;500;600&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --bg: #fafafa;
+            --surface: #ffffff;
+            --border: #e5e7eb;
+            --text: #1f2937;
+            --text-muted: #6b7280;
+            --accent: #2563eb;
+            --success: #16a34a;
+            --warning: #d97706;
+            --purple: #7c3aed;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', 'Noto Sans KR', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.8;
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 2px solid var(--border);
+        }
+
+        h1 {
+            font-size: 1.8rem;
+            color: var(--accent);
+            margin-bottom: 0.5rem;
+        }
+
+        .subtitle {
+            color: var(--text-muted);
+        }
+
+        .sentence-block {
+            background: var(--surface);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border: 1px solid var(--border);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        }
+
+        .english {
+            font-size: 1.05rem;
+            margin-bottom: 0.75rem;
+            color: var(--text);
+        }
+
+        .korean {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            margin-bottom: 0.75rem;
+            padding-left: 1rem;
+            border-left: 3px solid var(--purple);
+        }
+
+        .grammar-box {
+            background: #eff6ff;
+            border-radius: 8px;
+            padding: 1rem;
+            margin-top: 0.75rem;
+        }
+
+        .grammar-title {
+            font-weight: 600;
+            color: var(--accent);
+            margin-bottom: 0.5rem;
+            font-size: 0.85rem;
+        }
+
+        .grammar-content {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .grammar-content strong {
+            color: var(--warning);
+        }
+
+        .vocab {
+            display: inline-block;
+            background: #f3e8ff;
+            padding: 0.15rem 0.4rem;
+            border-radius: 4px;
+            margin: 0.2rem;
+            font-size: 0.8rem;
+            color: var(--purple);
+        }
+
+        .section-title {
+            font-size: 1.3rem;
+            margin: 2rem 0 1rem;
+            color: var(--accent);
+            border-bottom: 2px solid var(--accent);
+            padding-bottom: 0.5rem;
+        }
+
+        .speaker {
+            display: inline-block;
+            background: var(--accent);
+            color: white;
+            padding: 0.15rem 0.5rem;
+            border-radius: 4px;
+            font-weight: 600;
+            font-size: 0.8rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .speaker.rand {
+            background: var(--purple);
+        }
+
+        .timestamp {
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            margin-left: 0.5rem;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <h1>🔐 The Holy Grail of Crypto Privacy</h1>
+            <p class="subtitle">Rand Hindi, Zama Co-Founder | EFL Study Guide (Part 1/3)</p>
+        </header>
+
+        <h2 class="section-title">Part 1: Introduction (0:00 - 10:00)</h2>
+
+        <div class="sentence-block">
+            <span class="speaker rand">Rand</span><span class="timestamp">[0:00]</span>
+            <p class="english">"It'll feel just like using Ethereum, right? For developers, it'll feel like just like
+                building for Ethereum."</p>
+            <p class="korean">📝 "이더리움을 사용하는 것처럼 느껴질 거예요. 개발자들에게는 이더리움용으로 개발하는 것과 똑같이 느껴질 겁니다."</p>
+            <div class="grammar-box">
+                <div class="grammar-title">📖 "It'll feel just like + V-ing"</div>
+                <div class="grammar-content"><strong>~처럼 느껴질 것이다</strong>. 유사성을 표현할 때 사용. <span class="vocab">feel like
+                        = ~처럼 느끼다</span></div>
+            </div>
+        </div>
+
+        <div class="sentence-block">
+            <span class="speaker rand">Rand</span><span class="timestamp">[0:03]</span>
+            <p class="english">"Everything is in Solidity and you're pushing your contract to Ethereum. For users,
+                everything's going to feel like Ethereum. You're using a wallet to make a transaction to Ethereum."</p>
+            <p class="korean">📝 "모든 것이 솔리디티로 되어 있고 컨트랙트를 이더리움에 푸시합니다. 사용자에게는 모든 것이 이더리움처럼 느껴질 겁니다. 지갑을 사용해서 이더리움에 트랜잭션을
+                만드는 거죠."</p>
+            <div class="grammar-box">
+                <div class="grammar-title">📖 "Everything is going to feel like..."</div>
+                <div class="grammar-content"><strong>be going to + 동사원형</strong>: 미래 예측. <span class="vocab">push =
+                        (코드를) 배포하다</span></div>
+            </div>
+        </div>
+
+        <div class="sentence-block">
+            <span class="speaker rand">Rand</span><span class="timestamp">[0:19]</span>
+            <p class="english">"And that's really how we thought about this, right? We don't want people to use
+                something else. We want people to use Ethereum confidentially."</p>
+            <p class="korean">📝 "그게 정말 우리가 이것에 대해 생각한 방식이에요. 사람들이 다른 것을 사용하는 걸 원하지 않아요. 사람들이 기밀적으로 이더리움을 사용하길 원합니다."
+            </p>
+            <div class="grammar-box">
+                <div class="grammar-title">📖 "That's how we thought about this"</div>
+                <div class="grammar-content"><strong>That's how/what/why...</strong>: 설명이나 정당화에 사용. <span
+                        class="vocab">confidentially = 기밀적으로</span></div>
+            </div>
+        </div>
+
+        <div class="sentence-block">
+            <span class="speaker">Ryan</span><span class="timestamp">[0:24]</span>
+            <p class="english">"Rand, I think everyone listening to Bankless knows that crypto has a privacy problem. We
+                want privacy. We don't have it yet."</p>
+            <p class="korean">📝 "Rand, Bankless를 듣는 모든 사람이 암호화폐에 프라이버시 문제가 있다는 걸 안다고 생각해요. 우리는 프라이버시를 원합니다. 아직 없죠."</p>
+            <div class="grammar-box">
+                <div class="grammar-title">📖 "I think everyone... knows that..."</div>
+                <div class="grammar-content"><strong>that절</strong>: know의 목적어로 사용. <span class="vocab">privacy problem
+                        = 프라이버시 문제</span></div>
+            </div>
+        </div>
+
+        <div class="sentence-block">
+            <span class="speaker">Ryan</span><span class="timestamp">[0:24]</span>
+            <p class="english">"Here's how you put it in a recent tweet. You said, go to anyone on the street and ask
+                them to show you their bank account. That's blockchain today. It's obvious we need confidentiality."</p>
+            <p class="korean">📝 "최근 트윗에서 이렇게 표현하셨죠. 길거리에서 아무나 붙잡고 은행 계좌를 보여달라고 하라고요. 그게 오늘날 블록체인입니다. 기밀성이 필요하다는 건
+                명백합니다."</p>
+            <div class="grammar-box">
+                <div class="grammar-title">📖 "Here's how you put it"</div>
+                <div class="grammar-content"><strong>Here's how/what...</strong>: 인용이나 설명 도입. <strong>put it</strong> =
+                    표현하다. <span class="vocab">It's obvious (that) = ~은 명백하다</span></div>
+            </div>
+        </div>
+
+        <div class="sentence-block">
+            <span class="speaker rand">Rand</span><span class="timestamp">[0:47]</span>
+            <p class="english">"Well, I think if you look at the history of blockchain, maybe the first thing we have to
+                understand is why is data public in the first place?"</p>
+            <p class="korean">📝 "블록체인의 역사를 보면, 아마 우리가 먼저 이해해야 할 것은 왜 처음부터 데이터가 공개되어 있느냐는 것입니다."</p>
+            <div class="grammar-box">
+                <div class="grammar-title">📖 "in the first place"</div>
+                <div class="grammar-content"><strong>in the first place</strong> = 처음부터, 애초에. 근본적인 이유를 물을 때 사용. <span
+                        class="vocab">the first thing = 첫 번째로</span></div>
+            </div>
+        </div>
+
+        <div class="sentence-block">
+            <span class="speaker rand">Rand</span><span class="timestamp">[0:47]</span>
+            <p class="english">"The reason why data is public on a public blockchain is because you want public
+                verifiability. If you want anybody to be able to recompute the states, they need to be able to use and
+                see the data that was part of computing that state."</p>
+            <p class="korean">📝 "퍼블릭 블록체인에서 데이터가 공개되는 이유는 공개 검증가능성을 원하기 때문입니다. 누구나 상태를 재계산할 수 있게 하려면, 그 상태를 계산하는 데 사용된
+                데이터를 보고 사용할 수 있어야 합니다."</p>
+            <div class="grammar-box">
+                <div class="grammar-title">📖 "The reason why... is because..."</div>
+                <div class="grammar-content">인과관계 설명. 격식체에서는 "The reason is that..."이 더 정확함. <span
+                        class="vocab">verifiability = 검증가능성</span> <span class="vocab">recompute = 재계산하다</span></div>
+            </div>
+        </div>
+
+        <div class="sentence-block">
+            <span class="speaker rand">Rand</span><span class="timestamp">[0:47]</span>
+            <p class="english">"And so there was really no other way if you wanted decentralization and public
+                verifiability, but to make the data public."</p>
+            <p class="korean">📝 "그래서 탈중앙화와 공개 검증가능성을 원한다면, 데이터를 공개하는 것 외에는 정말 다른 방법이 없었습니다."</p>
+            <div class="grammar-box">
+                <div class="grammar-title">📖 "there was no other way but to..."</div>
+                <div class="grammar-content"><strong>no other way but to + 동사원형</strong> = ~하는 것 외에는 다른 방법이 없다. <span
+                        class="vocab">decentralization = 탈중앙화</span></div>
+            </div>
+        </div>
+
+        <div class="sentence-block">
+            <span class="speaker rand">Rand</span><span class="timestamp">[0:47]</span>
+            <p class="english">"This was never a feature of blockchain, right? It was kind of like an artifact of not
+                having homomorphic encryption in these techniques 15 years ago."</p>
+            <p class="korean">📝 "이건 블록체인의 기능이 아니었어요. 15년 전에 이런 기술에 동형암호가 없었던 것의 부산물 같은 거였죠."</p>
+            <div class="grammar-box">
+                <div class="grammar-title">📖 "an artifact of..."</div>
+                <div class="grammar-content"><strong>artifact</strong> = 부산물 (의도하지 않은 결과). 기술 분야에서 자주 사용. <span
+                        class="vocab">homomorphic encryption = 동형암호</span></div>
+            </div>
+        </div>
+
+        <div class="sentence-block">
+            <span class="speaker rand">Rand</span><span class="timestamp">[0:47]</span>
+            <p class="english">"But what you really want is public verifiability. And I think there are many, many
+                attempts to doing that."</p>
+            <p class="korean">📝 "하지만 정말 원하는 건 공개 검증가능성입니다. 그리고 그것을 하려는 많은 시도가 있다고 생각합니다."</p>
+            <div class="grammar-box">
+                <div class="grammar-title">📖 "What you really want is..."</div>
+                <div class="grammar-content"><strong>What절 주어</strong>: 강조 구문. "당신이 정말 원하는 것은..."</div>
+            </div>
+        </div>
+
+        <h2 class="section-title">Part 2: Privacy Evolution (1:30 - 6:00)</h2>
+
+        <div class="sentence-block">
+            <span class="speaker rand">Rand</span><span class="timestamp">[1:44]</span>
+            <p class="english">"So Zcash used zero-knowledge proofs as a way to effectively prove that you had the
+                tokens that you wanted to transfer, right? And so in this case, what you would publicly verify was the
+                proof. You didn't need the data."</p>
+            <p class="korean">📝 "Zcash는 영지식 증명을 사용해서 전송하려는 토큰이 있다는 것을 효과적으로 증명했죠. 이 경우, 공개적으로 검증하는 것은 증명이었어요. 데이터가 필요
+                없었죠."</p>
+            <div class="grammar-box">
+                <div class="grammar-title">📖 "as a way to..."</div>
+                <div class="grammar-content"><strong>as a way to + 동사원형</strong> = ~하는 방법으로. <span
+                        class="vocab">zero-knowledge proofs = 영지식 증명</span> <span class="vocab">transfer = 전송하다</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="sentence-block">
+            <span class="speaker rand">Rand</span><span class="timestamp">[2:05]</span>
+            <p class="english">"But the problem is that you didn't have composability on this proof. So you were stuck
+                with basically just doing confidential transfers."</p>
+            <p class="korean">📝 "하지만 문제는 이 증명에 대한 조합성이 없었다는 겁니다. 그래서 기본적으로 기밀 전송만 하는 데 갇혀 있었죠."</p>
+            <div class="grammar-box">
+                <div class="grammar-title">📖 "you were stuck with..."</div>
+                <div class="grammar-content"><strong>be stuck with</strong> = ~에 갇히다, ~만 할 수밖에 없다. <span
+                        class="vocab">composability = 조합성</span></div>
+            </div>
+        </div>
+
+        <div class="sentence-block">
+            <span class="speaker rand">Rand</span><span class="timestamp">[2:05]</span>
+            <p class="english">"And I think this is why a lot of other people started looking at other techniques like
+                FHE, like multi-party computation, like TEEs, to try and create this shared private state that you could
+                build DeFi on."</p>
+            <p class="korean">📝 "그래서 많은 다른 사람들이 FHE, 다자간 계산, TEE 같은 다른 기술을 살펴보기 시작한 이유라고 생각해요. DeFi를 구축할 수 있는 공유된 프라이빗
+                상태를 만들려고요."</p>
+            <div class="grammar-box">
+                <div class="grammar-title">📖 "This is why..."</div>
+                <div class="grammar-content"><strong>This is why...</strong> = 이것이 ~인 이유이다. 결론이나 설명에 사용. <span
+                        class="vocab">multi-party computation = 다자간 계산</span> <span class="vocab">TEE = 신뢰실행환경</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="sentence-block">
+            <span class="speaker">Ryan</span><span class="timestamp">[2:26]</span>
+            <p class="english">"For the non-cryptographers, Rand just mentioned TEEs and multi-party computation, all of
+                that. Don't worry, we will define those things."</p>
+            <p class="korean">📝 "암호학자가 아닌 분들을 위해, Rand가 방금 TEE와 다자간 계산 등을 언급했는데요. 걱정 마세요, 나중에 정의할 겁니다."</p>
+            <div class="grammar-box">
+                <div class="grammar-title">📖 "For the non-..."</div>
+                <div class="grammar-content"><strong>For the non-X</strong> = X가 아닌 사람들을 위해. 청중 배려 표현. <span
+                        class="vocab">non-cryptographers = 비암호학자들</span></div>
+            </div>
+        </div>
+
+        <div class="sentence-block">
+            <span class="speaker">Ryan</span><span class="timestamp">[2:26]</span>
+            <p class="english">"So I think you're saying, Rand, that the reason we had public blockchains in the first
+                place and they were constructed as such is because we were tech limited. We didn't have the cryptography
+                at the time."</p>
+            <p class="korean">📝 "Rand, 처음에 퍼블릭 블록체인이 그렇게 구축된 이유가 기술적으로 제한되어 있었기 때문이라는 말씀인 것 같아요. 당시에는 암호학이 없었죠."</p>
+            <div class="grammar-box">
+                <div class="grammar-title">📖 "I think you're saying that..."</div>
+                <div class="grammar-content">상대방의 말을 확인할 때 사용. <strong>as such</strong> = 그렇게, 그런 식으로. <span
+                        class="vocab">tech limited = 기술적으로 제한된</span></div>
+            </div>
+        </div>
+
+        <div class="sentence-block">
+            <span class="speaker">Ryan</span><span class="timestamp">[2:26]</span>
+            <p class="english">"I mean, there are a couple of other explanations I can think of. Certainly, Tech Limited
+                is one of them. There's also maybe demand. Maybe there's just not demand for privacy and
+                confidentiality."</p>
+            <p class="korean">📝 "제가 생각할 수 있는 몇 가지 다른 설명이 있어요. 확실히 기술 제한이 그 중 하나죠. 수요 문제도 있을 수 있어요. 프라이버시와 기밀성에 대한 수요가
+                없을 수도 있죠."</p>
+            <div class="grammar-box">
+                <div class="grammar-title">📖 "a couple of other explanations I can think of"</div>
+                <div class="grammar-content">관계절 축약: "that I can think of"에서 that 생략. <span class="vocab">demand =
+                        수요</span></div>
+            </div>
+        </div>
+
+        <div class="sentence-block">
+            <span class="speaker">Ryan</span><span class="timestamp">[2:26]</span>
+            <p class="english">"A third possibility is the regulators wouldn't let us. This is kind of a historical
+                counterfactual I've often thought of, which is the basic idea that if Bitcoin launched in a private way,
+                governments would have strangled it in the crib."</p>
+            <p class="korean">📝 "세 번째 가능성은 규제 당국이 허락하지 않았다는 거예요. 이건 제가 자주 생각한 역사적 반사실인데, 비트코인이 프라이빗하게 출시됐다면 정부가 요람에서 목을
+                졸랐을 거라는 거죠."</p>
+            <div class="grammar-box">
+                <div class="grammar-title">📖 "strangle it in the crib"</div>
+                <div class="grammar-content"><strong>관용어</strong>: 초기 단계에서 죽이다/막다. crib = 요람. <span
+                        class="vocab">counterfactual = 반사실적 가정</span> <span class="vocab">regulators = 규제 당국</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="sentence-block">
+            <span class="speaker rand">Rand</span><span class="timestamp">[3:36]</span>
+            <p class="english">"You know, I think that's a very interesting question. I've been in privacy for a very
+                long time, actually. You know, my previous company was already working on privacy for AI."</p>
+            <p class="korean">📝 "아주 흥미로운 질문이네요. 저는 사실 오랫동안 프라이버시 분야에 있었어요. 이전 회사에서 이미 AI 프라이버시를 연구했거든요."</p>
+            <div class="grammar-box">
+                <div class="grammar-title">📖 "I've been in X for a very long time"</div>
+                <div class="grammar-content"><strong>현재완료 진행형</strong>: 과거부터 현재까지 계속된 상태. <span class="vocab">be in + 분야
+                        = ~분야에 종사하다</span></div>
+            </div>
+        </div>
+
+        <div class="sentence-block">
+            <span class="speaker rand">Rand</span><span class="timestamp">[3:36]</span>
+            <p class="english">"And nobody really cares about privacy because most of your life isn't publicly visible
+                to other people. When you go to your house and close the door, nobody sees what you're doing inside."
+            </p>
+            <p class="korean">📝 "사실 아무도 프라이버시를 신경 쓰지 않아요. 삶의 대부분이 다른 사람들에게 공개적으로 보이지 않으니까요. 집에 가서 문을 닫으면 안에서 뭘 하는지 아무도
+                못 봐요."</p>
+            <div class="grammar-box">
+                <div class="grammar-title">📖 "Nobody really cares about..."</div>
+                <div class="grammar-content"><strong>Nobody + 긍정 동사</strong> = 아무도 ~하지 않는다. <span class="vocab">publicly
+                        visible = 공개적으로 볼 수 있는</span></div>
+            </div>
+        </div>
+
+        <div class="sentence-block">
+            <span class="speaker rand">Rand</span><span class="timestamp">[4:16]</span>
+            <p class="english">"I think it's not that people didn't want it in blockchain. It's that they didn't really
+                have much of an option."</p>
+            <p class="korean">📝 "블록체인에서 사람들이 원하지 않았던 게 아니라고 생각해요. 선택의 여지가 별로 없었던 거죠."</p>
+            <div class="grammar-box">
+                <div class="grammar-title">📖 "It's not that A, it's that B"</div>
+                <div class="grammar-content"><strong>대비 구문</strong>: A가 아니라 B이다. 오해를 바로잡을 때 사용. <span class="vocab">have
+                        much of an option = 선택의 여지가 있다</span></div>
+            </div>
+        </div>
+
+        <div class="sentence-block">
+            <span class="speaker rand">Rand</span><span class="timestamp">[4:18]</span>
+            <p class="english">"And for a long time, you know, we were told that having anonymous addresses was enough.
+                Clearly, this is no longer true. You go on a website like Arkham, you type your name, you'll see
+                everything that people can find about you on chain."</p>
+            <p class="korean">📝 "오랫동안 익명 주소를 갖는 것만으로 충분하다고 들었어요. 분명히 이건 더 이상 사실이 아니에요. Arkham 같은 웹사이트에 가서 이름을 치면 온체인에서
+                당신에 대해 찾을 수 있는 모든 것을 볼 수 있어요."</p>
+            <div class="grammar-box">
+                <div class="grammar-title">📖 "we were told that..."</div>
+                <div class="grammar-content"><strong>수동태 + that절</strong>: ~라고 들었다. <strong>no longer</strong> = 더 이상
+                    ~아니다. <span class="vocab">anonymous = 익명의</span></div>
+            </div>
+        </div>
+
+        <div class="sentence-block">
+            <span class="speaker rand">Rand</span><span class="timestamp">[4:18]</span>
+            <p class="english">"Like, that's really scary, man. Like, you know, I mean, I come from France, a country
+                where we had 10 crypto kidnappings."</p>
+            <p class="korean">📝 "정말 무섭죠. 저는 암호화폐 납치가 10건이나 있었던 나라인 프랑스에서 왔어요."</p>
+            <div class="grammar-box">
+                <div class="grammar-title">📖 "I come from X, a country where..."</div>
+                <div class="grammar-content"><strong>동격 구문</strong>: X를 부연 설명하는 "a country where..." 추가. <span
+                        class="vocab">kidnapping = 납치</span></div>
+            </div>
+        </div>
+
+        <div class="sentence-block">
+            <span class="speaker rand">Rand</span><span class="timestamp">[4:18]</span>
+            <p class="english">"I think we're getting now to an inflection point where privacy is no longer something
+                that people can afford not to have on blockchains because the amount and volume of assets are such that
+                we need to start taking this seriously."</p>
+            <p class="korean">📝 "지금 변곡점에 도달하고 있다고 생각해요. 자산의 양과 규모가 너무 커져서 프라이버시가 없어도 되는 게 아니라 진지하게 받아들여야 할 때가 됐어요."</p>
+            <div class="grammar-box">
+                <div class="grammar-title">📖 "an inflection point where..."</div>
+                <div class="grammar-content"><strong>inflection point</strong> = 변곡점, 전환점. <strong>can't afford not
+                        to</strong> = ~하지 않을 여유가 없다 (해야만 한다). <span class="vocab">take seriously = 진지하게 받아들이다</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="sentence-block">
+            <span class="speaker rand">Rand</span><span class="timestamp">[4:18]</span>
+            <p class="english">"And of course, you know, finance moving on chain, like there's just no way, there's just
+                no way that a bank is going to use stable coins for bank accounts if your neighbor can see your bank
+                account."</p>
+            <p class="korean">📝 "물론 금융이 온체인으로 옮겨가는데, 이웃이 당신의 은행 계좌를 볼 수 있다면 은행이 스테이블코인을 은행 계좌에 사용할 방법이 전혀 없어요."</p>
+            <div class="grammar-box">
+                <div class="grammar-title">📖 "there's just no way that..."</div>
+                <div class="grammar-content"><strong>강조 부정</strong>: ~할 방법이 전혀 없다. 강한 불가능성 표현. <span
+                        class="vocab">stable coins = 스테이블코인</span></div>
+            </div>
+        </div>
+
+        <div class="sentence-block">
+            <span class="speaker rand">Rand</span><span class="timestamp">[5:23]</span>
+            <p class="english">"I think a good example to illustrate how quickly the mentality can shift around that. If
+                you remember, before Telegram, before Signal, we didn't have any encryption in messages."</p>
+            <p class="korean">📝 "그 주변의 사고방식이 얼마나 빨리 변할 수 있는지 보여주는 좋은 예가 있어요. 기억하신다면, 텔레그램 이전, 시그널 이전에는 메시지에 암호화가 전혀
+                없었어요."</p>
+            <div class="grammar-box">
+                <div class="grammar-title">📖 "a good example to illustrate..."</div>
+                <div class="grammar-content"><strong>to부정사의 형용사적 용법</strong>: ~를 보여주는 예. <span class="vocab">mentality =
+                        사고방식</span> <span class="vocab">shift = 변화하다</span></div>
+            </div>
+        </div>
+
+        <div class="sentence-block">
+            <span class="speaker rand">Rand</span><span class="timestamp">[5:23]</span>
+            <p class="english">"And then Telegram came about around about the time of Snowden made the revelations in
+                2013."</p>
+            <p class="korean">📝 "그리고 2013년 스노든이 폭로했을 때쯤 텔레그램이 나왔어요."</p>
+            <div class="grammar-box">
+                <div class="grammar-title">📖 "came about"</div>
+                <div class="grammar-content"><strong>come about</strong> = 발생하다, 일어나다. <span class="vocab">revelations =
+                        폭로</span></div>
+            </div>
+        </div>
+
+        <div class="sentence-block">
+            <span class="speaker rand">Rand</span><span class="timestamp">[5:23]</span>
+            <p class="english">"And now it would be unthinkable to use a messaging app that isn't encrypted."</p>
+            <p class="korean">📝 "이제 암호화되지 않은 메시징 앱을 사용하는 것은 상상할 수 없게 됐어요."</p>
+            <div class="grammar-box">
+                <div class="grammar-title">📖 "It would be unthinkable to..."</div>
+                <div class="grammar-content"><strong>가정법</strong>: ~하는 것은 생각할 수 없을 것이다. <span class="vocab">unthinkable
+                        = 상상할 수 없는</span></div>
+            </div>
+        </div>
+
+        <div class="sentence-block">
+            <span class="speaker rand">Rand</span><span class="timestamp">[6:09]</span>
+            <p class="english">"But nobody asked for it. SMS text messages have existed since the 80s. Nobody was asking
+                for privacy until people realized, oh, I can have the exact same service, but private. Why would I not
+                do that?"</p>
+            <p class="korean">📝 "하지만 아무도 요청하지 않았어요. SMS 문자 메시지는 80년대부터 있었죠. 사람들이 '똑같은 서비스인데 프라이빗하게 할 수 있네. 왜 안 하겠어?'라고
+                깨닫기 전까지 아무도 프라이버시를 요청하지 않았어요."</p>
+            <div class="grammar-box">
+                <div class="grammar-title">📖 "Why would I not do that?"</div>
+                <div class="grammar-content"><strong>수사적 의문문</strong>: 당연히 해야 한다는 뉘앙스. "안 할 이유가 있겠어?"</div>
+            </div>
+        </div>
+
+        <p style="text-align: center; margin-top: 2rem; color: var(--text-muted);">📚 End of Part 1/3 - Continues with
+            Privacy vs Confidentiality discussion...</p>
+
+    </div>
+</body>
+
+</html>

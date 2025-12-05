@@ -1,0 +1,811 @@
+
+9linked0
+Try Yield Hunter
+CD20 $2,961.27 0.23% CD5 $1,603.80 0.37% 
+Sponsored by
+CoinDeskBTC $92,326.00 -1.10% ETH $3,163.42 -1.23% BNB $903.86 -1.83% SOL $139.46 -3.48% XRP $2.11 -4.04% DOGE $0.15 -2.23% TRX $0.29 2.44% ADA $0.44 -2.25% TON $3.03 10.57% SHIB $0.00 0.99% AVAX $28.30 -0.69% BCH $578.84 -1.71% LINK $14.28 -3.30% LEO $9.68 -0.16% SUI $2.65 -21.81% DOT $7.76 1.42% LTC $102.89 -11.81% NEAR $3.75 1.55% APT $8.30 -0.02% UNI $7.05 1.65% PEPE $0.00 2.04% ICP $7.16 -1.35% DAI $1.00 -0.16% TAO $431.30 -0.26% FET $1.18 2.73% BTC $92,326.00 -1.10% ETH $3,163.42 -1.23% BNB $903.86 -1.83% SOL $139.46 -3.48% XRP $2.11 -4.04% DOGE $0.15 -2.23% TRX $0.29 2.44% ADA $0.44 -2.25% TON $3.03 10.57% SHIB $0.00 0.99% AVAX $28.30 -0.69% BCH $578.84 -1.71% LINK $14.28 -3.30% LEO $9.68 -0.16% SUI $2.65 -21.81% DOT $7.76 1.42% LTC $102.89 -11.81% NEAR $3.75 1.55% APT $8.30 -0.02% UNI $7.05 1.65% PEPE $0.00 2.04% ICP $7.16 -1.35% DAI $1.00 -0.16% TAO $431.30 -0.26% FET $1.18 2.73%
+
+Podcast
+The Holy Grail of Crypto Privacy: Encrypted Ethereum, FHE & Living Forever | Rand Hindi, Zama Co-Founder
+Ethereum is transparent by design, and that’s a problem if you don’t want your entire financial life on display.
+Rand Hindi Rand Hindi  Zama Zama 
+Dec 1, 2025 • 01:29:47
+ 2  0 
+Inside the episode
+Rand:
+[0:00] It'll feel just like using Ethereum, right? For developers, it'll feel like
+
+Rand:
+[0:03] just like billing for Ethereum. Everything is in solidity and you're pushing your contract to Ethereum. For users, everything's going to feel like Ethereum. You're using a wallet to make a transaction to Ethereum. And that's really how we thought about this, right? We don't want people to use something else. We want people to use Ethereum confidentially.
+
+Ryan:
+[0:24] Rand, I think everyone listening to Bankless knows that crypto has a privacy problem. We want privacy. We don't have it yet. Here's how you put it in a recent tweet. You said, go to anyone on the street and ask them to show you their bank account. That's blockchain today. It's obvious we need confidentiality.
+
+Ryan:
+[0:44] Why don't we have privacy yet?
+
+Rand:
+[0:47] Well, I think if you look at the history of blockchain, maybe the first thing we have to understand is why is data public in the first place? The reason why data is public on a public blockchain is because you want public verifiability. If you want anybody to be able to recompute the states, they need to be able to use and see the data that was part of computing that state. And so there was really no other way if you wanted decentralization and public verifiability, but to make the data public. This was never a feature of blockchain, right? It was kind of like an artifact of not having homomorphic encryption in these techniques 15 years ago. But what you really want is public verifiability. And I think there are many, many attempts to doing that. For example, some early privacy protocols like Zcash. Big fan of Zcash. I've been a long-time holder. I'm very happy it's finally happening.
+
+Ryan:
+[1:41] It's finally happening. Right? Ron Paul style, yes.
+
+Rand:
+[1:44] I was right. So Zcash used zero-knowledge proofs as a way to effectively prove that you had the tokens that you wanted to transfer, right? And so in this case, what you would publicly verify was the proof. You didn't need the data. But the problem is that you didn't have composability on this proof.
+
+Rand:
+[2:05] So you were stuck with basically just doing confidential transfers. And I think this is why a lot of other people started looking at other techniques like FHE, like multi-party computation, like TEAS, to try and create this shared private state that you could build DeFi on, that you could build other blockchain applications.
+
+Ryan:
+[2:26] For the non-cryptographers, Rand just mentioned TEs and multi-party computation, all of that. Don't worry, we will define those things. And I hope we will simplify those later in the episode. But let's stick on this for a moment. So I think you're saying, Rand, that the reason we had public blockchains in the first place and they were constructed as such is because we were tech limited. We didn't have the cryptography at the time. I mean, there are a couple of other explanations I can think of. Certainly, Tech Limited is one of them. There's also maybe demand. Maybe there's just not demand for privacy and confidentiality. That's a possibility. A third possibility is the regulators wouldn't let us. This is kind of a sort of a counterfactual, historical counterfactual I've often thought of, which is the basic idea that if Bitcoin launched in a private way, governments would have strangled it in the crib. It would have never been able to rise to the degrees that it is today and get acceptance today. What do you think it is? You think it's all the tech side or do you think there's
+
+Ryan:
+[3:34] a balance of these other two as well?
+
+Rand:
+[3:36] You know, I think that's a very interesting question. I've been in privacy for a very long time, actually. You know, my previous company was already working on privacy for AI. So I've been thinking about this problem of how do you make, you know, services private? And nobody really cares about privacy because most of your life isn't publicly visible to other people. When you go to your house and close the door, nobody sees what you're doing inside. When I'm on my phone, I'm using an app. Everything I'm doing on my phone isn't broadcasted to the public. So it wasn't really something people had to think about because it wasn't something so visible as it is in blockchain.
+
+Rand:
+[4:16] I think it's not that people didn't want it in blockchain.
+
+Rand:
+[4:18] It's that they didn't really have much of an option. And for a long time, you know, we were told that having anonymous addresses was enough. Clearly, this is no longer true. You go on a website like Arkham, you type your name, you'll see everything that people can find about you on chain. Like, that's really scary, man. Like, you know, I mean, I come from France, a country where we had 10 crypto kidnappings. Like, you don't want this data to be public in those instances. I think it's just that we're getting now to an inflection point where, Privacy is no longer something that people can't afford not to have on blockchains because the amount and volume of assets are such that we need to start taking this seriously. And of course, you know, finance moving on chain, like there's just no way, there's just no way that a bank is going to use stable coins for bank accounts if your neighbor can see your bank account. It's just not going to happen. I don't even think it's legal in that sense.
+
+Ryan:
+[5:13] So you think the demand has always been here. We've been more tech limited. Maybe we'll talk about the regulator, kind of the nation state limitations later in the episode.
+
+Rand:
+[5:23] I think a good example to illustrate how quickly the mentality can shift around that. If you remember, before Telegram, before Signal, we didn't have any encryption in messages. When I sent you like a text message over like SMS, this data was not encrypted. So it was completely visible to anybody on the network, effectively. And then Telegram came about around about a time of Snowden made the revelations in 2013. Telegram came and said, hey, you can encrypt your messages. Everybody started adopting it. Then WhatsApp added encryption by default. Then Signal came out. And now it would be unthinkable to use a messaging app that isn't encrypted.
+
+Ryan:
+[6:06] I mean, thank God, right? Thank God for that.
+
+Rand:
+[6:09] But nobody asked it. SMS text messages have existed since the 80s. Nobody was asking for privacy until people realized, oh, I can have the exact same service, but private. Why would I not do that?
+
+Ryan:
+[6:22] And I guess that transformation to end-to-end encryption over our communication, that felt very natural, that felt very organic, that was not stopped in a big way. Yeah, there was a moving of the Overton window. I want to ask about terms here because I've heard you talk about privacy, certainly, but then you also use the term confidentiality. And I think we'll probably come back to these two terms throughout the episode. Are they interchangeable? Is privacy and confidentiality, are they synonyms? Are they basically the same thing? Or is there some distinction between those words I'm missing?
+
+Rand:
+[6:58] So we use, I mean, I use confidentiality more often than privacy because it's a larger set of application. When we talk about privacy, we typically talk about personal data, your bank accounts, your DNA. This is personal data. You want it to be private to you. When we talk about confidentiality, we include data that is not necessarily about someone, but it could still be sensitive. A company is a statement, or maybe, I don't know, like you're playing cards and you want to hide your cards in poker. You need confidentiality for that to even be possible, but it's not technically privacy in the sense of personal data. So confidentiality is just like a bigger, more generic term of which privacy is specifically about personal data.
+
+Ryan:
+[7:42] Okay. So confidentiality is then a superset under which privacy exists. But when you say confidentiality, you're not implying something lesser than privacy. Are you implying that, you know, most parties don't have access to it, so it's non-public, but there are some parties that can access the data. Do you know what I mean?
+
+Rand:
+[8:04] I can see how some, yeah, because something thinks about confidentiality in like a business a setting where it basically means a confidentiality agreement, but the term confidentiality actually means...
+
+Rand:
+[8:15] Just, you know, not public,
+
+Rand:
+[8:17] Effectively. So I use it at least as a superset of privacy.
+
+Ryan:
+[8:22] Okay. And so we might use these as in the episode with the listeners understanding
+
+Ryan:
+[8:25] that we might be, like, use these interchangeably throughout the episode. Now, the reason I wanted to have you on today is because I feel like privacy is having a little bit of a moment right now in crypto. Thank God, which is great. And I think that what you're doing, we'll certainly get into what you're doing, but But I want to frame this out because the reason we're doing this episode is because I think, Rand Hindi, you are trying to bring privacy to every Ethereum transaction. At least if I said that, if I made that claim, Rand, Izama, your project, are you seriously planning and trying to bring privacy to every single Ethereum transaction? If I said that, how correct is that statement? it.
+
+Rand:
+[9:09] It's correct, just it's not limited to Ethereum. We want every blockchain transaction to be encrypted. So the way that we are building Zama is as a layer of confidentiality on top of existing blockchains. So instead of launching a new chain that would be private on which you need to bridge your assets, we basically add this layer of encryption to Ethereum, to Base, to Solana, to anywhere where people want to run and do something, you know, on-chain. And so I think that's really interesting because, If I tell you you've got stable coins on Ethereum and you can now shield them into confidential stable coins where your balances are encrypted, the amounts are encrypted, but they're still on Ethereum, you have all the benefits of Ethereum's liquidity, Ethereum's security, without actually the data being public on Ethereum anymore. I think about it a little bit like HTTPS, but for blockchain. You know HTTPS, when you connect to a website, the data you're sending and receiving is encrypted, but you don't really actually notice it. You're still just connecting to a website. This is the same idea here for blockchain transactions.
+
+Ryan:
+[10:17] Bringing confidentiality, bringing privacy to not just every single Ethereum transaction, but also to every single blockchain transaction, whether that's in the Solana ecosystem, other EVMs, other layer twos. That sounds like a holy grail. And we'll get into how this is possible because that'll be the rest of the episode we're sort of teeing up. But I want to make sure I understand what you're actually saying. So if I'm on Ethereum and Zama is deployed, like this works, then will there be a button inside of my crypto wallet, inside of my Rabi, inside of my MetaMask, where I can basically go incognito and send this specific transaction privately, confidentiality? I don't have to bridge to a whole new chain. I don't have to do a thing. It's just integrated into my self-sovereign DeFi wallet experience. That to me is the holy grail. And I just want to be clear, is that what you're saying?
+
+Rand:
+[11:16] That's exactly what we built. And actually, you know what? I wish I could hire you for marketing because you're saying it. I got excited just listening to you talk about it. I was like, that sounds like a cool thing. Yes, that's exactly what we actually did. And I know it sounds incredible because it doesn't seem like this would even be possible. Like how can you have privacy on a public blockchain? But that's exactly where there's new cryptographic techniques like FHE actually come in, right? This was the missing piece to enable exactly that vision. I've been in crypto since 2013, right? So I've seen many, many, many cycles. I don't want to have to use a new protocol. Like I'm happy on Ethereum. Like I've been an EAT maxi for a very, very long time. Like that's where I want my money to be. But I don't want it to be public. And so in a way, I just kind of solve the problem for myself by building this Exama tube.
+
+Ryan:
+[12:09] Well, and the excitement is you're solving a problem for me and a ton of Bankless listeners, basically, if this works. Now, let's talk about, because this sounds almost too good to be true, Rand.
+
+Ryan:
+[12:18] And so now we get into the more nerdy part of the episode. So you used an acronym there, which is a cryptography acronym called FHE. And I believe that stands for fully homomorphic encryption. All right. So it's not something that you'll probably be able to bring up in a dinnertime conversation. No one will know what you're talking about. But I want to do a quick 101 on cryptography.
+
+Ryan:
+[12:42] So, can you take us through the main families of cryptography in crypto and help simplify this? I don't know how you would list this out, but I guess my mental model, I have kind of a list of maybe four families. There's sort of the classic cryptography of Bitcoin. These are things like hashes and signatures. Then there's this whole field of moon math with Justin Drake just came on the podcast. He calls this SNARKS, succinct proofs, or like ZK, right? ZK, SNARKS, that whole section, and that has some magic. So that's the second. Then we also have this thing called multi-party computation, I believe. MPC is the acronym for this. That's another thing. And we also have FHE, which is what you're talking about. And this is what enables some of the holy grail that you've just been talking about. Can you break this down, give some detail here without getting too far in the weeds?
+
+Ryan:
+[13:44] How can a layman think about each of these families of crypto and what are their superpowers? And then we'll get into how FHE fits into this.
+
+Rand:
+[13:53] So I think when you think about cryptography as a field, there are, I would say, big kind of ideas. One of them is I want to be able to store data securely in a way that nobody can see it unless they have the secret key. So that's typically what you have with traditional encryption. You know, when you're encrypting data that you're storing in a database, you know, you're using AES to do that. Then there is, I want to be able to communicate a message to someone without other people being able to eavesdrop. So secure communication, what the signal is doing, for example. That uses another type of encryption, which is slightly different than what you have in storage. Then you've got the whole field of like, I want to authenticate myself. I want to prove that I'm the owner of that particular thing. That's where signatures comes in, whether it's like, you know, ECDSA or other types of signatures. When you sign a transaction on Ethereum, you're using a key to prove that you're the legitimate owner who's allowed to do that, right? So that's another field. And then you've got, I would say, more like cryptography 2.0, which is related to how can it go beyond transmitting, storing, and authenticating things? How can I compute privately? How can I share a secret privately? How can I prove it?
+
+Ryan:
+[15:10] So everything you just described, Rand, is basically what I call the classic family.
+
+Rand:
+[15:15] And that's what- Yes, that's the classical cryptography.
+
+Ryan:
+[15:17] Yeah, and that's what Bitcoin and Ethereum have been based on to date.
+
+Rand:
+[15:21] Exactly. And then you have what you call the moon math cryptography, in which I would actually include all of those new advanced techniques, zero knowledge proofs, ZK, fluoromorphic encryption, FHE, multi-party computation, and PCD. All three of them are very important, but are used in different ways.
+
+Ryan:
+[15:39] ZK is a
+
+Rand:
+[15:40] Way to prove that you've done something without necessarily revealing the data that's behind it. So I can prove to you that I have 100 tokens without showing you that I have 100 tokens. That's what Zcash does typically. Very, very useful in many applications. The only downside of ZK is that you cannot compute on the ZK proof. So you don't have like composability. You cannot stake that proof. You cannot do this kind of things. If you want composability, if you want like a state on which you can compute, you have only two solutions, multi-party computation or fully homomorphic encryption. MPC is used very often for wallets, for secret keys, because it gives you a way to split the secret key with a bunch of different people that have to effectively talk to each other in order to do something. So think about it as like decentralizing the private key.
+
+Ryan:
+[16:34] When people are thinking about decentralizing the private key, maybe they're thinking about something like, you know, the seed phrases to set up a crypto wallet, right? That's the the english word mnemonic and is basically you know you can derive a private key based on that so mpc splits those words up across multiple parties and is it some majority of these parties have to kind of um you know share the data in order to reconstruct the private key and what is a private key in crypto of course it's a it's a key to a safe easy you can open a safe if you have enough of these parties like agree to open it?
+
+Rand:
+[17:11] So MPC, the way it works is the key is never reassembled. The point is that the key is never in one place, right? The key is placing a bunch of places, but each individual person does a piece of the computation. And when you put it back together, you get the actual result of having used the full key.
+
+Ryan:
+[17:28] Kind of like a multi-sig in a way, like conceptually.
+
+Rand:
+[17:32] Conceptually kind of like a multi-sig, right? You need all the different parties to be involved to get the actual end result. That is by far the best thing that we know of for managing a secret key. But it's not very easy to use that if you want to compute because it doesn't scale very well with the number of people involved. So effectively, the more people are splitting the key, the slower the system actually gets because they have to talk to each other.
+
+Ryan:
+[17:58] On MPC, so I think people are aware of like ZK, sort of ZK proofs and where that's being used, like Zcash, it's being used for privacy. Also, we've done a ton of content around scalability. You know, Justin Drake and kind of the next Lean Ethereum roadmap is all about using ZK Snarks for scaling Ethereum. So it's really good there. On the MPC side, I think I've seen it in different wallet constructions. So Coinbase has some MPC wallets, which are...
+
+Rand:
+[18:27] Fireblocks.
+
+Ryan:
+[18:27] Yeah, Fireblocks, right? And most recently, that X402 protocol, which is just like agent-to-agent or machine-based transactions, which is super cool. I saw a demo of Coinbase where you can sort of attach an MPC wallet to your ChatGPT interface and have ChatGPT go buy stuff online for you from your crypto wallet. And I guess in that construction, the MBC wallet is what? Like who has the ability to sign a transaction? Is it you locally and then also Coinbase somewhere? Or like what is that?
+
+Rand:
+[19:02] It depends who are running the different nodes.
+
+Ryan:
+[19:05] I see.
+
+Rand:
+[19:06] So we actually use it in the Zama protocol when we want to decrypt something. Let's say someone wants to see their encrypted balance on Ethereum. Someone has to decrypt this encrypted balance. So the way that we address the problem is that we have the decryption key that is split between 13 different entities. And those 13 entities are extremely reputable people. Ledger is one of them. Fireblocks is one of them. Layer Zero is one of them. So we're talking companies that collectively secure 100 billion in assets already, which are responsible for the decryption key in the Zama protocol. You need two thirds of them, to participate, to get a decryption. So if someone wanted to cheat, they would need to hack two-thirds of those companies, in which case, to be honest, you can probably steal most of crypto custody assets that people have anyways. But if you want that to be performant, you have to use it for very, very specific things. So we only use it for decryption and nothing else. And that's what brings me to FHE.
+
+Rand:
+[20:09] FHE is a way to compute unencrypted data without decrypting it. So I give you a piece of encrypted data, and I can now run software, a smart contract, an AI model on the encrypted data, and the output is also going to be an encrypted piece of data. So it's like end-to-end encryption, but for any kind of software that you might want to be using. And so if you're talking about a blockchain, it means that, you know, your state is encrypted, but you can still have a smart contract that modifies that state without having to actually see it.
+
+Ryan:
+[20:44] Now, Rand, I take you as almost a little bit of a FHE maxi. And I say that in, you know, a complimentary way.
+
+Ryan:
+[20:52] And I think maybe this, your take is different from some other takes that I've heard. You put it this way, FHE for privacy. ZK for scaling, MPC for key management.
+
+Rand:
+[21:07] Exactly.
+
+Ryan:
+[21:08] This is the optimal blockchain stack. Yeah. So you really think FHE is the primary cryptography to bring privacy to blockchains rather than ZK? And some people will hear that and say, wait, hold on a second, Rand. I thought ZK was not only the scaling technology, but it's also the privacy technology, right? The solutions that we see out in the wild for privacy on blockchain today, they're all ZK-based. So the Z in Zcash is ZK. And something like Tornado Cash or Railgun, these are all ZK-type solutions. I believe even the Aztec protocol, which we'll talk about maybe in a little bit, it's all ZK. So why are you doing FHE rather than ZK?
+
+Rand:
+[21:57] So when you're looking at a blockchain and you want confidential blockchains, you want three things. You want the encryption that you're using to be safe, to be secure, right? So you want something that can withstand any kind of cryptographic attacks, even quantum computers. So today, FHE is secure even against quantum computers. So even a quantum computer cannot decrypt your data on chain. That's really important. It's also the case, by the way, for MPC, and it's the case for some of the ZK stuff, not all of them. So that's one thing. The second thing is you want public verifiability. People should be able to recompute the state and verify that it's correct.
+
+Rand:
+[22:40] ZK gives you verifiability, obviously, because anybody could verify the ZK proof. FHE gives you verifiability because anybody can rerun the FHE computation and verify that the encrypted result is correct. MPC doesn't give you public verifiability in that sense. And the third one is you want composability. There is not much point using a blockchain if you can only do one thing on that chain, right? Ethereum's, I would say, big breakthrough and kind of genius was to bring programmability to blockchain, which didn't exist before. If you remember, before Ethereum, every coin was its own blockchain. Ethereum gave you a way to program the blockchain using smart contracts. So you really want this programmable privacy, this kind of composability feature, and ZK doesn't offer that. For that, you only have MPC and FHE. So it's not that I'm like an FHE maxi. It's just that if you look at like, how do you take an existing blockchain, not change it, but add confidentiality to it, FHE is actually the right way to do that.
+
+Ryan:
+[23:47] So you're not an FHE maxi. you just think FHE is a better fit for purpose for the blockchain constructions that we have. Yeah. Is there some like beef between like ZK people and FHE people? I'm, you know, like I just tangentially view this, but there's Ellie Bansassin, of course, a Starknet godfather of ZK, like an absolute legend.
+
+Rand:
+[24:12] I love Eli, by the way.
+
+Ryan:
+[24:13] Yeah. So Eli says like some pushback, right? He's pushing back on the idea that FHE is best for privacy. He says two problems with the FHE. You need the nodes of the chain to do the heavy lifting of computing the FHE because FHE gives privacy, but not integrity. If you need integrity, you need to trust the FHE operator or add ZK to the mix because ZK does prove integrity. That's the first problem, he says. The second problem is the silicon and scale needed are pretty large, especially at scale, like you're talking 100,000 TPS, and you don't need two nodes to run it. This might be a typo there. Herding decentralization and scale. So he's saying it's hard to scale, and he's also saying there's some trust implications when you use FHE.
+
+Ryan:
+[25:00] What's your response to that?
+
+Rand:
+[25:02] I mean, that's a very fair point, right? And I think, you know, those problems exist for sure. And these are the hard problems that Zama has been solving. So integrity is...
+
+Rand:
+[25:12] The way we look at it,
+
+Rand:
+[25:14] This is a blockchain problem. If you run consensus on the FHC computation, you get integrity, right? Like, you know, if 100 people run the computation and agree on the result, you can basically say the result is correct. So FHC in that sense can benefit from all of the existing blockchain paradigms for achieving integrity. Consensus, optimistic proofs, ZK proofs, whatever the flavor that you're using to have integrity on the state, you can have integrity on the FHG computation as well. So from that sense, I don't want to say it's not our problem, but this is a problem that blockchain have already solved. If you look at performance, historically performance in FHG was a big bottleneck. You know, it took like minutes to do a confidential token transfer a few years ago. But today, we've actually made FHE about a thousand times faster than when we started a company five years ago. And we're on track to get a 10x improvement year on year on performance. So we're actually launching now on Ethereum with more capacity than mainnet can support.
+
+Rand:
+[26:23] All the Ethereum we can do encrypted in FHE today. And moving to GPUs, we can get to 1,000 TPS. So like FHE is not really that compute intensive. If you look at like something like ZK, I think actually I looked at the numbers, the cost of an FHE token transfer infrastructure-wise is $0.00001, right? So like 100,000th of a dollar. and it takes like 20 milliseconds. So you're going faster than the communication between the consensus nodes in the first place. It's not really a problem anymore. It was a problem, but we solved that problem.
+
+Ryan:
+[27:02] So on scaling, you have more recently, you know, scaled this up, scaled up performance such that so the Ethereum network can handle like 20 to 30 transactions per second. You can support far more than that in Zama, for instance. Like, can you support the thousands of TPS that, yeah, thousands right now?
+
+Rand:
+[27:23] So we're launching on CPU first, because as much as I'd like Zama to have a thousand TPS on day one, you know, the world doesn't work like that. You know, there's a bit of a ramp up for people to start adopting those new confidential products. But moving to GPU, which we're planning for early 2026, we are estimating we can get anywhere from 500 to 1,000 TPS per chain on which we're deploying Zama. So 500 to 1,000 TPS on base, on Solana, on each of them. I think, you know, that buys us quite a lot of time so that we can work on the next phase, which indeed, you know, will require work, is building a dedicated chip for FHE, an ASIC for FHE.
+
+Ryan:
+[28:07] Okay.
+
+Rand:
+[28:08] That sounds a little bit crazy to say we're going to build a chip for FHE, but I mean, we've done it for-
+
+Ryan:
+[28:12] Not too crazy.
+
+Rand:
+[28:13] Bitcoin mining is ASICs, basically. And the FHE chip is comparable in complexity to a Bitcoin miner. And that will give you 100,000 TPS on a single machine in a data center. So one server, one box in a data center would be enough to power global payments on chain with FHE at a fraction of the cost of running a GPU server. So FHE is not a problem anymore. It's just a compute problem, which by the way, is just a money problem. If you throw more money at compute, you're going to get better compute. You're going to get better performance and bigger addressable market for this technology.
+
+Ryan:
+[28:49] I mean, this seems like a similar story to what we're seeing with like ZK prover times and that kind of thing, where it's a combination of software and hardware that's like making that possible. And those are the ingredients here. You guys are optimizing kind of the software layer and also the hardware layer to like squeeze out as much scale as possible.
+
+Rand:
+[29:08] Exactly. So Zika and FHE are following very similar scalability paths in terms of making it better. It's just that in practice, there are fewer people that were able to construct secure FHE protocols. I think today, I think Zama is probably the only FHE protocol that is secure in production. Nine out of 10 people doing FHE are actually using Zama's technology somehow. And there is a reason for this, is that FHE is a very hard problem. Like a very, very hard problem. And I have no credit for it, by the way. My co-founder is Pascal Payet. He invented one of the early homomorphic encryption schemes. The Payet scheme has his name. And we've got 37 PhDs in the company. And these guys are far smarter than I am. But it's a hard problem. It took years to make it work. It took years.
+
+Ryan:
+[30:00] So back to Elise's first point. So that's the scaling point. His first point. And you guys use this term integrity, which sometimes throws me for a loop. Like, what does integrity mean? Actually, in the context of data, I get that it has a definition of This was meaningful to me. He said, you either need to trust the FHE operator or add ZK to the mix. Is the trust the FHE operator, is that why in the Zama construction you just mentioned, you have 13 different entities, you know, kind of trusted entities that are running some of the Zama nodes and you have this MCP construction between all of those 13. Is that what he's referring to? Is this something else?
+
+Rand:
+[30:42] No, not exactly. There are two parts of how you build an FHE protocol. There is how do you compute on the encrypted data and how do you decrypt the encrypted data. So there are like two things, computation and decryption. And you need.
+
+Ryan:
+[30:55] To decrypt it because the user wants to decrypt their own data.
+
+Rand:
+[31:00] Right. You want to know how much money you have. So for the decryption, that's where you use the 13-MPC node, MPC protocol.
+
+Ryan:
+[31:06] I see.
+
+Rand:
+[31:07] It's just for decryption. For computation, you can have as many people as you want doing the FHC computation because everything is publicly verifiable. So anybody could participate and you can basically say, I'm going to compute it and can effectively do like a consensus like any existing blockchain. So when you want integrity on the FHC computation, either you just ask a bunch of people to do it and you compare the results or you.
+
+Rand:
+[31:31] Just ask a bunch of people to do it
+
+Rand:
+[31:32] Or you can use a fraud proof. So one person does it, but anybody could verify it and basically say, oh, that person cheated, needs to be slashed. Or you can use ZK and basically do a verification of the FHE computation. So there is absolutely no difference on how you handle FHE computation versus existing blockchain smart contracts. Every single technique that we use for integrity in blockchains, you can use for integrity in FHE. Okay.
+
+Ryan:
+[32:02] And these sort of, I'll call them weak points of FHE, that's the entire purpose of Zama. I mean, we'll get into the Zama construction later, but the encryption part and the decryption part, that's what you're sort of, I guess, smoothing out the rough edges there in the Zama protocol and creating a mechanism so that everything is secure and maintains confidentiality in both those parts of the process. Is that correct?
+
+Rand:
+[32:31] Yes, exactly. You want to think about this not as separate things, but as an end-to-end protocol. You cannot dissociate the decryption from the computation from the blockchain. So for example, the way that you know that someone can decrypt a value is because you have a smart contract that explicitly says this user can decrypt this value.
+
+Rand:
+[32:54] If the smart contract doesn't say so,
+
+Rand:
+[32:56] The protocol will reject the request for decryption. And so you see how everything kind of becomes intertwined, right? Like you have people doing FHC computation, people doing threshold decryption, you have a blockchain where all the logic and access control actually lives. And you have to analyze this as an end-to-end system to know whether it's secure or not. And fortunately, there are actually mathematical proofs that you can have that the system from a cryptographic perspective is secure. And so Zama actually achieved that. Zama achieved what's called a strong IND-CPAD security. It's a mouthful, but basically what it says is there is no known attacks that can break the cryptography of FHE. So the only issue can be a software bug in the implementation, of course, or it could be people didn't do the job they're supposed to do. But the cryptography in itself is mathematically proven to be secure as long as people do what they're supposed to do.
+
+Ryan:
+[33:56] So does this answer the question of, again, I'm not smart enough, Rand, to field these questions to you. So I'm using other cryptographers by proxy.
+
+Ryan:
+[34:05] So Ian Myers, he's a CS professor, security and applied cryptography. He said this, there's no such thing as fully homomorphic decryption. Of course, we've been talking about fully homomorphic encryption. He says, there's no such thing as fully homomorphic decryption. Anytime you see a system using FHE to compute on your sensitive data, remember someone has the key. And if it's not you, do you trust them? This is the 13 entities
+
+Rand:
+[34:32] Essentially in the.
+
+Ryan:
+[34:33] Zama protocol that do have the key.
+
+Rand:
+[34:35] No, so Jan is right, right? In FHE, someone has to decrypt. And so instead of having like a trusted central party do that, right? That key is split between 13 people. Those 13 people, everybody knows who they are. Ledger, Fireblocks, all of these guys. If those guys cheat in the Zama protocol, first of all, you know, they have to be able to do that, right? So you need to have two-thirds of them colluded. So we're talking about 10 out of 13 of the most reputable companies in crypto that are responsible for $100 billion in assets, calling each other on the phone and being like, hey, guys, let's cheat to read to know how much money Ryan has. I mean, sure, right? It's not ideal, but it's as good as it gets. And it's actually how most of the world works. You know, the internet, people, it's crazy, people don't realize that. You know, when you connect to a domain name, right, to bankless.com, that domain, bankless.com, is converted to an IP address so that, you know, the internet knows where to send people. There are 13 companies responsible for this.
+
+Rand:
+[35:45] So the internet runs on 13 companies, right? That's insane. And it works. So I think, you know, it's, we're doing the best we can with existing techniques. And today, Zama, the way it's implemented, this is as state of the art and as secure as cryptography allows you to build. Like we didn't take any shortcut. If anything, we've actually done things that were never done previously anywhere in the world, cryptography wise.
+
+Ryan:
+[36:13] Yeah, I like it. I mean, there's definitely a practical implementation that you've done. And I mean, just to be clear, so these 13 entities, it would require two thirds majority. You really can't imagine them calling each other on the phone and just being like, hey, I really want to decrypt Ryan's, you know, blockchain.
+
+Rand:
+[36:29] If they didn't get caught,
+
+Rand:
+[36:30] Their business would go to zero. Like who would use a Ledger wallet if Ledger cheats in Zama?
+
+Ryan:
+[36:36] But let's push back on that a little bit because it probably wouldn't happen that they are all kind of in a cabal and turn evil. The way it would happen really is like some government, right? You get an OFAC calling you, the three-letter agency calling you and saying, you got to decrypt this data, okay? We'll bring court orders against you. We'll make life really hard for operating in our country if you don't. What you're doing is illegal unless you decrypt it. It's probably going to be nation-state level attack, which is like, I'll put that out there. And I'll just say that's going to be fine for the majority of use cases that people do probably, you know, but that is a vector that they could get into something like Zama,
+
+Ryan:
+[37:25] for instance. That's a very fair point.
+
+Rand:
+[37:27] And so I think about this a lot, like a lot, honestly, like I think I'm spending hours a day trying to think about how to make this thing more resilient to global catastrophe and attacks against it. So the first thing you can do is those operators, you can try and pick them in a way that they're geographically distributed. Some US, some Europe, some Asia. So the more geographically distributed, the harder it is for a government to do this. So you will need like a coalition of governments to do this kind of stuff, right? So sure, you know, is it possible that the US, you know, has a deal with 50 other countries and surveillance? Maybe, right? That's possible. But you see, you're already adding like one layer of complexity because you're talking about global political coordination to make this happen. The second thing we're doing is we're actually locking out the operators from accessing the secret key that they're holding. So the way we're doing this is the MPC nodes, all 13 companies, they have to run inside what's called a hardware enclave. So the actual software is running inside a container that has another layer of security. So it's not just that you would need two thirds of them to be corrupted. You need two thirds of them to break the hardware faster than they would be detected and the protocol would basically kick them out.
+
+Rand:
+[38:54] And on top of that, there's also encrypted communication between those different nodes to make sure that they're running the correct version of the software, each other. So they would need to run the incorrect version of the software to break, you know, the hardware kind of like container they're in. They would need two thirds of them to collude on an international coalition of governments to make that happen and not get caught during that meantime that, you know, we would just basically kick them out and replace them with other operators. I think, to be fair, if that's your threat model, you're probably not going to be using the internet for anything. Let's be honest. There are far fewer...
+
+Ryan:
+[39:39] Or, I mean, you're probably like North Korea or something like that, right? I don't think North Korea can
+
+Rand:
+[39:44] Pull this off. I don't think North Korea can pull this off. The truth is, no matter how much people don't like to talk about it, there's always going to be... When you talk about security, when you talk about anything, there's always going to be a trade-off somewhere. The question is, you have to make the trade-off so high that it's either extremely unlikely or extremely expensive or extremely, I would say, disruptive for someone to actually do that.
+
+Ryan:
+[40:16] Yeah, I think that sometimes people, you know, think in terms, like they don't think, they think in terms of binaries, right? And they don't think in terms of like, good, better, best, right? Things that are, if you just think about the status quo, which is, we have no confidentiality on any transaction. And if you actually want confidentiality and for the practical crypto user, I mean, they're doing something like they're moving their assets from one address to Coinbase and then moving it back out in an attempt to kind of obfuscate their traffic. I mean, like, what is that? The upgrade of just having a confidential button inside of your wallet that has these like that uses Zama, that is just like a 10x, 100x better than the status quo.
+
+Rand:
+[41:04] I mean, look, it solves problems that are unsolvable otherwise. Like the trade-off that Zama has to make, there is no other solution. It does not exist. You cannot have composability unless you figure out a way to have like a shared secret state. And the way we are doing it, honestly, like it's, most people think I'm over the top in how many layers I'm adding to this thing to make it really, really, really, really hard for people to kind of read your balance.
+
+Ryan:
+[41:35] Well, that's the thing. If you make it incredibly easy, like current privacy solutions are pretty difficult. So even something like Zcash, you have to go to an entirely new chain in order to do that. And you have to basically, if you want your store of value inside of Zcash, you have to like buy a coin. I mean, Amin Soleimani put it this way. It's like, I shouldn't have to buy someone's Ponzi scheme in order to get privacy,
+
+Rand:
+[41:57] Right? I wouldn't call Zcash a Ponzi.
+
+Ryan:
+[42:01] A little tongue in cheek, right? But it's memetic money. I shouldn't have to buy another store of value asset that could fluctuate 10, 50% in a given day in order to just get some privacy on the assets that I really
+
+Rand:
+[42:15] Want to help. No, what you want is encrypted. You want encrypted dollars on Ethereum.
+
+Ryan:
+[42:19] Yeah, that's right. That's right. And so if you're bringing this to more people and creating an easy button for that, that's a net win. I guess, so we've talked about these families of cryptography. Are there other ways to kind of smush these things together? So you're talking about like every operator has a secure enclave. I don't know if that's like TEE or what that is, but like, are we able to like, even the tweet I was referencing from the StarkNet founder talked about, well, you could just add ZK to some of the FHE stuff and get even stronger guarantees. Can we layer this cake somehow and get even better?
+
+Rand:
+[42:54] I mean, this is what we're doing. You know, it's funny because people think about Zama as a purely FHE company. So, you know, out of like 30 or so researcher, I have like six, seven of them doing MPC, five of them doing ZK. Zama uses FHE for the computation parts. But actually in the protocol, as I mentioned, there is MPC for the decryption. There's even some ZK stuff we're doing like for integrity security stuff. This is not like the primary component. These are like Lego blocks that you're putting together to build an end-to-end secure, privacy layer, right? So yeah, 100%. Like, as I said, I'm super pragmatic. If tomorrow someone comes up with a better technology than what we've got, we're just going to, you know, we're just going to use the ideas and then try to implement it to make things better. Like, you know, we, whatever works, that's the bottom line.
+
+Ryan:
+[43:49] Whatever works, that's the bottom line. We also have another bottom line tweet. The bottom line is that FHE is the only technology that offers security plus verifiability plus composability. It simply adds a layer of confidentiality to existing chains. I love that part, without changing how we build and use blockchains. You don't need to bridge to another layer two or another chain. It just works with existing chains. So that's the vision here. I want to ask you a cultural question because we're sort of having a bit of a moment here in crypto, I'd say. I mean, some people have called it privacy season. Not sure how long this lasts, whether this is a trader narrative, but it has been good. I think it's been kind of wholesome actually to watch Zcash rise in price, Rather than go speculate on some stupid meme coin that a celebrity launched, Zcash, it's cool technology. It's going up. It has gone up 4,000% in the last six weeks, which has been pretty crazy. What do you think is driving this focus on privacy? Is this trader narrative or do you think there's something deeper here in crypto?
+
+Rand:
+[44:52] I think there's something deeper. I think fundamentally, people don't care more about privacy than they did before. I think one of the major driver is people started paying attention to finance moving on chain. We want dollar to be on chain. We want banks to be on chain. We want $100 trillion of assets to be tokenized and put on chain. But when you talk to financial institutions, they're just not going to do that unless they have confidentiality in their activity on chain. And so I think like the push and the adoption of blockchain by finance is what made people realize, oh my God, we need to solve the privacy thing if we want this to actually happen and if we want blockchain to become the global financial rails of the world. So it was very honestly, like I think people were forced to look at privacy again as a kind of requirement for the realization of on-chain finance. And so the downstream effect of that is we get privacy as well, as users, right, as people. But I don't think that the initial motivating factor was I want to protect my data. I think the initial motivating factor is, JP Morgan wants to protect their trades on Ethereum.
+
+Ryan:
+[46:05] Yeah, I think they do want to protect their trades on Ethereum. I think that's kind of the game theory of this. So if we have the tech now, the FHE tech and the confidentiality tech, and there's certainly the demand, institutional demand, retail demand, it's always been here. Let's bring back the nation state. Let's bring back the regulator conversation and address that. So during this privacy season, it's been interesting to observe just last week, there was a private Bitcoin wallet developer, the Samurai Wallet, got five years in prison. He pled guilty to charges. That's in the United States of America. We've been following on Bankless over the last couple of years, the Tornado Cash Roman Storm case. Of course, his case is still outstanding. I tweeted this recently, which is just like, I wonder how privacy developers are feeling. Developers behind the Aztec Protocol, which is a ZK privacy layer two, developers even within your company, Adzama Rand, when it seems like the DOJ and the US government is somewhat arbitrarily picking out privacy developers and prosecuting them. Someone replied and said, well, look at the Roman Storm case. It was like, it's an okay outcome. I mean, he gets to present his case. ruin that man's life. Okay. It's ruining his life. FBI raided his home in front of his daughter, you know, like arrested him. This is happening in the United States of America.
+
+Ryan:
+[47:33] And I'm kind of wondering like how you personally feel about this? Like, do you feel safe to develop privacy tools and the Zama protocol in the United States of America right now? Or like, what's the underlying feeling here?
+
+Rand:
+[47:49] So obviously it would be nicer if we had clear rules to go by, right? Then you know what you can and cannot do. The way I think about compliance is that there are two ways to build a protocol. One way is I'm providing the privacy features directly to another cache, for example, and people are using it. The other way is what Zama is doing is we're providing a way for people to build confidentiality into their tokens and applications. The Zama protocol in itself doesn't offer any kind of privacy feature natively, right? We're just giving you a library that you can use to write the Solidity smart contract in which things can be shielded and things can be public. So it's kind of up to the developer and token issuer to decide how they want to be compliant.
+
+Rand:
+[48:39] Ethereum didn't get sued because Tornado Cash was running on Ethereum. And so the way we're thinking about this is like, okay, so instead of like forcing a privacy model or a compliance model on everybody who's building on top of the ZAMP technology, we're going to create tools in the protocol so that people can decide how they want to be compliant at the level of their own users and application. So I'll give you an example. I'm a stablecoin issuer. I'm a regulated entity. I want to offer confidentiality to people on my confidential stablecoin on Ethereum. I would give the user the ability to see their own data, their balances, their transactions, obviously, right? You want to know how much money you have. But I could also give myself, as a token issuer, the ability to see the data of my own users in my contract. And I can program that in my smart contracts directly. And if you're doing that, what you're recreating is TratFi compliance model. The user sees their bank account, the bank sees the bank account to their users, but your neighbor doesn't. And if you're creating this, like you're just, again, you're just recreating TratFi. Then you know the token issuer can go and comply with OFAC and whatever they want to do. It's their problem at that point, because they're the one deciding the spectrum of compliance that they want to implement. And I think that's the key part. Programmable compliance at the application level, we don't force you one way or another.
+
+Ryan:
+[50:09] Do you feel like that's enough of a bright line that you're not worried about
+
+Rand:
+[50:12] This at all? So another thing that we're looking at right now is a way to basically kick out applications that would be obviously used for illegitimate purposes. So the way to do that is you're literally just like stopping the contract itself. And then people can withdraw their money, right? So you're never freezing the money or anything like that. But at least the application is no longer usable. I don't even think that this is necessary, to be honest, because the way I'm looking at this, most of the volume right now is starting to go through services that companies are building. And companies want to be compliant, right? So I think that it's kind of like the internet. 99% of the internet is compliant and 1% is the dark web. And then most likely, as much as we want that or not, it's likely to be something similar with DeFi. You know, 99% of stablecoins and DeFi protocols are going to be compliant stablecoins and DeFi protocols. And 1%, you know, might be just like, you know, not caring at all. We are building our protocol for that 99%. We're not building Zama for the 1% of North Korea money laundering use cases. And that's a choice we're making. We're very clear about that. Our business are legitimate financial use cases.
+
+Ryan:
+[51:31] I still feel like there's something simmering here in the background. And we had Marc Andreessen on the podcast a couple of years ago, And he talked about the early cryptography wars and how the original cryptography behind kind of SSL, HTTPS was on the US munitions list, basically. And so it was not legal for him to export Netscape to Europe with those protocols in place, right? And so it took a while for the US to get its head wrapped around encrypted digital communications. And I don't feel like we've had the national conversation about encrypted financial transactions. Like that's another step. And it feels like the last administration, maybe, members of the last administration, took a very dim view on financial privacy completely. And it wasn't just North Korea. It was just like, we don't want anybody to have financial privacy, right?
+
+Rand:
+[52:33] Well, I know. I'm taking extremes just to illustrate the point. But in practice, of course, the people who are the most asking for confidentiality are the financial institutions. There is no chance, no chance that dollar stable coins will be used as banking rails unless you have confidential balances and confidential payments.
+
+Ryan:
+[52:55] It's just not going to happen. Agreed. Right?
+
+Rand:
+[52:58] So again, like I think, you know, this is not like a Zama versus the US kind of thing or versus anybody else. This is like, Everybody has to come together and be like, we want this thing to exist. This is how we're going to make it happen. And we're going to follow along the lines of the people who need this technology, right? So Zama will participate as much as it can in helping to shape how confidentiality and blockchain can actually be built in a compliant, sustainable manner. As I said, I'm a founder building a company. So my goal is to do whatever is best for the people who are using my technology.
+
+Ryan:
+[53:36] I think that's the way it'll work, honestly. And I think that's the way we got cryptography through the early internet. It was basically like, you know, tech companies and said, hey, the internet is not going to work unless we have confidential communication, right? Anyone can browse this web traffic? You crazy? And the US government said, well, we want the internet to work in America. We're going to be pro-innovation, pro-building, pro-GDP, pro-job growth. And so therefore, we'll allow this to happen. I think in the same way, institutions coming onto public blockchains, stable coins, that's a big carrot for the US government. I think that'll move the Overton window in our direction. But it's a dicey game to play right now. It's still feeling a little unsettled. And I worry about this sometimes.
+
+Rand:
+[54:21] I'm very confident that the way we're approaching the problem is the right way that we have to approach a problem. Like, we're not trying to pretend this is not a problem, right? But the good thing is, again, as I mentioned, people really want that.
+
+Ryan:
+[54:35] Let's talk about Zama itself a little bit more. I think we've described it in a few places in this episode, but maybe we can put it all together because there is something going mainnet, I believe, relatively soon. Perhaps you can help us on the dates. And I think this is my understanding of it. ZOM is a protocol. So it's a set of smart contracts. The very first place you're going to deploy these smart contracts, an underlying kind of protocol network, is Ethereum. And that is going to allow on Ethereum mainnet for confidential transactions. At some stage, I hope, and I'm sure that this is your intent for the confidential transaction button to be in all of our crypto wallets via Zama. But this is going to mainnet relatively soon, correct? Like, can you tell us about that? What exactly is going mainnet and when and what will we have the ability to do once it does?
+
+Rand:
+[55:32] So we are launching mainnet early December. So imminently, I would say on Ethereum first, and then we're going to go multi-chain in 2026. The first use cases that we're focusing on are even concrete examples, because I think it's always better to give you like clear app examples.
+
+Rand:
+[55:51] So there is a company called Raycash,
+
+Rand:
+[55:53] Which is building an on-chain bank that cannot rug you. So the idea is that your money is on stablecoins on-chain. So even if they go bankrupt, you can always withdraw your funds to a different wallet, right? So like you own your assets effectively. But because you're using Zama, they can have confidential stablecoin. So your actual money in your bank account on-chain is confidential. People don't know how much you have or how much you're spending, which is a very important point.
+
+Rand:
+[56:21] But because, again, they're using FHE, those confidential tokens are composable. So you can stake them to earn yield on your bank account. You can swap them for other crypto or tokenized stocks. You can also have, of course, a debit card and wires on top of it. So every single feature that you have from like a modern fintech app like Revolut, you can build on-chain with confidential stablecoins in a way that is completely self-custodial. That is huge when you think about it, right? That is absolutely huge because in a country where you've been rugged by your central bank or financial system, like I come from Lebanon, Lebanon a few years ago, central bank went, oh, sorry, no more money. We're freezing all of your dollars in your bank account. Boom, done. This would never happen with an app like Raycash if it existed. Cyprus in Europe a few years ago, Argentina, Nigeria, Vietnam, there's so many places where people cannot actually claim that they own their money. And this is a good solution to that. So that's one example. So that's going to be coming out relatively soon. Another use case that we're doing for Zama itself, actually, which I think is amazing, is a confidential vesting and distribution of tokens as a crypto team. You know, like I'm going to distribute tokens to the Zama team, to the Zama investors.
+
+Rand:
+[57:38] We're going to do that with confidential tokens, which are going to be in an on-chain vesting contract. Right. Which itself is confidential. So, you know, your people don't know how much each other are getting, but everything is on chain. Everything is vesting. That is solving such a huge problem that everybody has right now, which is like, oh my God, like how do we actually keep this information confidential? Because it's actually kind of like very private information. Like your salary is not something you want people to know publicly. There are also a bunch of other like things, but I think these two things are very interesting because they show you how simple things that we do today could be do much better on the same platform that you're using now. Can you talk about.
+
+Ryan:
+[58:16] The diffusion of Zaman, you know, like FHE on top of Ethereum? So those applications and use cases sound very cool. The challenge with them is they're kind of like ground up. It's something net new, right? It's not something that some people are using today. I think what people really, really want, like back to the Holy Grail conversation is, in my Gnosis safe or in my MetaMask wallet or in my Rabi wallet or whatever, When I'm depositing a position into a trade in Uniswap or I am interacting with the Aave protocol, I want some sort of confidential button where I can go incognito and all of the existing apps and protocols and the existing Ethereum ecosystem just has that, like, has a confidentiality button by Zama embedded in it. How does that happen? Does every single app individually have to build this and opt in and put it on their roadmap? Or can this happen in a faster way?
+
+Rand:
+[59:17] We actually created a standard with OpenZeppelin and another company called Inco. We created a standard for confidential tokens, the ERC-7984, which effectively, well, standardizes that. Specifically because we wanted people to be able to integrate something once and for all. So the VRC7984 token standard is not just for FHE, by the way. It works also for MPC tokens, it works for T tokens, and to some extent, ZK tokens as well.
+
+Rand:
+[59:45] So it's like a general confidential token standard. Of course, it's going to take a bit of time for people to start doing that because, you know, it's like a new, like it's a new standard. So we are working today with multiple wallets. We're currently integrating it. One of them that I'm using personally is called Bron. Fantastic wallets. It's not like one of the existing big ones, like a new one that just came out recently. And they did exactly that. You have like a shield button to convert your ERC-20 to confidential tokens. And then you can do confidential transfers in a very streamlined kind of way. So I think it's just a matter of, it's going to take a bit of time for the adoption to kind of like take on like everything else. For having been in crypto for such a long time, I don't think I've ever seen so much interest in adopting something new that just came out.
+
+Ryan:
+[1:00:34] Yeah, certainly there's interest. So in that case, you would have to basically take your USDC ERC-20 token. And then let's say Circle kind of adopted this or something. I'm not sure who would have to adopt this. Then there would be another ERC, confidential ERC standard that they would also support. You basically have to take your ERC-20 USDC and swap it into the confidential ERC-20 asset, and then it would be confidential. Is that right?
+
+Rand:
+[1:01:02] Yeah, exactly. So you can shield and unshield your ERC-20 tokens. So you can convert them back and forth to confidential tokens on Ethereum directly. So this is not happening off-chain. This is on Ethereum.
+
+Rand:
+[1:01:13] So yeah, in the beginning,
+
+Rand:
+[1:01:14] At least that's how it's going to be until confidential tokens become the default, right? And then ERC-20 will be the exception when you don't have a choice, but have to leave the confidentiality ecosystem. In the beginning, we're going from ERC-20 to confidential tokens, but the same way that the internet is encrypted by default now, at least HTTPS or messaging apps, the same is going to happen with tokens and transactions in the future. So public tokens is going to be an exception, not the default anymore.
+
+Ryan:
+[1:01:43] Right. It wasn't always this way, right?
+
+Rand:
+[1:01:44] There was a lot
+
+Ryan:
+[1:01:45] Of HTTP that had to gradually convert to HTTPS, essentially. And that didn't happen all at once. That happened over many years, I believe. And so maybe something happens. We have time.
+
+Rand:
+[1:01:57] You know, I think it's, I'm not building this as a short-term project. You know, privacy is something I've been working on for decades. And I think this is one of the most important thing that anybody could be working on right now, especially if they're working in blockchain. And so however long it takes, however much resources we have to throw at it, we're going to make this happen. This has to happen. This is too important.
+
+Ryan:
+[1:02:20] So if I have inside of my crypto wallet, if I have USDC and this is supported, and I then shield my USDC, What's actually happening in the background? Are there some smart contracts on Ethereum that are, I guess, getting triggered? Is the Zama network activated? Are there additional transaction fees to do this? Take me through the flow.
+
+Rand:
+[1:02:46] Okay, so let's say you have USDC and you want to turn that into confidential USDC. The first thing you have to do is shield those USDC by converting them to confidential USDC. So this is just a smart contract on Ethereum. So you're basically sending your USDC tokens to a smart contract, which then mints confidential USDC on the other side, right? So think of it like as a wrapping contract, kind of like, you know, when you have EAT versus wrapped EATs. Same idea, USDC to confidential units.
+
+Ryan:
+[1:03:16] So there's some smart contract gas fees for this that are common to any sort of smart contract on Ethereum.
+
+Rand:
+[1:03:23] If you're on base, for example, the gas fee will be zero, right? Right, right. Even in theory, it actually was 0.1 guay yesterday. So, you know, it's never been cheap. I remember, man, DeFi summer, 200 guay transactions. Like that was something else.
+
+Ryan:
+[1:03:38] Yeah, I see some doodles in your background. So I don't know if those were purchased with, you know, very high gas fees. But yes, I'm sure you understand.
+
+Rand:
+[1:03:46] Yeah. So that's the first thing, right? So you shield those tokens, just those transactions. So you pay whatever fees on Ethereum you have to do that. Now that you have a confidential USDC token, you want to be able to send that to someone confidentially. When you want to send tokens confidentially, you need to encrypt the amount that you want to send.
+
+Ryan:
+[1:04:04] Okay.
+
+Rand:
+[1:04:05] To encrypt it, you need to use the public key of the Zama protocol. So you're encrypting it, but you also have to pay a small fee to the Zama protocol to prove that you've used the correct encryption key to encrypt the inputs. So basically, you know, the Zama protocol has to verify that you've done the encryption correctly. This is actually one place we use ZK, by the way, right? You produce a zero-knowledge proof of the encryption that you've done, and then you request a verification from the Zama protocol, and here you're paying a small fee with Zama tokens.
+
+Ryan:
+[1:04:35] And that's where it's going to, I don't know if I should call it the Zama network. The operators, yes, exactly. The operators, yes, exactly.
+
+Rand:
+[1:04:41] So when you do that, you're sending that, the operator has verified a proof, they send you back an attestation, and this is what you're including in your transaction to Ethereum to say, hey, this is a proof that I'm allowed to send this encrypted amount. The contract does this thing.
+
+Rand:
+[1:04:57] And then when you want to decrypt your balance,
+
+Rand:
+[1:04:59] Again, you just call the Zama protocol, paying a small fee for the decryption, and that triggers the MPC threshold decryption, and then you get your balance back. So we don't charge for the computation, we charge for the basically encryption and decryption of data.
+
+Ryan:
+[1:05:12] Very cool. So while it's confidential, I suppose there's no charge, you just charge, you know, when it becomes confidential or when you're decrypting it.
+
+Rand:
+[1:05:23] Anytime you're encrypting data in a transaction or decrypting data that some states, you pay something. But the actual transaction on the L1 or L2 you're using, you just pay the gas fees of the L1 or L2. Very cool.
+
+Ryan:
+[1:05:37] And the operators that you were mentioning, those are the 13 entities that we were speaking about earlier. Is that correct? And they're running some sort of Zama infrastructure, basically, to do this encryption and decryption. And of course, it takes a two third majority for them to decrypt anything. And so I'm sure reliability, uptime is important. I'm sure that these, I don't know if I should call them validators, but I'll call them operators maybe. Okay. Yeah. So these operators have to have some uptime guarantees and certainly have to be, you know, like incredible high reputation entities.
+
+Ryan:
+[1:06:14] So how does that side of the network work and how are they incentivized?
+
+Rand:
+[1:06:17] So they have to stake tokens. Okay. And so it's a kind of traditional proof of stake type thing. You know, if you cheat, if you're down, you can get slashed, all that kind of stuff. And they get rewarded by Zama tokens as well. So users are paying fees for encryption, decryption Zama tokens. And then we're also giving rewards to operators who are staking in Zama tokens. So the Zama token is a very vanilla utility token used for fees and and rewards effectively. I was going to ask about this.
+
+Ryan:
+[1:06:46] So the Zama token is coming out soon. It's not out yet, but that's going to come out with mainnet because you need this for operators. Is that right?
+
+Rand:
+[1:06:53] Correct. Yes. So we're actually launching the mainnet with the Zama token and everything, early December. So I need A now.
+
+Ryan:
+[1:07:00] Very cool. All right. In what conditions does an operator get slashed? What types of bad things could they do to get slashed?
+
+Rand:
+[1:07:08] You know, that's a pretty open-ended conversation. Depends who you're asking, right? The way that we're addressing slashing and design a protocol is actually through governance. So we think, you know, there are different situations and people can, you know, they can be offline for different reasons. Maybe their data center blew up, right? Like in that case, it's technically not their fault if that happens. So instead of just having like a blanket slashing for any reason whatsoever, the idea is that the operators between them can effectively look at what happened and decide what's the appropriate course of action. Should we just, you know, kind of like consider that to be like a one-off bad luck kind of issue? Was this malicious intent? Should we kick this operator out, right? And replace them by someone else? Should we slash them?
+
+Rand:
+[1:07:56] Should we, you know, pause the rewards for some amount of time? So we're basically using like a governance system to decide the appropriate thing. Kind of like, you know, it's like a jury in a way, right?
+
+Ryan:
+[1:08:08] Can you maybe contrast this and thinking again from a user perspective from other privacy solutions that are available on Ethereum today and kind of the, I guess the pros and cons or how this would work. So on Ethereum today, I could Well, actually, I don't think I can use TornadoCache legally anymore. Or they may have taken that off the OFAC sanction list. I'm not sure.
+
+Rand:
+[1:08:30] I think they took it out, but I think it's still from the bottom. Okay.
+
+Ryan:
+[1:08:34] All right. So something like Railgun, right? Which is a privacy pool. It's not on the OFAC sanction list. And so basically, it's somewhat complicated, but you can kind of like shield your transaction that way. It does require some gas fees. That's one possibility on Ethereum. There's other privacy pools as well. There's the privacy pool type of camp. And then there's something that Aztec is rolling out. They're going to mainnet soon. This has been a long-awaited Ethereum project that's a layer two. It promises privacy. I don't really have a sense for how that's going to feel from a user perspective, but I guess my guess is it'll feel somewhat like bridging to an L2, right? It'll be that whole experience. And then when you're on the other side of that bridge, you kind of enjoy privacy for everything, but you still have to go through the bridging process and it breaks composability, it breaks liquidity. So those are the two general streams of options I see on Ethereum for privacy and confidentiality, you're adding a third. So how will the third feel for users compared to those other two?
+
+Rand:
+[1:09:41] It'll feel just like using Ethereum, right? For developers, it'll feel like just like billing for Ethereum. Everything is in solidity and you're pushing your contract to Ethereum. For users, everything's going to feel like Ethereum. You're using a wallet to make a transaction to Ethereum. And that's really how we thought about this, right? We don't want people to use something else. We want people to use Ethereum confidentially.
+
+Ryan:
+[1:10:03] How confidential is this? So we've talked about sort of the encryption, decryption side of things. I'm fine there. But in the process of going from unshielded to shielded. Am I leaking any other data in that process? Is there other stuff?
+
+Rand:
+[1:10:18] I guess when you're shielding, it's a public operation. So people know how much you deposited as confidential tokens.
+
+Ryan:
+[1:10:25] Right.
+
+Rand:
+[1:10:26] I mean, same thing, if you're bridging to a privacy chain or even to Railgun, the deposit is public. Once it's shielded, then everything is confidential. So of course, the idea is that people never unshield, right? It's like you shield once and then that's it. But even that, to be honest, I'm a little bit, I don't like it, the fact that the shielding is public. So what we're currently working on is finding ways which you can have on and off ramp with confidential tokens.
+
+Rand:
+[1:10:56] So when you're getting a stablecoin minted,
+
+Rand:
+[1:10:58] You would get natively a confidential stablecoin. So there would be no shielding necessary. When you deposit tokens to an exchange or withdraw from an exchange, you deposit and receive confidential tokens. So technically, you could use an exchange as a way to rebalance between multiple addresses, right? If you have this confidential on and off ramp, then the shielding thing is no longer an issue. Very cool. I mean, arguably Coinbase would see how much you have because you send them the confidential tokens. But that's an acceptable trade-off, I think.
+
+Ryan:
+[1:11:31] This is what you've just described is the thing that's coming to Ethereum mainnet and then to other chains later next year. That's the Zama network, the Zama protocol. There's also, my understanding is, there's other projects using Zama technology and enjoying some of the benefits of FHE and what you guys have developed, but taking it in a different use case in a different direction. I'm not familiar with many of these, but one I'm somewhat familiar with is Phoenix. And my understanding is they were originally an L2 that was completely private. Maybe they've moved to being sort of a coprocessor now. Maybe use Phoenix as an example of how are they using FHE? And I should say it's Phoenix with a F-H-E, Phoenix, not P-H. Good word. Phoenix. Yeah. So what's that doing? What's that project up to?
+
+Rand:
+[1:12:28] I mean, I know the team at Phoenix very well, you know, very close, and they're one of the best teams in privacy. Guy, one of the founders, this is his third privacy protocol.
+
+Ryan:
+[1:12:38] Guy, one of the founders, the other co-founders also named Guy, which is kind of fun.
+
+Rand:
+[1:12:42] So these guys, I guess. So one of them, you know, Guy Ziskin, he started Enigma, which was an MPC confidentiality protocol.
+
+Ryan:
+[1:12:52] I remember that.
+
+Rand:
+[1:12:53] Then he started Secret Network, which was also a confidentiality protocol now at Phoenix. I think he's one of the very few, he must be the only one who launched three privacy projects. Like he knows what he's talking about. Like, you know, this is like, this is a serious guy, no pun intended, you know, that we're talking.
+
+Ryan:
+[1:13:09] It's two serious guys,
+
+Rand:
+[1:13:10] Right? And the other guy actually was working Intel on FHE stuff. So like also coming from like that field. Honestly, I would say that like, you know, for us, they're one of the best teams out there for sure. And so they're using Zama's cryptography to build their own confidentiality protocol and coprocessor. So it's the same underlying FHE tech, but it's a very different instantiation of.
+
+Rand:
+[1:13:35] That they've built on top. Interesting.
+
+Ryan:
+[1:13:37] This has been very helpful, Rand. I've really enjoyed this. Maybe often I think conversations with founders about projects like this start with like, hey, what's your bio? And you're like, what are you doing? I wanted to get right to the meat of like what you're actually doing for confidentiality and crypto. I feel like we've done this. So now we can get to the bio part of the episode because you have a very interesting, like the way you got here and what you've been up to in life is pretty interesting. So you have bioinformatics PhD. You've also been in crypto since 2013, since the early years. You also, my understanding is you have some interest in kind of the DGEN side of things, like meme coins, and I see some NFTs in your backgrounds. You're doing all of that. You're also involved with longevity and biohacking. I don't really know where to start in this set of questions, But like, tell us a little bit about yourself. Like, what are you up to? How'd you get here?
+
+Rand:
+[1:14:37] I started coding when I was like 10 years old. Built my first company as a teenager in the 90s. It was a social network at the time. And that's actually, by the way, when I started caring about privacy the first time. Because when you build a social network and you see the amount of personal data, you're collecting, you're like, oh my God, this is wrong on so many levels. And then eventually ended up doing machine learning, did a PhD in AI, applied to biology, bioinformatics. I loved bio and AI. For me, like bio and data was always like two of my favorite things to work on. Decided to go down the route of AI and built one of the first AI companies in Europe, already focusing on privacy, which is where I discovered FHE had met my co-founder, Pascal Payet.
+
+Ryan:
+[1:15:18] When was this, by the way? When were you doing that AI thing?
+
+Rand:
+[1:15:21] 2015 to 2019.
+
+Ryan:
+[1:15:22] Okay, so this is before the whole LLM breakthrough.
+
+Rand:
+[1:15:24] Yeah, yeah, yeah. Actually, I sold that company in 2019.
+
+Ryan:
+[1:15:29] Oh, wow.
+
+Rand:
+[1:15:30] So in hindsight, good timing, because now that I see what it took to build AI, I mean, you know, we didn't have the funding to do that.
+
+Ryan:
+[1:15:41] Not a hyperscaler?
+
+Rand:
+[1:15:42] We were thinking tens of millions, not billions.
+
+Ryan:
+[1:15:45] Yeah, right. In the trillions now, I'm pretty sure, right?
+
+Rand:
+[1:15:48] In the trillions now. So that went great, you know, made a bunch of money selling the company. And so since then, I've been investing also quite actively. So like I've invested in about 100 companies. I like to invest in super deep tech, complicated projects. So my kind of like line to founders is, if they go to a VC and he doesn't get it, they should come and pitch me instead. And so, yeah, so crypto since 2013, mostly like on the, as you said, investor, trader, DJ inside. This is my first crypto project as a founder, for sure. So like I would say like it's not what privacy is obvious because it's something that has been like a red thread in everything I've done but to be honest Zama could have gone the way of confidential AI or the way of confidential blockchain and in fact for a time we were building both, it's just we found that the need for confidentiality in blockchain was much more urgent because there is no other way to build those use cases we want to build with finance so.
+
+Rand:
+[1:16:52] Maybe come back around to AI at some point.
+
+Ryan:
+[1:16:55] I actually, I'm having the founder of Proton, you know, the ProtonMail and the suite of services there. Yeah, of course. And one of the topics I want to discuss with him is like, hey, what's the state of AI privacy? I mean, they rolled out sort of a, you know, AI privacy sort of feature inside of the Proton ecosystem. What's your take on this? I'm deeply worried about it. Like as a daily ChatGPT user, I'm like, I've read the terms and service. No, I had ChatGPT read me the terms and services for a terms of service for ChatGPT. And it's not great. Like different people with different access can get your information in ChatGPT. I mean, like when I talk to a doctor, there's things like HIPAA, right? There's confidentiality that I have baked in. If I talk to a lawyer, I know the lawyer is not going to sell me out. I know it's going to be confidential. And people are having these conversations with chat GPT and have no idea where the data is going and what their civil protections of that actually are. Can we change that? Like what's your assessment of the current state of AI and privacy?
+
+Rand:
+[1:18:03] I think it's going to happen. So, you know, I know a lot of the AI founders just, you know, by virtue of being early in the space, right? Everybody wants confidentiality in their AI products.
+
+Ryan:
+[1:18:14] The founders do.
+
+Rand:
+[1:18:15] Yeah, the founders do. Yeah, they do.
+
+Ryan:
+[1:18:17] You think they're genuine in that. They're not trying to data mine us and steal our data.
+
+Rand:
+[1:18:22] No, no, no. 100%. Data is toxic for a company. It's liability.
+
+Rand:
+[1:18:27] Right?
+
+Rand:
+[1:18:27] People need it to offer a service, but nobody wants it, right? If people could offer a service without having access to the data, they would.
+
+Ryan:
+[1:18:34] But isn't that service ads? They want our attention, our eyeballs. They want to know everything about us so they can sell us more stuff.
+
+Rand:
+[1:18:40] You can do confidential advertising.
+
+Ryan:
+[1:18:43] Right?
+
+Rand:
+[1:18:44] Okay. The point is people want things like FHE for AI, but it's just that right now, the way the AI industry works, the compute is so, the size of models are so big and they're already like so, so limited in how much compute they can access. Like there's not enough energy, electricity production in the US for AI demand. Okay. They cannot afford any extra computation cycles for confidentiality. So right now, the economic model of AI doesn't allow you to bake in confidentiality, even if it worked, even if it worked. So until we find a way to make AI models smaller or to make GPUs cheaper and less energy consuming, it's going to be very difficult to make that happen. So it's not a question of whether people want it. It's just a question that economically right now is just infeasible.
+
+Ryan:
+[1:19:36] So it's basically back to a tech problem again, right? Back to why we haven't had confidentiality and privacy in blockchains. It's not because the demand isn't there. It's not necessarily because of regulators. It's because... We don't have the tech and scale to actually pull this off.
+
+Rand:
+[1:19:49] I'm convinced, to be honest, I'm convinced that, you know, the same way that we went from no encryption to encrypting data with HTTPS, we're going to end up encrypting data in end-to-end in everything we're doing, including AI, including blockchain. And the day that's going to happen, nobody's going to care about privacy, not because they gave up, but because it's going to be by default in everything we're doing. And that's the end goal. You know, like when I think about Zama, when I think about FHE, when I think about all of these technologies, I don't just think about it for blockchain. I think about it as like a technology for everything that you're doing on the internet down the line. Blockchain just turns out to be a great way to start.
+
+Ryan:
+[1:20:26] Rand, I was just relisting to an episode we did with Brian Johnson, Don't Die. Are you in the kind of the Brian Johnson camp of longevity? I actually haven't read.
+
+Rand:
+[1:20:37] I am actually. So my latest longevity score is 0.68.
+
+Ryan:
+[1:20:42] Wait, what's a longevity score? What is that? Is that called the DunnAmp ranking for the server somewhere?
+
+Rand:
+[1:20:47] Yeah, the DunnAmp pace. So basically they measure the pace of aging. So how fast are you aging versus calendar months? of the year. So if you're like, you know, 0.68 like me, it basically means that like, you know, you're aging 0.68% of a full year per year, effectively. So like you're aging slower.
+
+Rand:
+[1:21:08] Which is great because,
+
+Rand:
+[1:21:09] You know, 0.68 puts me like in the top 20 on Brian Johnson's leaderboard. Wow. You're really listed.
+
+Ryan:
+[1:21:14] On the top 20 of Brian Johnson's leaderboard?
+
+Rand:
+[1:21:16] I haven't updated my score yet. So I'm like in the top 50 still, but when you update my latest score, it will be the top 20. Yeah. Oh my God.
+
+Ryan:
+[1:21:23] So you're serious about this. You are a longevity athlete, sir.
+
+Rand:
+[1:21:27] Dude, like I'm like full on biohacker, like competitive biohacker, right? You know, it's a thing, man. Competitive biohacking is a thing.
+
+Ryan:
+[1:21:36] How often do they take the score or do you submit the score?
+
+Rand:
+[1:21:40] I do it once every quarter.
+
+Ryan:
+[1:21:42] Okay. Is there some ability to game it? Like how do they verify the integrity of the data?
+
+Rand:
+[1:21:46] So the company that does the test uploads the score.
+
+Ryan:
+[1:21:49] I see. Wow. Are you Brian? Like Brian Johnson, it feels like he's doing this 24-7. It doesn't seem sustainable for the regular person.
+
+Rand:
+[1:21:59] I tried doing that, man. I tried. Actually, I tried both ways. I tried to be very unhealthy at some point. I did an experiment.
+
+Ryan:
+[1:22:06] Yeah. Will you try to be unhealthy?
+
+Rand:
+[1:22:08] Yeah. So I wanted to start a company doing AI for nutrition, but the problem is I was fit. And so I needed to find a way to be unfit to get fit.
+
+Ryan:
+[1:22:17] You did a supersize me thing.
+
+Rand:
+[1:22:19] I did a supersize me. I gained over 70 pounds in a year. That was a lot. That was a lot. That was a lot. And then my mom started freaking out. She was like, please, I beg you, stop, stop. I was like, no, I'm going to. And then I stopped. And then a year later, I got fit again. And then at some point I was like, you know what? I want to try the other way around. Like, what does it take to get ridiculously fit? Like, you know, to a point that makes no sense. Yeah. Well, I called up a friend of mine who's a coach in LA. And I told him, hey, you know, Mike, what are you going to do for the next few months? He's like, not much. I'm like, come to Paris, live in my house and train me, you know, for six months, like hardcore style. So for six months, I had a live-in coach that was basically training me everything, you know, food, workouts, mindset, like every single thing. 24-7. Wow. So obviously I got like extremely healthy and ripped, But it was, you know, 20 hours a week of efforts going towards that. So completely not doable when you're building a company. And so now it's more like an 80-20 rule. So I do 20% of what I used to do, but I still get 80% of the benefits.
+
+Ryan:
+[1:23:25] Yeah, to be able to be a founder and fully dialed into that. And then also top 20 longevity score. I mean, you must have found some secret combination here. Yeah, well, I mean,
+
+Rand:
+[1:23:36] You know, it's actually not that hard if you know what you're doing. So there are six things that you have to figure out first. First, sleep well, eat well, exercise, don't smoke, don't drink, have friends. I swear, these are the six things.
+
+Ryan:
+[1:23:52] That's it?
+
+Rand:
+[1:23:54] Lifestyle-wise, that's all you have to do.
+
+Ryan:
+[1:23:56] And that helps you live longer. That will increase your longevity.
+
+Rand:
+[1:24:00] You'll get to 100. Just that, right? Then the question is, how do you get to 120 or more than that? That's where you get into supplements. That's where I started getting into biotech, into interventions and protocols, as Brian, you know, calls them. So my protocol is pretty simple. Like I'm basically optimizing for immune system, for blood flow, and for energy metabolism. The logic being that your body knows how to fix itself. So if you have a good way to fix it, enough energy to fix it, and, you know, good blood flow to make it kind of like spread around... Let the rest happen naturally, biologically.
+
+Ryan:
+[1:24:39] Are you fully on board with the whole, like, you don't think you're going to die type of thing? Like, do you think you actually could live forever?
+
+Rand:
+[1:24:46] Well, I'm certainly hoping that, you know, technology will get us there. But I do have a plan B in case it doesn't happen, which is being cryopreserved. So, you know, worst case, you know, there's someone's going to put me in a nice box and wake me up in a thousand years. Who cares? You're dead anyway. You don't see time pass. I've invested in that company, by the way, you know, because I was like, look, if I'm going to be a customer, I might as well know that this is legit. Great company based in Germany called Tomorrow Biostasis. I know it seems like far-fetched, but look, it's a plan B, right? Plan A is live for as long as possible, healthy, happy. Plan B, you know, you get hit by a bus. At least, you know, you have a tiny, tiny chance to make it back.
+
+Ryan:
+[1:25:30] If you're living for hundreds of years, do you think this can be achieved like biologically? Or is there going to have to be some silicon biology sort of fusion? Are you envisioning a world where maybe you are encrypted inside of a data center somewhere? You're like, your mind is there. Hopefully it's encrypted, right? Hopefully it's got some FHE behind that. So we can't hack your mind.
+
+Rand:
+[1:25:50] I think, you know, there is a camp of like mind uploads, right? Yes. I'm more in the camp of like fixing biology, like you fix a car.
+
+Ryan:
+[1:25:58] You kind of like your body. the way it is.
+
+Rand:
+[1:26:01] Yeah, keep it the way it is. Maybe replace a heart here and there, right? But like, at least preserve a biological kind of like a baseline. That's what I want to do, right? Like, maybe it's fun to be in a computer, but I don't know. I just think it's fun to be here right now talking to you. So I want to keep that going as much as I can.
+
+Ryan:
+[1:26:22] Yeah, that's my feeling too. I mean, I really like blockchain. I'm not sure that I'd want to live inside of a blockchain, whatever that would mean in the future. Ran, this has been- Imagine,
+
+Rand:
+[1:26:30] You know, coming back as a meme coin, like how bad you feel.
+
+Ryan:
+[1:26:34] That'd be called hell, I think. Ran, this has been really fun. Maybe just last question for you. 2026, what progress do you think crypto is going to make in terms of privacy and confidentiality? What should we look out for?
+
+Rand:
+[1:26:46] I think 2026 is really going to be a turning point where privacy, Zama hopefully, but also other things are going to go mainstream and are going to start to be integrated by default. I think every wallet, every exchange, every DeFi protocol, every stablecoin is going to have a confidentiality feature because it's net better for everybody to have that.
+
+Ryan:
+[1:27:08] That is good. That is bullish. That is great news. Thank you so much for joining us today. Bankless Nation, got to let you know, of course, none of this has been financial advice, though. If you do have finances on the blockchain, you'll want to make sure to keep them private. You'd lose what you put in, but we're headed west. This is the frontier. It's not for everyone, but we're glad you're with us on the Bankless journey. Thanks a lot. Thank you.
+
+No Responses
+What are your thoughts?
+Newsletter
+Master the frontier of Crypto
+Get smarter, level up in 3 mins a day
+6 per week
+Daily Brief The Daily Brief 
+Front run the day in 3 mins
+
+ Subscribed
+3+ per week
+Metaversal Metaversal 
+1st looks at NFTs, games & culture
+
+ Subscribed
+New
+1+ per week
+Mindshare Mindshare 
+The frontier of AI x Crypto
+
+ Subscribed
+Get connected
+  
+Get the podcast
+   
+Go Bankless
+Become a Citizen
+About Us
+Causes
+Merch
+Jobs
+Terms
+Privacy
+Advertise With Us
+Disclosures
+Tools
+Citizen Discord
+Airdrop Hunter
+Yield Hunter
+Claimables
+Token Hub
+2024 Onchain Wrapped
+Perks
+Convert Crypto Prices
+Ethereum Gas Fees
+Status
+Help & Support
+Bankless API
+Onchain MCP
+Media
+Bankless Podcast
+Articles
+Guides
+Daily Brief
+Metaversal
+Mindshare
+Changelog
+Partners
+Crypto Prices
+Bitcoin Price With Audio
+Ethereum Price With Audio
+Not financial or tax advice. Bankless content is strictly educational and is not investment advice or a solicitation to buy or sell any assets or to make any financial decisions. This newsletter is not tax advice. Talk to your accountant. Do your own research.
+
+Disclosure. From time-to-time we may add links in this newsletter to products we use. We may receive commission if you make a purchase through one of these links. Additionally, the Bankless team hold crypto assets. See our investment disclosures here.
+
+This site is protected by reCAPTCHA.
+
+© 2025 Bankless, LLC

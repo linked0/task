@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Holy Grail of Crypto Privacy - EFL Study Guide</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+KR:wght@400;500;600&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0f172a;
+            --surface: #1e293b;
+            --border: #334155;
+            --text: #e2e8f0;
+            --text-muted: #94a3b8;
+            --accent: #60a5fa;
+            --success: #4ade80;
+            --warning: #fbbf24;
+            --danger: #f87171;
+            --purple: #a78bfa;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', 'Noto Sans KR', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.8;
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, var(--accent), var(--purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .subtitle {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+        }
+
+        .sentence-block {
+            background: var(--surface);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border-left: 4px solid var(--accent);
+        }
+
+        .english {
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+            color: var(--text);
+        }
+
+        .korean {
+            font-size: 1rem;
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+            padding-left: 1rem;
+            border-left: 2px solid var(--purple);
+        }
+
+        .grammar-box {
+            background: rgba(96, 165, 250, 0.1);
+            border-radius: 8px;
+            padding: 1rem;
+            margin-top: 1rem;
+        }
+
+        .grammar-title {
+            font-weight: 600;
+            color: var(--accent);
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .grammar-content {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        .grammar-content strong {
+            color: var(--warning);
+        }
+
+        .vocab {
+            display: inline-block;
+            background: rgba(167, 139, 250, 0.2);
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            margin: 0.2rem;
+            font-size: 0.85rem;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            margin: 2rem 0 1rem;
+            color: var(--accent);
+        }
+
+        .speaker {
+            display: inline-block;
+            background: var(--accent);
+            color: var(--bg);
+            padding: 0.2rem 0.6rem;
+            border-radius: 4px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .speaker.rand {
+            background: var(--purple);
+        }
+
+        .toc {
+            background: var(--surface);
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+        }
+
+        .toc h2 {
+            margin-bottom: 1rem;
+            color: var(--accent);
+        }
+
+        .toc ul {
+            list-style: none;
+            columns: 2;
+        }
+
+        .toc li {
+            margin-bottom: 0.5rem;
+        }
+
+        .toc a {
+            color: var(--text-muted);
+            text-decoration: none;
+        }
+
+        .toc a:hover {
+            color: var(--accent);
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
+            color: var(--text-muted);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <h1>🔐 The Holy Grail of Crypto Privacy</h1>
+            <p class="subtitle">Encrypted Ethereum, FHE & Living Forever | Rand Hindi, Zama Co-Founder</p>
+            <p class="subtitle" style="margin-top: 0.5rem;">EFL Study Guide with Korean Translations & Grammar Points
+            </p>
+        </header>
+
+        <nav class="toc">
+            <h2>📚 Table of Contents</h2>
+            <ul>
+                <li><a href="#intro">1. Introduction to Crypto Privacy</a></li>
+                <li><a href="#why-public">2. Why Blockchain Data is Public</a></li>
+                <li><a href="#confidentiality">3. Privacy vs Confidentiality</a></li>
+                <li><a href="#cryptography">4. Cryptography Families</a></li>
+                <li><a href="#fhe">5. What is FHE?</a></li>
+                <li><a href="#zama">6. The Zama Protocol</a></li>
+                <li><a href="#regulation">7. Regulation & Compliance</a></li>
+                <li><a href="#future">8. The Future of Privacy</a></li>
+            </ul>
+        </nav>
+
+        <section id="intro">
+            <h2 class="section-title">1. Introduction to Crypto Privacy</h2>
+
+            <div class="sentence-block">
+                <span class="speaker rand">Rand</span>
+                <p class="english">"It'll feel just like using Ethereum, right? For developers, it'll feel like just
+                    like building for Ethereum."</p>
+                <p class="korean">📝 "이더리움을 사용하는 것처럼 느껴질 거예요, 맞죠? 개발자들에게는 이더리움용으로 개발하는 것과 똑같이 느껴질 겁니다."</p>
+                <div class="grammar-box">
+                    <div class="grammar-title">📖 Grammar Point: "It'll feel just like..."</div>
+                    <div class="grammar-content">
+                        <strong>구문</strong>: "It'll feel just like + V-ing / noun" = ~처럼 느껴질 것이다<br><br>
+                        <strong>예시</strong>:<br>
+                        • It'll feel just like driving a normal car. (일반 차를 운전하는 것처럼 느껴질 거예요)<br>
+                        • It feels just like home. (집처럼 느껴져요)<br><br>
+                        <span class="vocab">feel like = ~처럼 느끼다</span>
+                        <span class="vocab">just like = 마치 ~처럼</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sentence-block">
+                <span class="speaker">Ryan</span>
+                <p class="english">"Go to anyone on the street and ask them to show you their bank account. That's
+                    blockchain today. It's obvious we need confidentiality."</p>
+                <p class="korean">📝 "길거리에서 아무나 붙잡고 은행 계좌를 보여달라고 해보세요. 그게 오늘날 블록체인입니다. 기밀성이 필요하다는 건 명백합니다."</p>
+                <div class="grammar-box">
+                    <div class="grammar-title">📖 Grammar Point: Imperative + "That's..."</div>
+                    <div class="grammar-content">
+                        <strong>구문</strong>: 명령문 + "That's [noun]" = ~해봐. 그게 바로 [명사]야.<br><br>
+                        수사적 효과를 위해 명령문과 정의를 연결하는 강력한 수사법입니다.<br><br>
+                        <strong>예시</strong>:<br>
+                        • Try running a marathon without training. That's starting a business. (훈련 없이 마라톤을 뛰어봐. 그게 사업
+                        시작하는 거야.)<br><br>
+                        <span class="vocab">It's obvious (that) = ~은 명백하다</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="why-public">
+            <h2 class="section-title">2. Why Blockchain Data is Public</h2>
+
+            <div class="sentence-block">
+                <span class="speaker rand">Rand</span>
+                <p class="english">"The reason why data is public on a public blockchain is because you want public
+                    verifiability. If you want anybody to be able to recompute the states, they need to be able to use
+                    and see the data that was part of computing that state."</p>
+                <p class="korean">📝 "퍼블릭 블록체인에서 데이터가 공개되는 이유는 공개 검증가능성을 원하기 때문입니다. 누구나 상태를 재계산할 수 있게 하려면, 그 상태를 계산하는 데
+                    사용된 데이터를 보고 사용할 수 있어야 합니다."</p>
+                <div class="grammar-box">
+                    <div class="grammar-title">📖 Grammar Point: "The reason why... is because..."</div>
+                    <div class="grammar-content">
+                        <strong>구문</strong>: "The reason why [A] is because [B]" = A인 이유는 B이기 때문이다<br><br>
+                        ⚠️ <strong>주의</strong>: 문법적으로 "The reason is that..."이 더 정확하지만, 구어체에서는 "because"가 자주
+                        사용됩니다.<br><br>
+                        <strong>예시</strong>:<br>
+                        • The reason why I'm late is because the train was delayed. (제가 늦은 이유는 기차가 지연됐기 때문입니다.)<br><br>
+                        <span class="vocab">verifiability = 검증가능성</span>
+                        <span class="vocab">recompute = 재계산하다</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sentence-block">
+                <span class="speaker rand">Rand</span>
+                <p class="english">"This was never a feature of blockchain, right? It was kind of like an artifact of
+                    not having homomorphic encryption in these techniques 15 years ago."</p>
+                <p class="korean">📝 "이건 블록체인의 기능이 아니었어요, 맞죠? 15년 전에 이런 기술에 동형암호가 없었던 것의 부산물 같은 거였죠."</p>
+                <div class="grammar-box">
+                    <div class="grammar-title">📖 Grammar Point: "an artifact of..."</div>
+                    <div class="grammar-content">
+                        <strong>어휘</strong>: "artifact" = 부산물, 인공물 (의도하지 않은 결과)<br><br>
+                        기술 분야에서 자주 사용되는 표현으로, 의도한 것이 아닌 부수적으로 발생한 것을 의미합니다.<br><br>
+                        <strong>예시</strong>:<br>
+                        • This bug is an artifact of the legacy code. (이 버그는 레거시 코드의 부산물입니다.)<br><br>
+                        <span class="vocab">artifact = 부산물, 인공물</span>
+                        <span class="vocab">homomorphic encryption = 동형암호</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sentence-block">
+                <span class="speaker rand">Rand</span>
+                <p class="english">"When you go to your house and close the door, nobody sees what you're doing inside.
+                    When I'm on my phone, I'm using an app. Everything I'm doing on my phone isn't broadcasted to the
+                    public."</p>
+                <p class="korean">📝 "집에 가서 문을 닫으면 아무도 안에서 뭘 하는지 못 봅니다. 제가 폰을 쓸 때 앱을 사용하잖아요. 폰에서 하는 모든 게 대중에게 방송되진
+                    않습니다."</p>
+                <div class="grammar-box">
+                    <div class="grammar-title">📖 Grammar Point: Present Simple for General Truths</div>
+                    <div class="grammar-content">
+                        <strong>용법</strong>: 일반적인 사실이나 진리를 표현할 때 현재 단순 시제 사용<br><br>
+                        "When you go..." / "When I'm..." 조건절과 함께 사용하여 보편적 상황을 설명합니다.<br><br>
+                        <strong>예시</strong>:<br>
+                        • When water boils, it turns to steam. (물이 끓으면 증기로 변합니다.)<br>
+                        • When you exercise, you feel better. (운동하면 기분이 좋아집니다.)<br><br>
+                        <span class="vocab">broadcast = 방송하다, 널리 알리다</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="confidentiality">
+            <h2 class="section-title">3. Privacy vs Confidentiality</h2>
+
+            <div class="sentence-block">
+                <span class="speaker rand">Rand</span>
+                <p class="english">"When we talk about privacy, we typically talk about personal data, your bank
+                    accounts, your DNA. This is personal data. You want it to be private to you."</p>
+                <p class="korean">📝 "프라이버시에 대해 말할 때, 우리는 보통 개인 데이터, 은행 계좌, DNA를 말합니다. 이것은 개인 데이터입니다. 당신만의 프라이버시로 유지되길
+                    원하죠."</p>
+                <div class="grammar-box">
+                    <div class="grammar-title">📖 Grammar Point: "When we talk about X, we typically..."</div>
+                    <div class="grammar-content">
+                        <strong>구문</strong>: 정의나 설명을 시작할 때 사용하는 학술적/전문적 표현<br><br>
+                        <strong>유사 표현</strong>:<br>
+                        • When we refer to X, we mean... (X를 언급할 때, 우리는 ~를 의미합니다)<br>
+                        • When discussing X, it's important to note... (X를 논의할 때, ~를 주목해야 합니다)<br><br>
+                        <span class="vocab">typically = 보통, 일반적으로</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sentence-block">
+                <span class="speaker rand">Rand</span>
+                <p class="english">"When we talk about confidentiality, we include data that is not necessarily about
+                    someone, but it could still be sensitive. A company's financial statement, or maybe you're playing
+                    cards and you want to hide your cards in poker."</p>
+                <p class="korean">📝 "기밀성에 대해 말할 때는 반드시 누군가에 관한 것은 아니지만 여전히 민감할 수 있는 데이터를 포함합니다. 회사의 재무제표나, 포커를 할 때 카드를
+                    숨기고 싶은 경우 같은 거죠."</p>
+                <div class="grammar-box">
+                    <div class="grammar-title">📖 Grammar Point: "not necessarily... but..."</div>
+                    <div class="grammar-content">
+                        <strong>구문</strong>: "not necessarily A, but B" = 반드시 A는 아니지만, B<br><br>
+                        부분적 부정을 표현할 때 사용합니다. 완전히 부정하지 않고 뉘앙스를 추가합니다.<br><br>
+                        <strong>예시</strong>:<br>
+                        • It's not necessarily expensive, but it's not cheap either. (반드시 비싼 건 아니지만, 싸지도 않아요.)<br><br>
+                        <span class="vocab">sensitive = 민감한</span>
+                        <span class="vocab">financial statement = 재무제표</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sentence-block">
+                <span class="speaker rand">Rand</span>
+                <p class="english">"Confidentiality is just like a bigger, more generic term of which privacy is
+                    specifically about personal data."</p>
+                <p class="korean">📝 "기밀성은 더 크고 일반적인 용어이며, 프라이버시는 그 중에서 특별히 개인 데이터에 관한 것입니다."</p>
+                <div class="grammar-box">
+                    <div class="grammar-title">📖 Grammar Point: "of which"</div>
+                    <div class="grammar-content">
+                        <strong>구문</strong>: 관계대명사 "of which"는 전치사 + which의 형태<br><br>
+                        격식체 영어에서 사용되며, 소속이나 부분 관계를 나타냅니다.<br><br>
+                        <strong>예시</strong>:<br>
+                        • There are many programming languages, of which Python is the most popular. (많은 프로그래밍 언어가 있는데,
+                        그 중 Python이 가장 인기 있습니다.)<br><br>
+                        <span class="vocab">generic = 일반적인, 포괄적인</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="cryptography">
+            <h2 class="section-title">4. Cryptography Families</h2>
+
+            <div class="sentence-block">
+                <span class="speaker rand">Rand</span>
+                <p class="english">"One of them is I want to be able to store data securely in a way that nobody can see
+                    it unless they have the secret key."</p>
+                <p class="korean">📝 "그 중 하나는 비밀 키가 없으면 아무도 볼 수 없는 방식으로 데이터를 안전하게 저장하고 싶다는 것입니다."</p>
+                <div class="grammar-box">
+                    <div class="grammar-title">📖 Grammar Point: "in a way that..."</div>
+                    <div class="grammar-content">
+                        <strong>구문</strong>: "in a way that + 절" = ~하는 방식으로<br><br>
+                        방법이나 방식을 설명할 때 사용하는 표현입니다.<br><br>
+                        <strong>예시</strong>:<br>
+                        • We need to solve this in a way that everyone benefits. (모두가 이익을 보는 방식으로 이것을 해결해야 합니다.)<br><br>
+                        <span class="vocab">securely = 안전하게</span>
+                        <span class="vocab">unless = ~하지 않으면</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sentence-block">
+                <span class="speaker rand">Rand</span>
+                <p class="english">"ZK is a way to prove that you've done something without necessarily revealing the
+                    data that's behind it. So I can prove to you that I have 100 tokens without showing you that I have
+                    100 tokens."</p>
+                <p class="korean">📝 "ZK는 그 뒤에 있는 데이터를 반드시 공개하지 않고도 무언가를 했다는 것을 증명하는 방법입니다. 그래서 100개의 토큰이 있다는 것을 보여주지
+                    않고도 100개의 토큰이 있다는 것을 증명할 수 있습니다."</p>
+                <div class="grammar-box">
+                    <div class="grammar-title">📖 Grammar Point: "without + V-ing"</div>
+                    <div class="grammar-content">
+                        <strong>구문</strong>: "without + 동명사" = ~하지 않고<br><br>
+                        어떤 동작 없이 다른 동작을 수행함을 표현합니다.<br><br>
+                        <strong>예시</strong>:<br>
+                        • She left without saying goodbye. (그녀는 작별 인사도 없이 떠났다.)<br>
+                        • You can't succeed without working hard. (열심히 일하지 않고는 성공할 수 없다.)<br><br>
+                        <span class="vocab">reveal = 드러내다, 공개하다</span>
+                        <span class="vocab">prove = 증명하다</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sentence-block">
+                <span class="speaker rand">Rand</span>
+                <p class="english">"The only downside of ZK is that you cannot compute on the ZK proof. So you don't
+                    have like composability. You cannot stake that proof."</p>
+                <p class="korean">📝 "ZK의 유일한 단점은 ZK 증명에 대해 연산을 할 수 없다는 것입니다. 그래서 조합성이 없죠. 그 증명을 스테이킹할 수 없습니다."</p>
+                <div class="grammar-box">
+                    <div class="grammar-title">📖 Grammar Point: "The only downside of X is that..."</div>
+                    <div class="grammar-content">
+                        <strong>구문</strong>: 단점이나 문제점을 소개할 때 사용<br><br>
+                        <strong>유사 표현</strong>:<br>
+                        • The only problem with X is that... (X의 유일한 문제는 ~이다)<br>
+                        • The only drawback is that... (유일한 결점은 ~이다)<br><br>
+                        <span class="vocab">downside = 단점, 부정적 측면</span>
+                        <span class="vocab">composability = 조합성</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="fhe">
+            <h2 class="section-title">5. What is FHE?</h2>
+
+            <div class="sentence-block">
+                <span class="speaker rand">Rand</span>
+                <p class="english">"FHE is a way to compute on encrypted data without decrypting it. So I give you a
+                    piece of encrypted data, and I can now run software, a smart contract, an AI model on the encrypted
+                    data, and the output is also going to be an encrypted piece of data."</p>
+                <p class="korean">📝 "FHE는 암호화된 데이터를 복호화하지 않고 연산하는 방법입니다. 암호화된 데이터를 주면, 이제 그 암호화된 데이터에서 소프트웨어, 스마트 컨트랙트,
+                    AI 모델을 실행할 수 있고, 출력도 암호화된 데이터가 됩니다."</p>
+                <div class="grammar-box">
+                    <div class="grammar-title">📖 Grammar Point: "a way to + infinitive"</div>
+                    <div class="grammar-content">
+                        <strong>구문</strong>: "a way to + 동사원형" = ~하는 방법<br><br>
+                        방법, 수단, 기술을 설명할 때 사용하는 기본적인 패턴입니다.<br><br>
+                        <strong>예시</strong>:<br>
+                        • This is a way to save money. (이것은 돈을 절약하는 방법입니다.)<br>
+                        • There must be a way to solve this problem. (이 문제를 해결하는 방법이 있을 거예요.)<br><br>
+                        <span class="vocab">compute = 연산하다, 계산하다</span>
+                        <span class="vocab">decrypt = 복호화하다</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sentence-block">
+                <span class="speaker rand">Rand</span>
+                <p class="english">"So it's like end-to-end encryption, but for any kind of software that you might want
+                    to be using."</p>
+                <p class="korean">📝 "그러니까 종단 간 암호화와 같지만, 당신이 사용하고 싶은 모든 종류의 소프트웨어에 적용됩니다."</p>
+                <div class="grammar-box">
+                    <div class="grammar-title">📖 Grammar Point: "A, but for B"</div>
+                    <div class="grammar-content">
+                        <strong>구문</strong>: 비유를 확장할 때 사용<br><br>
+                        기존 개념(A)을 새로운 영역(B)에 적용함을 설명합니다.<br><br>
+                        <strong>예시</strong>:<br>
+                        • It's like Uber, but for dog walking. (Uber 같지만, 강아지 산책 서비스입니다.)<br>
+                        • It's like Netflix, but for books. (Netflix 같지만, 책 서비스입니다.)<br><br>
+                        <span class="vocab">end-to-end encryption = 종단 간 암호화</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sentence-block">
+                <span class="speaker rand">Rand</span>
+                <p class="english">"Today, FHE is secure even against quantum computers. So even a quantum computer
+                    cannot decrypt your data on chain."</p>
+                <p class="korean">📝 "오늘날 FHE는 양자 컴퓨터에 대해서도 안전합니다. 그래서 양자 컴퓨터조차도 온체인 데이터를 복호화할 수 없습니다."</p>
+                <div class="grammar-box">
+                    <div class="grammar-title">📖 Grammar Point: "even + noun" for emphasis</div>
+                    <div class="grammar-content">
+                        <strong>구문</strong>: "even"을 강조에 사용 = ~조차도<br><br>
+                        예상치 못한 상황이나 극단적인 경우를 강조할 때 사용합니다.<br><br>
+                        <strong>예시</strong>:<br>
+                        • Even the experts couldn't solve it. (전문가들조차 해결하지 못했다.)<br>
+                        • She didn't even say thank you. (그녀는 고맙다는 말조차 하지 않았다.)<br><br>
+                        <span class="vocab">quantum computer = 양자 컴퓨터</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="zama">
+            <h2 class="section-title">6. The Zama Protocol</h2>
+
+            <div class="sentence-block">
+                <span class="speaker rand">Rand</span>
+                <p class="english">"We basically add this layer of encryption to Ethereum, to Base, to Solana, to
+                    anywhere where people want to run and do something, you know, on-chain."</p>
+                <p class="korean">📝 "우리는 기본적으로 이더리움, 베이스, 솔라나, 사람들이 온체인에서 무언가를 실행하고 하고 싶은 모든 곳에 이 암호화 레이어를 추가합니다."</p>
+                <div class="grammar-box">
+                    <div class="grammar-title">📖 Grammar Point: "to X, to Y, to anywhere..."</div>
+                    <div class="grammar-content">
+                        <strong>구문</strong>: 반복되는 "to"로 목록의 포괄성 강조<br><br>
+                        범용성이나 광범위한 적용을 강조할 때 사용하는 수사적 기법입니다.<br><br>
+                        <strong>예시</strong>:<br>
+                        • We deliver to homes, to offices, to anywhere you need. (집으로, 사무실로, 필요한 어디든 배달합니다.)<br><br>
+                        <span class="vocab">layer = 레이어, 층</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sentence-block">
+                <span class="speaker rand">Rand</span>
+                <p class="english">"I think about it a little bit like HTTPS, but for blockchain. You know HTTPS, when
+                    you connect to a website, the data you're sending and receiving is encrypted, but you don't really
+                    actually notice it."</p>
+                <p class="korean">📝 "저는 이것을 HTTPS와 비슷하게 생각하는데, 블록체인용이죠. HTTPS 아시죠, 웹사이트에 연결할 때 보내고 받는 데이터가 암호화되지만 실제로
+                    알아채지 못하잖아요."</p>
+                <div class="grammar-box">
+                    <div class="grammar-title">📖 Grammar Point: "I think about it like X"</div>
+                    <div class="grammar-content">
+                        <strong>구문</strong>: 비유나 유추를 설명할 때 사용<br><br>
+                        복잡한 개념을 친숙한 것에 비유하여 설명하는 데 효과적입니다.<br><br>
+                        <strong>유사 표현</strong>:<br>
+                        • I see it as... (저는 그것을 ~로 봅니다)<br>
+                        • Think of it like... (~처럼 생각해보세요)<br><br>
+                        <span class="vocab">notice = 알아채다, 인지하다</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sentence-block">
+                <span class="speaker rand">Rand</span>
+                <p class="english">"Those 13 people, everybody knows who they are. Ledger is one of them. Fireblocks is
+                    one of them. Layer Zero is one of them. So we're talking companies that collectively secure 100
+                    billion in assets already."</p>
+                <p class="korean">📝 "그 13명, 모두가 누군지 알죠. Ledger가 그 중 하나입니다. Fireblocks가 그 중 하나입니다. Layer Zero가 그 중
+                    하나입니다. 우리는 이미 총 1000억 달러의 자산을 보호하는 회사들을 말하는 겁니다."</p>
+                <div class="grammar-box">
+                    <div class="grammar-title">📖 Grammar Point: "We're talking..."</div>
+                    <div class="grammar-content">
+                        <strong>구문</strong>: 구어체에서 강조나 설명에 사용<br><br>
+                        "We're talking about"의 축약형으로, 규모나 중요성을 강조할 때 사용합니다.<br><br>
+                        <strong>예시</strong>:<br>
+                        • We're talking millions of dollars here. (여기서 우리는 수백만 달러를 말하는 겁니다.)<br>
+                        • We're talking serious consequences. (심각한 결과를 말하는 거예요.)<br><br>
+                        <span class="vocab">collectively = 총체적으로, 집단적으로</span>
+                        <span class="vocab">secure = 보호하다, 확보하다</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="regulation">
+            <h2 class="section-title">7. Regulation & Compliance</h2>
+
+            <div class="sentence-block">
+                <span class="speaker rand">Rand</span>
+                <p class="english">"The way I think about compliance is that there are two ways to build a protocol. One
+                    way is I'm providing the privacy features directly... The other way is what Zama is doing is we're
+                    providing a way for people to build confidentiality into their tokens and applications."</p>
+                <p class="korean">📝 "제가 컴플라이언스를 생각하는 방식은, 프로토콜을 구축하는 두 가지 방법이 있다는 것입니다. 한 가지 방법은 제가 직접 프라이버시 기능을 제공하는
+                    것... 다른 방법은 Zama가 하는 것처럼 사람들이 토큰과 애플리케이션에 기밀성을 구축할 수 있는 방법을 제공하는 것입니다."</p>
+                <div class="grammar-box">
+                    <div class="grammar-title">📖 Grammar Point: "The way I think about X is..."</div>
+                    <div class="grammar-content">
+                        <strong>구문</strong>: 개인적인 관점이나 프레임을 소개할 때 사용<br><br>
+                        자신의 시각을 설명하며 논의를 시작하는 효과적인 방법입니다.<br><br>
+                        <strong>유사 표현</strong>:<br>
+                        • The way I see it is... (제가 보는 관점에서는...)<br>
+                        • How I look at it is... (제가 바라보는 방식은...)<br><br>
+                        <span class="vocab">compliance = 준수, 컴플라이언스</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sentence-block">
+                <span class="speaker rand">Rand</span>
+                <p class="english">"Ethereum didn't get sued because Tornado Cash was running on Ethereum. And so the
+                    way we're thinking about this is like, okay, so instead of like forcing a privacy model or a
+                    compliance model on everybody who's building on top of the Zama technology, we're going to create
+                    tools in the protocol."</p>
+                <p class="korean">📝 "토네이도 캐시가 이더리움에서 운영됐다고 해서 이더리움이 소송당하진 않았죠. 그래서 우리가 이것에 대해 생각하는 방식은, Zama 기술 위에 구축하는
+                    모든 사람에게 프라이버시 모델이나 컴플라이언스 모델을 강요하는 대신, 프로토콜에 도구를 만들 거라는 겁니다."</p>
+                <div class="grammar-box">
+                    <div class="grammar-title">📖 Grammar Point: "X didn't get [past participle] because..."</div>
+                    <div class="grammar-content">
+                        <strong>구문</strong>: 인과관계의 부정 - "~했다고 해서 ~되지 않았다"<br><br>
+                        <strong>구조</strong>: "X didn't get sued/punished/blamed because Y happened"<br><br>
+                        <strong>예시</strong>:<br>
+                        • He didn't get fired because he made one mistake. (한 번 실수했다고 해고되지 않았다.)<br><br>
+                        <span class="vocab">get sued = 소송당하다</span>
+                        <span class="vocab">force = 강요하다</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="future">
+            <h2 class="section-title">8. The Future of Privacy</h2>
+
+            <div class="sentence-block">
+                <span class="speaker rand">Rand</span>
+                <p class="english">"I'm convinced, to be honest, I'm convinced that, you know, the same way that we went
+                    from no encryption to encrypting data with HTTPS, we're going to end up encrypting data in
+                    end-to-end in everything we're doing."</p>
+                <p class="korean">📝 "솔직히 저는 확신합니다. 암호화 없는 상태에서 HTTPS로 데이터를 암호화하는 것으로 넘어간 것처럼, 우리는 결국 우리가 하는 모든 것에서 종단 간
+                    데이터 암호화를 하게 될 것입니다."</p>
+                <div class="grammar-box">
+                    <div class="grammar-title">📖 Grammar Point: "the same way that..."</div>
+                    <div class="grammar-content">
+                        <strong>구문</strong>: 유추나 비교를 할 때 사용 = ~한 것과 같은 방식으로<br><br>
+                        과거의 경험이나 다른 영역의 발전을 현재 상황에 적용할 때 유용합니다.<br><br>
+                        <strong>예시</strong>:<br>
+                        • The same way that smartphones replaced landlines, AI will replace many jobs. (스마트폰이 유선전화를 대체한
+                        것처럼, AI가 많은 일자리를 대체할 것입니다.)<br><br>
+                        <span class="vocab">I'm convinced = 나는 확신한다</span>
+                        <span class="vocab">end up + V-ing = 결국 ~하게 되다</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sentence-block">
+                <span class="speaker rand">Rand</span>
+                <p class="english">"I think 2026 is really going to be a turning point where privacy, Zama hopefully,
+                    but also other things are going to go mainstream and are going to start to be integrated by
+                    default."</p>
+                <p class="korean">📝 "2026년이 정말 전환점이 될 것 같습니다. 프라이버시, 바라건대 Zama도, 그리고 다른 것들도 주류가 되고 기본적으로 통합되기 시작할
+                    것입니다."</p>
+                <div class="grammar-box">
+                    <div class="grammar-title">📖 Grammar Point: "a turning point where..."</div>
+                    <div class="grammar-content">
+                        <strong>구문</strong>: 중요한 변화의 시점을 설명할 때 사용<br><br>
+                        "turning point"는 결정적 전환점을 의미하며, "where"로 그 시점에서 일어나는 일을 설명합니다.<br><br>
+                        <strong>예시</strong>:<br>
+                        • 2008 was a turning point where the financial system fundamentally changed. (2008년은 금융 시스템이
+                        근본적으로 변화한 전환점이었다.)<br><br>
+                        <span class="vocab">turning point = 전환점</span>
+                        <span class="vocab">go mainstream = 주류가 되다</span>
+                        <span class="vocab">by default = 기본적으로</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sentence-block">
+                <span class="speaker rand">Rand</span>
+                <p class="english">"I think every wallet, every exchange, every DeFi protocol, every stablecoin is going
+                    to have a confidentiality feature because it's net better for everybody to have that."</p>
+                <p class="korean">📝 "모든 지갑, 모든 거래소, 모든 DeFi 프로토콜, 모든 스테이블코인이 기밀성 기능을 갖게 될 것입니다. 그것을 갖는 것이 모든 사람에게 순이익이기
+                    때문입니다."</p>
+                <div class="grammar-box">
+                    <div class="grammar-title">📖 Grammar Point: "every X, every Y, every Z"</div>
+                    <div class="grammar-content">
+                        <strong>구문</strong>: 반복을 통한 포괄성 강조<br><br>
+                        같은 단어(every)를 반복하여 예외 없이 모든 것을 포함함을 강조합니다.<br><br>
+                        <strong>예시</strong>:<br>
+                        • Every employee, every department, every branch needs to follow this policy. (모든 직원, 모든 부서, 모든
+                        지점이 이 정책을 따라야 합니다.)<br><br>
+                        <span class="vocab">net better = 순이익인, 전체적으로 더 나은</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <footer>
+            <p>📚 EFL Study Guide | Created from Bankless Podcast with Rand Hindi, Zama Co-Founder</p>
+            <p style="margin-top: 0.5rem; font-size: 0.9rem;">Source: "The Holy Grail of Crypto Privacy: Encrypted
+                Ethereum, FHE & Living Forever"</p>
+        </footer>
+    </div>
+</body>
+
+</html>
