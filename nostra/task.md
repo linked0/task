@@ -8,17 +8,16 @@ It's just asking for some knowledge about general development. So do change the 
 
 # Tasks 
 ## Task-1:
-We manage users by wallets. All the information is related to the wallet. Is it right to manage users by wallets? 
+The P&L does not show the correct value. It is like this image:
+![alt text](/images/image-1207-01.png) which is the trader 1's P&L even though the market is not resolved yet.
 
-## Task-2: 
-ERC20 포인트 제공, 거래소 사업에서 대해서 스터디
+## Task-2:
+The market title should be bigger and clickable to the detail page.
+![alt text](/images/image-1207-02.png)
 
-## Task-3: 
-Notion is good for project management like monday.com? Actually I don't need any special tool for project management.
-
-## Task-4: Figma and Stitch and Notion
-Is there any good way to implement in Figma something that our team discussed in Notion. 
-
+## Task-3:
+![alt text](/images/image-1207-03.png)
+This is weird because the trader 4 tried to buy 40 amount of 51c of Argentina Yes tokens. But the order book doesn't shows the right order book which means the trading are not completed normally.
 
 # After Tasks Done
 You can summarize the what you've done and the changes you've made to the codebase in the file named `summary.md` in the same folder as the tasks.md And copy it to the foler `~/work/task/nostra/dev-logs` with the name of summary-xxx.md in which xxx is date and time when the summary was created. If there is already the same file, you can add some number to the file name. In the last part of the file you should add the original request of the tasks described in this file with some vivid separation. I don't think you must change the codebase, but you can just plan the implementation or recommend something after a review and research. Any summary is OK because I can try to have you do something after a review.

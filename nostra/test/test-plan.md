@@ -1,22 +1,22 @@
 # Prerequisites
-The balances of all traders are $1000 USDC.
-The creator has $100000 USDC who is also a administrator of this platform.
+The balances of all traders are $10,000 USDC.
+The creator has $100,000 USDC who is also an administrator of this platform.
 
 You calculate the PnL of each trader based on the final resolution. And the creator would get the 2% of the Winners' profit. And the platform would also get the 2% of the Winner's profit. Currently, the creator and the platform are the same person, which mean the creator would get the 4% of the Winners' profit.
 
 # Initial State for each test
 💰 Initial mUSDC Token Balances:
 SERVER_WALLET   100,000.00 mUSDC
-TRADER_1        1,000.00 mUSDC
-TRADER_2        1,000.00 mUSDC
-TRADER_3        1,000.00 mUSDC
-TRADER_4        1,000.00 mUSDC
-TRADER_5        1,000.00 mUSDC
-TRADER_6        1,000.00 mUSDC
-TRADER_7        1,000.00 mUSDC
-TRADER_8        1,000.00 mUSDC
-TRADER_9        1,000.00 mUSDC
-TRADER_10       1,000.00 mUSDC
+TRADER_1        10,000.00 mUSDC
+TRADER_2        10,000.00 mUSDC
+TRADER_3        10,000.00 mUSDC
+TRADER_4        10,000.00 mUSDC
+TRADER_5        10,000.00 mUSDC
+TRADER_6        10,000.00 mUSDC
+TRADER_7        10,000.00 mUSDC
+TRADER_8        10,000.00 mUSDC
+TRADER_9        10,000.00 mUSDC
+TRADER_10       10,000.00 mUSDC
 
 **Market Configuration:**
 - 5 Outcomes (Argentina, Brazil, France, England, Spain)
@@ -29,7 +29,7 @@ TRADER_10       1,000.00 mUSDC
 World Cup 2026
 
 ### Steps
-All traders have $1000 USDC in their wallets at start.
+All traders have $10,000 USDC in their wallets at start.
 
 1. Trader 1 Buy
 - **Market Buy** $10 worth Brazil Yes token at ~21.0c (Ask price)
@@ -50,37 +50,37 @@ Brazil Wins
 
 ### Result
 - Trader 1: Filled ~47.6 shares @ 21.0c (Brazil YES)
-    - Initial Balance: $1000.00
-    - Balance After Buy: $990.00
+    - Initial Balance: $10,000.00
+    - Balance After Buy: $9,990.00
     - Gross PnL (If Brazil Wins): +$37.60 (47.6 * $1.00 - $10.00)
     - Fee (4% of Profit): -$1.50 ($37.60 * 0.04)
     - Net Profit: +$36.10
-    - Balance After Claim: **$1036.10**
+    - Balance After Claim: **$10,036.10**
 
 - Trader 2: Filled ~47.6 shares @ 21.0c (France YES)
-    - Initial Balance: $1000.00
-    - Balance After Buy: $990.00
+    - Initial Balance: $10,000.00
+    - Balance After Buy: $9,990.00
     - Gross PnL (If Brazil Wins): -$10.00
     - Fee: $0.00
     - Net Profit: -$10.00
-    - Balance After Claim: **$990.00**
+    - Balance After Claim: **$9,990.00**
 
 - Trader 3:
-    - Initial Balance: $1000.00
-    - Balance After Buy: $980.00
+    - Initial Balance: $10,000.00
+    - Balance After Buy: $9,980.00
     - Step 3: Filled ~24.7 shares @ 81.0c (France NO buy)
     - Step 4: **Limit order placed** at 85.0c (France NO sell)
     - Total France NO position: 24.7 shares
     - Gross PnL (If Brazil Wins): +$4.70 (24.7 * $1.00 - $20.00)
     - Fee (4% of Profit): -$0.19 ($4.70 * 0.04)
     - Net Profit: +$4.51
-    - Balance After Claim: **$1004.51**
+    - Balance After Claim: **$10,004.51**
 
 ## Test 2: Liquidity & Limit Orders
 World Cup 2026
 
 ### Steps
-All traders have $1000 USDC in their wallets at start.
+All traders have $10,000 USDC in their wallets at start.
 
 1. Trader 1 Buy
 - $20 worth Brazil Yes token at ~21.0c
@@ -100,8 +100,8 @@ Brazil Wins
 
 ### Result
 - Trader 1:
-    - **Initial Balance**: $1,000.00
-    - **Step 1 (Buy)**: Buys $20 worth @ ~21.0c -> ~95 shares. Balance: $980.00.
+    - **Initial Balance**: $10,000.00
+    - **Step 1 (Buy)**: Buys $20 worth @ ~21.0c -> ~95 shares. Balance: $9,980.00.
     - **Step 2 (Limit Sell)**: Sells 20 shares @ 30.0c -> Receives $6.00 (if filled).
     - **Resolution (Win)**: Pays out $1.00 per share.
 
@@ -142,7 +142,7 @@ Verify that a user can exit a position by selling shares into existing liquidity
 
 ### Expected Result
 ✅ Trader 1 successfully converts Shares back to USDC.
-✅ Final Balance: **~$990.00** (Loss ~2c per share * 238 shares = ~$4.76).
+✅ Final Balance: **~$9,995.24** (Loss ~2c per share * 238 shares = ~$4.76).
 
 ## Test 7: Hedging (Buying Both Sides)
 ### Objective
@@ -183,7 +183,7 @@ Verify the outcome when a trader buys equal amounts of both outcomes (Yes and No
 Verify the outcome when a trader executes Market Buys for a specific dollar amount ($30) on both outcomes.
 
 ### Steps
-1. **Initial State**: Trader 1 has $1,000.00 mUSDC.
+1. **Initial State**: Trader 1 has $10,000.00 mUSDC.
 2. **Buy Yes**:
     - Trader 1 Market Buys **$30.00** of "Brazil Yes".
     - Price ~21c. Shares: ~142.
@@ -191,13 +191,13 @@ Verify the outcome when a trader executes Market Buys for a specific dollar amou
     - Trader 1 Market Buys **$30.00** of "Brazil No".
     - Price ~81c. Shares: ~37.
 4. **Verify Portfolio**:
-    - **Cash Balance**: $940.00.
+    - **Cash Balance**: $9,940.00.
     - **Current Value**: ~$60.00.
 5. **Resolve Market**:
     - Administrator resolves the market to **"Brazil Yes"**.
 6. **Claim**:
     - Payout: 142 * $0.96 = $136.32.
-    - Final Balance: $940 + $136 = $1076.
+    - Final Balance: $9,940 + $136 = $10,076.
     - **Again, profit because Underdog won.**
 
 ### Note on Hedging with 20/80 Split
