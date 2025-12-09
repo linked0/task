@@ -162,214 +162,101 @@
             padding: 40px;
             display: none;
         }
+
+        .card-desc {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-top: 8px;
+            line-height: 1.4;
+            font-style: italic;
+            border-top: 1px dashed var(--border);
+            padding-top: 8px;
+        }
     </style>
 </head>
 
 <body>
 
     <div class="container">
-        <header>
-            <h1>Workspace Index</h1>
-            <p style="color: var(--text-secondary);">Documentation, Tasks, and Dev Logs</p>
+        <!-- ... code omitted ... -->
 
-            <div class="search-container">
-                <input type="text" class="search-input" id="searchInput" placeholder="Search files...">
+        <!-- External Resources -->
+        <div class="section">
+            <h2 class="section-title">External Resources</h2>
+            <div class="grid">
+                <a href="https://www.youtube.com/watch?v=uzFOhkORVfk" class="card" target="_blank"
+                    style="grid-column: span 2;">
+                    <span class="card-title">Coding Agent PR Review (YouTube) <span class="badge badge-html"
+                            style="background: rgba(255, 0, 0, 0.2); color: #ff0000;">YT</span></span>
+                    <span class="card-path">youtube.com/watch?v=uzFOhkORVfk</span>
+                    <span class="card-desc">"The most impressive shift is that instead of reviewing code in PRs, with
+                        coding agents we review implementation plans and test cases."</span>
+                </a>
+                <a href="https://red.anthropic.com/2025/smart-contracts/" class="card" target="_blank">
+                    <span class="card-title">Anthropic: AI Agents & Exploits <span class="badge badge-html"
+                            style="background: rgba(239, 68, 68, 0.2); color: #ef4444;">WEB</span></span>
+                    <span class="card-path">red.anthropic.com/...</span>
+                </a>
+                <a href="https://www.youtube.com/watch?v=gKsRyd1fQfY" class="card" target="_blank">
+                    <span class="card-title">YouTube Video (gKsRyd1fQfY) <span class="badge badge-html"
+                            style="background: rgba(255, 0, 0, 0.2); color: #ff0000;">YT</span></span>
+                    <span class="card-path">youtube.com/watch?v=gKsRyd1fQfY</span>
+                </a>
+                <a href="https://www.youtube.com/watch?v=CEvIs9y1uog" class="card" target="_blank">
+                    <span class="card-title">YouTube Video (CEvIs9y1uog) <span class="badge badge-html"
+                            style="background: rgba(255, 0, 0, 0.2); color: #ff0000;">YT</span></span>
+                    <span class="card-path">youtube.com/watch?v=CEvIs9y1uog</span>
+                </a>
+                <a href="zksnark_math.html" class="card">
+                    <span class="card-title">ZK-SNARKs Math <span class="badge badge-html">HTML</span></span>
+                    <span class="card-path">zksnark_math.html</span>
+                </a>
             </div>
-        </header>
-
-        <div id="content">
-            <!-- Root -->
-            <div class="section">
-                <h2 class="section-title">Nostra - Core</h2>
-                <div class="grid">
-                    <a href="nostra/task.md" class="card">
-                        <span class="card-title">Task List (Active) <span class="badge badge-md">MD</span></span>
-                        <span class="card-path">nostra/task.md</span>
-                    </a>
-                    <a href="nostra/summary.md" class="card">
-                        <span class="card-title">Summary <span class="badge badge-md">MD</span></span>
-                        <span class="card-path">nostra/summary.md</span>
-                    </a>
-                    <a href="nostra/README.md" class="card">
-                        <span class="card-title">Readme <span class="badge badge-md">MD</span></span>
-                        <span class="card-path">nostra/README.md</span>
-                    </a>
-                    <a href="nostra/plan.html" class="card">
-                        <span class="card-title">Project Plan <span class="badge badge-html">HTML</span></span>
-                        <span class="card-path">nostra/plan.html</span>
-                    </a>
-                    <a href="nostra/batch-plan.md" class="card">
-                        <span class="card-title">Batch Plan <span class="badge badge-md">MD</span></span>
-                        <span class="card-path">nostra/batch-plan.md</span>
-                    </a>
-                    <a href="nostra/TESTING_GUIDE.md" class="card">
-                        <span class="card-title">Testing Guide <span class="badge badge-md">MD</span></span>
-                        <span class="card-path">nostra/TESTING_GUIDE.md</span>
-                    </a>
-                </div>
-            </div>
-
-            <!-- Designs -->
-            <div class="section">
-                <h2 class="section-title">Designs & Visuals</h2>
-                <div class="grid">
-                    <a href="nostra/designs/liquidity_preview.html" class="card">
-                        <span class="card-title">Liquidity Preview <span class="badge badge-html">HTML</span></span>
-                        <span class="card-path">nostra/designs/liquidity_preview.html</span>
-                    </a>
-                    <a href="nostra/designs/market-design-discussion.html" class="card">
-                        <span class="card-title">Market Design <span class="badge badge-html">HTML</span></span>
-                        <span class="card-path">nostra/designs/market-design-discussion.html</span>
-                    </a>
-                    <a href="nostra/designs/negrisk-adapter-explained.html" class="card">
-                        <span class="card-title">Negrisk Adapter <span class="badge badge-html">HTML</span></span>
-                        <span class="card-path">nostra/designs/negrisk-adapter-explained.html</span>
-                    </a>
-                    <a href="nostra/designs/batch-processing-design-2025-12-09.html" class="card">
-                        <span class="card-title">Batch Processing Design <span
-                                class="badge badge-html">HTML</span></span>
-                        <span class="card-path">nostra/designs/batch-processing-design...html</span>
-                    </a>
-                    <a href="nostra/designs/cloud-run-deployment-guide.html" class="card">
-                        <span class="card-title">Cloud Run Guide <span class="badge badge-html">HTML</span></span>
-                        <span class="card-path">nostra/designs/cloud-run...html</span>
-                    </a>
-                    <a href="nostra/designs/task-1-create-market.md" class="card">
-                        <span class="card-title">Task 1: Create Market <span class="badge badge-md">MD</span></span>
-                        <span class="card-path">nostra/designs/task-1-create-market.md</span>
-                    </a>
-                    <a href="nostra/designs/task-2-deposit-withdrawal.md" class="card">
-                        <span class="card-title">Task 2: Deposit/Withdrawal <span
-                                class="badge badge-md">MD</span></span>
-                        <span class="card-path">nostra/designs/task-2-deposit-withdrawal.md</span>
-                    </a>
-                    <a href="nostra/designs/task-3-batching.md" class="card">
-                        <span class="card-title">Task 3: Batching <span class="badge badge-md">MD</span></span>
-                        <span class="card-path">nostra/designs/task-3-batching.md</span>
-                    </a>
-                    <a href="nostra/designs/liquidity-ui-concept.md" class="card">
-                        <span class="card-title">Liquidity UI Concept <span class="badge badge-md">MD</span></span>
-                        <span class="card-path">nostra/designs/liquidity-ui-concept.md</span>
-                    </a>
-                </div>
-            </div>
-
-            <!-- Dev Logs -->
-            <div class="section">
-                <h2 class="section-title">Dev Logs</h2>
-                <div class="grid">
-                    <a href="nostra/dev-logs/summary-2025-12-09-sync-and-trade-fixes.html" class="card">
-                        <span class="card-title">Sync & Trade Fixes (Dec 9) <span
-                                class="badge badge-html">HTML</span></span>
-                        <span class="card-path">nostra/dev-logs/summary-2025-12-09...html</span>
-                    </a>
-                    <a href="nostra/dev-logs/summary-2025-12-09-sync-trade-button-fixes.html" class="card">
-                        <span class="card-title">Sync Trade Button Fixes <span
-                                class="badge badge-html">HTML</span></span>
-                        <span class="card-path">nostra/dev-logs/summary-2025-12-09...html</span>
-                    </a>
-
-                    <!-- Recent Markdown Logs -->
-                    <a href="nostra/dev-logs/summary-2025-12-09-batch-processing-review.md" class="card">
-                        <span class="card-title">Batch Processing Review <span class="badge badge-md">MD</span></span>
-                        <span class="card-path">nostra/dev-logs/...batch-processing-review.md</span>
-                    </a>
-                    <a href="nostra/dev-logs/summary-2025-12-09-14-48-limit-order-fix.md" class="card">
-                        <span class="card-title">Limit Order Fix <span class="badge badge-md">MD</span></span>
-                        <span class="card-path">nostra/dev-logs/...limit-order-fix.md</span>
-                    </a>
-                </div>
-            </div>
-
-            <!-- Root / Misc -->
-            <div class="section">
-                <h2 class="section-title">Knowledge Base & Root</h2>
-                <div class="grid">
-                    <a href="zksnark_math.html" class="card">
-                        <span class="card-title">ZK-SNARKs Math <span class="badge badge-html">HTML</span></span>
-                        <span class="card-path">zksnark_math.html</span>
-                    </a>
-                    <a href="eng/holy-grail-study-light.html" class="card">
-                        <span class="card-title">Holy Grail Study (Light) <span
-                                class="badge badge-html">HTML</span></span>
-                        <span class="card-path">eng/holy-grail-study-light.html</span>
-                    </a>
-                    <a href="ai/README.md" class="card">
-                        <span class="card-title">AI Readme <span class="badge badge-md">MD</span></span>
-                        <span class="card-path">ai/README.md</span>
-                    </a>
-                </div>
-            </div>
-
-            <!-- External Resources -->
-            <div class="section">
-                <h2 class="section-title">External Resources</h2>
-                <div class="grid">
-                    <a href="https://red.anthropic.com/2025/smart-contracts/" class="card" target="_blank">
-                        <span class="card-title">Anthropic: AI Agents & Exploits <span class="badge badge-html"
-                                style="background: rgba(239, 68, 68, 0.2); color: #ef4444;">WEB</span></span>
-                        <span class="card-path">red.anthropic.com/...</span>
-                    </a>
-                    <a href="https://www.youtube.com/watch?v=gKsRyd1fQfY" class="card" target="_blank">
-                        <span class="card-title">YouTube Video (gKsRyd1fQfY) <span class="badge badge-html"
-                                style="background: rgba(255, 0, 0, 0.2); color: #ff0000;">YT</span></span>
-                        <span class="card-path">youtube.com/watch?v=gKsRyd1fQfY</span>
-                    </a>
-                    <a href="https://www.youtube.com/watch?v=CEvIs9y1uog" class="card" target="_blank">
-                        <span class="card-title">YouTube Video (CEvIs9y1uog) <span class="badge badge-html"
-                                style="background: rgba(255, 0, 0, 0.2); color: #ff0000;">YT</span></span>
-                        <span class="card-path">youtube.com/watch?v=CEvIs9y1uog</span>
-                    </a>
-                    <a href="zksnark_math.html" class="card">
-                        <span class="card-title">ZK-SNARKs Math <span class="badge badge-html">HTML</span></span>
-                        <span class="card-path">zksnark_math.html</span>
-                    </a>
-                </div>
-            </div>
-
-            <div id="no-results" class="empty-state">
-                No matching files found.
-            </div>
-
-            <footer>
-                <p>Generated by Antigravity</p>
-            </footer>
         </div>
 
-        <script>
-            const searchInput = document.getElementById('searchInput');
-            const sections = document.querySelectorAll('.section');
-            const cards = document.querySelectorAll('.card');
-            const noResults = document.getElementById('no-results');
+        <div id="no-results" class="empty-state">
+            No matching files found.
+        </div>
 
-            searchInput.addEventListener('input', (e) => {
-                const term = e.target.value.toLowerCase();
-                let visibleCount = 0;
+        <footer>
+            <p>Generated by Antigravity</p>
+        </footer>
+    </div>
 
-                cards.forEach(card => {
-                    const title = card.querySelector('.card-title').innerText.toLowerCase();
-                    const path = card.querySelector('.card-path').innerText.toLowerCase();
-                    const match = title.includes(term) || path.includes(term);
+    <script>
+        const searchInput = document.getElementById('searchInput');
+        const sections = document.querySelectorAll('.section');
+        const cards = document.querySelectorAll('.card');
+        const noResults = document.getElementById('no-results');
 
-                    card.style.display = match ? 'flex' : 'none';
-                    if (match) visibleCount++;
-                });
+        searchInput.addEventListener('input', (e) => {
+            const term = e.target.value.toLowerCase();
+            let visibleCount = 0;
 
-                // Hide empty sections
-                sections.forEach(section => {
-                    const visibleCards = section.querySelectorAll('.card[style="display: flex;"]');
-                    section.style.display = visibleCards.length > 0 || term === '' ? 'block' : 'none';
-                    // Actually checking if ANY card in this section is visible
-                    let hasVisible = false;
-                    section.querySelectorAll('.card').forEach(c => {
-                        if (c.style.display !== 'none') hasVisible = true;
-                    });
-                    section.style.display = hasVisible ? 'block' : 'none';
-                });
+            cards.forEach(card => {
+                const title = card.querySelector('.card-title').innerText.toLowerCase();
+                const path = card.querySelector('.card-path').innerText.toLowerCase();
+                const match = title.includes(term) || path.includes(term);
 
-                noResults.style.display = visibleCount === 0 ? 'block' : 'none';
+                card.style.display = match ? 'flex' : 'none';
+                if (match) visibleCount++;
             });
-        </script>
+
+            // Hide empty sections
+            sections.forEach(section => {
+                const visibleCards = section.querySelectorAll('.card[style="display: flex;"]');
+                section.style.display = visibleCards.length > 0 || term === '' ? 'block' : 'none';
+                // Actually checking if ANY card in this section is visible
+                let hasVisible = false;
+                section.querySelectorAll('.card').forEach(c => {
+                    if (c.style.display !== 'none') hasVisible = true;
+                });
+                section.style.display = hasVisible ? 'block' : 'none';
+            });
+
+            noResults.style.display = visibleCount === 0 ? 'block' : 'none';
+        });
+    </script>
 
 </body>
 
