@@ -1,25 +1,23 @@
-Written on Tue Nov 25 14:07:53 KST 2025
-
 # Summary
 This is the list of additional tasks in response to your latest implementation of the detail page. Your workspace should be in the `/Users/jay/work/nostra-server`, `/Users/jay/work/nostra-contracts`, and `/Users/jay/work/task` folders. You don't need to check the folder `/Users/jay/work/web` that you acutally have to avoid.
 
 # Heads-Up
-It's just asking for some knowledge about general development. So do change the code.
+Check the following checkbox whether the task I'm requesting is just a design or a code change.
+
+[x] Change the code 
+[ ] Just Design how to implement or research the background
 
 # Tasks 
-## Task-1:
-The P&L does not show the correct value. It is like this image:
-![alt text](/images/image-1207-01.png) which is the trader 1's P&L even though the market is not resolved yet.
-
-## Task-2:
-The market title should be bigger and clickable to the detail page.
-![alt text](/images/image-1207-02.png)
-
-## Task-3:
-![alt text](/images/image-1207-03.png)
-This is weird because the trader 4 tried to buy 40 amount of 51c of Argentina Yes tokens. But the order book doesn't shows the right order book which means the trading are not completed normally.
+## Task-1: change summary-2025-12-09-sync-and-trade-fixes.html
+Modify the file as I decribed the following section
 
 # After Tasks Done
-You can summarize the what you've done and the changes you've made to the codebase in the file named `summary.md` in the same folder as the tasks.md And copy it to the foler `~/work/task/nostra/dev-logs` with the name of summary-xxx.md in which xxx is date and time when the summary was created. If there is already the same file, you can add some number to the file name. In the last part of the file you should add the original request of the tasks described in this file with some vivid separation. I don't think you must change the codebase, but you can just plan the implementation or recommend something after a review and research. Any summary is OK because I can try to have you do something after a review.
+If we just discussing what to do for some change not going to implement it, you should summarize your recommendation for implementation and how to implement it into some document within `/Users/jay/work/task/nostra/designs` that could be created with current date not replacing the existing file. I thin html is more readable than markdown.
+
+You should copy this md file to `/Users/jay/work/task/nostra/old-tasks` folder with current date. And if there is already the same file, you should add the new content to the existing file.
+
+You must summarize the what you've done and the changes you've made to the codebase in the file named `summary.md` with date in the folder `~/work/task/nostra/dev-logs`. If there is already the same file, you just add the new content to the existing file. You should add the changed code showing before and after and technical details and background. The code for ‘before’ and ‘after’ should be placed vertically. You can add link to the changed code to the file that shows in antigravity, at least vscode.
+
+If you edit html file which should have code int it, so the html doesn't need to have container becuase the the container unnecessarily make the width of the content narrow. And for the code shown in the page, don't carriage return which makes the code hard to read.
 
 Go ahead and thanks in advance!

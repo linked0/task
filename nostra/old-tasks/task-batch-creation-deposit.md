@@ -11,7 +11,7 @@ We already created a create-market page. But it's not working. So we need to mak
 
 ## Task-2: Deopsoit/Withdrawal Model
 We need to create a deposit/withdrawal model for the users. The users can deposit their USDC to the contract and withdraw it back. The contract will be used to store the users' USDC and the users can withdraw it back to their wallets. So we just add this kind of popup like the image below that will popup when the user clicks the deposit button next to the portpolio button that you should also add at the top of the landing page that is also the market listing page.
-![alt text](/images/image-11.png)
+![alt text](../images/image-11.png)
 
 I think we should change the contracts in nostra-contracts folder, which would very big change I think. 
 
