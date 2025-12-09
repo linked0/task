@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cloud Run Deployment Guide</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=JetBrains+Mono:wght@400;700&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: #1e293b;
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --accent: #38bdf8;
+            --accent-gradient: linear-gradient(135deg, #38bdf8 0%, #818cf8 100%);
+            --border: #334155;
+            --code-bg: #0f1115;
+            --success: #4ade80;
+            --warning: #fbbf24;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 60px;
+            padding: 40px 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin: 0;
+            background: var(--accent-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -0.02em;
+        }
+
+        p.subtitle {
+            color: var(--text-secondary);
+            font-size: 1.2rem;
+            margin-top: 10px;
+        }
+
+        section {
+            margin-bottom: 60px;
+        }
+
+        h2 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .step-number {
+            background: var(--accent-gradient);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            font-weight: 700;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 30px;
+            border: 1px solid var(--border);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+
+        .code-block {
+            background: var(--code-bg);
+            border-radius: 8px;
+            padding: 20px;
+            overflow-x: auto;
+            margin: 15px 0;
+            border: 1px solid var(--border);
+            position: relative;
+        }
+
+        code {
+            font-family: 'JetBrains Mono', monospace;
+            color: #e2e8f0;
+            font-size: 0.9em;
+        }
+
+        .filename {
+            font-family: 'JetBrains Mono', monospace;
+            color: var(--accent);
+            font-size: 0.9rem;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .tag {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-bottom: 15px;
+        }
+
+        .tag-critical {
+            background: rgba(239, 68, 68, 0.2);
+            color: #ef4444;
+            border: 1px solid rgba(239, 68, 68, 0.5);
+        }
+
+        .note {
+            background: rgba(251, 191, 36, 0.1);
+            border-left: 4px solid var(--warning);
+            padding: 15px;
+            border-radius: 0 8px 8px 0;
+            color: #e2e8f0;
+            margin: 20px 0;
+            font-size: 0.95rem;
+        }
+
+        ul {
+            color: var(--text-secondary);
+            padding-left: 20px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        .copy-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.8rem;
+        }
+
+        .copy-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <header>
+            <h1>Cloud Run Deployment</h1>
+            <p class="subtitle">Deploying Nostra Server (API) as a Stateless Container</p>
+        </header>
+
+        <!-- Step 1 -->
+        <section>
+            <h2><span class="step-number">1</span> Prepare the Dockerfile</h2>
+            <div class="card">
+                <span class="tag tag-critical">Critical: Local Libraries</span>
+                <p>Because we use a local SDK via <code>.yalc</code>, simply copying `package.json` isn't enough. We
+                    must copy the hidden <code>.yalc</code> folder into the container.</p>
+
+                <div class="filename">nostra-server/api/Dockerfile</div>
+                <div class="code-block">
+                    <button class="copy-btn"
+                        onclick="navigator.clipboard.writeText(this.nextElementSibling.innerText)">Copy</button>
+                    <pre><code>FROM node:20-alpine
+
+WORKDIR /app
+
+# 1. Copy Manifests and Local Libs
+COPY package.json yarn.lock ./
+COPY .yalc ./.yalc
+
+# 2. Install Dependencies (Frozen for stability)
+RUN yarn install --frozen-lockfile
+
+# 3. Copy Source Code
+COPY . .
+
+# 4. Generate Prisma Client (Required for DB access)
+RUN npx prisma generate
+
+# 5. Build TypeScript code
+RUN yarn build
+
+# 6. Configure Environment
+ENV NODE_ENV=production
+ENV PORT=8080
+
+# 7. Start
+CMD ["node", "dist/index.js"]</code></pre>
+                </div>
+            </div>
+        </section>
+
+        <!-- Step 2 -->
+        <section>
+            <h2><span class="step-number">2</span> Build & Push Image</h2>
+            <p>Google Cloud Run needs to pull the image from a registry usually Google Artifact Registry (GAR).</p>
+
+            <div class="card">
+                <div class="note">
+                    <strong>Prerequisite:</strong> Ensure you have the `gcloud` CLI installed and authenticated (`gcloud
+                    auth login`).
+                </div>
+
+                <div class="filename">Terminal Command</div>
+                <div class="code-block">
+                    <pre><code># 1. Set your Project ID
+export PROJECT_ID="your-gcp-project-id"
+
+# 2. Enable Artifact Registry API (First time only)
+gcloud services enable artifactregistry.googleapis.com
+
+# 3. Create a Docker Repository (First time only)
+gcloud artifacts repositories create nostra-repo \
+    --repository-format=docker \
+    --location=us-central1 \
+    --description="Nostra Docker Repository"
+
+# 4. Configure Docker to use gcloud credentials
+gcloud auth configure-docker us-central1-docker.pkg.dev
+
+# 5. Build and Push (Submitting build to Cloud Build is easiest)
+# Run this from /nostra-server/api directory
+gcloud builds submit --tag us-central1-docker.pkg.dev/$PROJECT_ID/nostra-repo/nostra-api:latest .</code></pre>
+                </div>
+
+                <p>Using <code>gcloud builds submit</code> is easier than building locally because it avoids
+                    architecture issues (e.g., building on Apple Silicon M1/M2 for Linux servers).</p>
+            </div>
+        </section>
+
+        <!-- Step 3 -->
+        <section>
+            <h2><span class="step-number">3</span> Deploy Service</h2>
+            <div class="card">
+                <p>We need to tell Cloud Run about our database. The safest way is using the <strong>Cloud SQL
+                        Proxy</strong> integration.</p>
+
+                <div class="filename">Deploy Command</div>
+                <div class="code-block">
+                    <pre><code>gcloud run deploy nostra-api \
+  --image us-central1-docker.pkg.dev/$PROJECT_ID/nostra-repo/nostra-api:latest \
+  --platform managed \
+  --region us-central1 \
+  --allow-unauthenticated \
+  --set-env-vars="NODE_ENV=production" \
+  --set-secrets="DATABASE_URL=projects/$PROJECT_ID/secrets/DB_URL/versions/1"</code></pre>
+                </div>
+
+                <ul>
+                    <li><strong>--allow-unauthenticated</strong>: Makes the API public (remove this if it's internal
+                        only).</li>
+                    <li><strong>--set-secrets</strong>: Use Google Secret Manager for the `DATABASE_URL` to avoid
+                        leaking passwords.</li>
+                </ul>
+            </div>
+        </section>
+
+        <footer style="text-align: center; margin-top: 60px; color: var(--text-secondary); padding-bottom: 40px;">
+            <p>Generated by Antigravity for Nostra Deployment</p>
+        </footer>
+    </div>
+
+</body>
+
+</html>
