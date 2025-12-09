@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dev Log: Sync & Trade Fixes - Dec 9, 2025</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+      line-height: 1.6;
+      color: #333;
+      padding: 2rem;
+      background-color: white;
+      margin: 0;
+    }
+
+    /* Removed max-width/container constraint as requested */
+    .container {
+      width: 100%;
+    }
+
+    h1 {
+      border-bottom: 2px solid #e5e7eb;
+      padding-bottom: 1rem;
+      color: #111827;
+    }
+
+    h2 {
+      color: #1f2937;
+      margin-top: 3rem;
+      border-left: 5px solid #3b82f6;
+      padding-left: 1rem;
+    }
+
+    h3 {
+      color: #374151;
+      margin-top: 2rem;
+      font-size: 1.2em;
+      border-bottom: 1px dashed #e5e7eb;
+      padding-bottom: 0.5rem;
+    }
+
+    code {
+      background-color: #f3f4f6;
+      padding: 0.2rem 0.4rem;
+      border-radius: 4px;
+      font-family: 'Menlo', 'Monaco', monospace;
+      font-size: 0.9em;
+      color: #e11d48;
+    }
+
+    pre {
+      background-color: #f8fafc;
+      padding: 1rem;
+      border-radius: 8px;
+      overflow-x: auto;
+      /* Horizontal scroll */
+      font-size: 0.9em;
+      border: 1px solid #e2e8f0;
+      white-space: pre;
+      /* No wrapping */
+      margin-top: 0.5rem;
+    }
+
+    .tag {
+      display: inline-block;
+      padding: 0.25rem 0.75rem;
+      border-radius: 9999px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      margin-right: 0.5rem;
+    }
+
+    .tag-fix {
+      background-color: #d1fae5;
+      color: #065f46;
+    }
+
+    .tag-feat {
+      background-color: #dbeafe;
+      color: #1e40af;
+    }
+
+    .tag-ui {
+      background-color: #fce7f3;
+      color: #9d174d;
+    }
+
+    /* Vertical Stack for Diff */
+    .diff-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      /* Vertical layout */
+      gap: 1.5rem;
+      margin-top: 1rem;
+    }
+
+    .diff-col h4 {
+      margin: 0 0 0.5rem 0;
+      font-size: 1em;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .before {
+      color: #ef4444;
+    }
+
+    .after {
+      color: #22c55e;
+    }
+
+    .problem-box {
+      background-color: #fef2f2;
+      border-left: 4px solid #ef4444;
+      padding: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .solution-box {
+      background-color: #f0fdf4;
+      border-left: 4px solid #22c55e;
+      padding: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .file-link {
+      display: inline-block;
+      background-color: #e5e7eb;
+      color: #2563eb;
+      padding: 0.3rem 0.8rem;
+      border-radius: 4px;
+      font-size: 0.9rem;
+      font-family: 'Menlo', 'Monaco', monospace;
+      margin: 1.5rem 0 0.5rem 0;
+      border: 1px solid #d1d5db;
+      text-decoration: none;
+    }
+
+    .file-link:hover {
+      background-color: #d1d5db;
+      text-decoration: underline;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <h1>Dev Log: Sync, Trade & Batch Fixes</h1>
+    <p><strong>Date:</strong> December 9, 2025</p>
+    <p><strong>Summary:</strong> Daily log covering resolution of Sync/History bugs, Order Crossing precision, Batch
+      Processing, and UI compaction. Includes Before/After code comparisons.</p>
+
+    <!-- 1. Sync -->
+    <h2>1. Limit Mode Issue: "Bought Position Disappears"</h2>
+    <span class="tag tag-fix">Critical Fix</span> <span class="tag tag-feat">Backend Sync</span>
+    <div class="problem-box">
+      <strong>Problem:</strong> SyncService crashed due to missing ABI events in the SDK instance ("unknown fragment")
+      and invalid repository calls.
+    </div>
+
+    <h3>Code Comparison: Correcting ABI Definition</h3>
+    <a href="vscode://file/Users/jay/work/nostra-server/api/src/services/SyncService.ts" class="file-link">📁
+      api/src/services/SyncService.ts</a>
+
+    <div class="diff-grid">
+      <div class="diff-col">
+        <h4 class="before">❌ Before (SDK Default - Missing Event)</h4>
+        <pre>// SDK instance lacked 'TransferSingle' event definition
+this.conditionalTokens = getConditionalTokens(network, this.provider);
+// Result: Crash on event emission due to ethers parsing failure</pre>
+      </div>
+      <div class="diff-col">
+        <h4 class="after">✅ After (Explicit ABI - Robust)</h4>
+        <pre>const abi = [
+  'function balanceOf(address owner, uint256 id) view returns (uint256)',
+  'function balanceOfBatch(address[] owners, uint256[] ids) view returns (uint256[])',
+  'event TransferSingle(address indexed operator, address indexed from, address indexed to, uint256 id, uint256 value)',
+  'event TransferBatch(address indexed operator, address indexed from, address indexed to, uint256[] ids, uint256[] values)'
+];
+// Instantiate with explicit ABI
+this.conditionalTokens = new ethers.Contract(ctfAddress, abi, this.provider);</pre>
+      </div>
+    </div>
+
+    <h3>Code Comparison: Correcting Repository Method</h3>
+    <a href="vscode://file/Users/jay/work/nostra-server/api/src/services/SyncService.ts" class="file-link">📁
+      api/src/services/SyncService.ts</a>
+    <div class="diff-grid">
+      <div class="diff-col">
+        <h4 class="before">❌ Before (Invalid Method)</h4>
+        <pre>// findAll() does not exist in Prisma repo
+const { markets } = await marketRepository.findAll();</pre>
+      </div>
+      <div class="diff-col">
+        <h4 class="after">✅ After (Correct Method)</h4>
+        <pre>// Use findMany with explicit limit
+const { markets } = await marketRepository.findMany({ limit: 1000 });</pre>
+      </div>
+    </div>
+
+
+    <!-- 2. History -->
+    <h2>2. Limit Mode Issue: "No Trade History"</h2>
+    <span class="tag tag-fix">Critical Fix</span> <span class="tag tag-feat">Data Consistency</span>
+    <div class="problem-box">
+      <strong>Problem:</strong> Auto-matched limit orders executed on-chain but skipped database logging, so they didn't
+      appear in the History list.
+    </div>
+
+    <h3>Code Comparison: Logging Trade History</h3>
+    <a href="vscode://file/Users/jay/work/nostra-server/api/src/routes/orders.ts" class="file-link">📁
+      api/src/routes/orders.ts</a>
+    <div class="diff-grid">
+      <div class="diff-col">
+        <h4 class="before">❌ Before (Ghost Trade)</h4>
+        <pre>// Execute On-Chain
+await ctfExchange.matchOrders(...);
+await tx.wait();
+
+// ... No DB record created ...
+// Result: User sees balance change but no History</pre>
+      </div>
+      <div class="diff-col">
+        <h4 class="after">✅ After (Persisted Trade)</h4>
+        <pre>// Execute On-Chain
+await ctfExchange.matchOrders(...);
+await tx.wait();
+
+// Create DB Record immediately
+await tradeRepository.create({
+  marketId: match.markerOrder.marketId,
+  userId: user.id, // Taker
+  tradeType: order.side === 'BUY' ? TradeType.BUY : TradeType.SELL,
+  rawAmount: match.fillAmount, // shares
+  price: match.price,
+  totalCost: totalCost,
+  blockchainTxHash: receipt?.hash || '',
+  tradeGroup: uuidv4()
+});
+
+// Trigger Instant Sync
+const { getSyncService } = await import('../services/SyncService.js');
+await getSyncService().syncUserPositions(user.walletAddress);</pre>
+      </div>
+    </div>
+
+    <!-- 3. Crossing -->
+    <h2>3. Limit Mode Issue: "Orders Not Crossing" (Precision)</h2>
+    <span class="tag tag-fix">Math Fix</span> <span class="tag tag-feat">Matching Engine</span>
+    <div class="problem-box">
+      <strong>Problem:</strong> Floating point precision issues (e.g. 50.000001) caused overlapping prices to fail
+      matching checks.
+    </div>
+
+    <h3>Code Comparison: Order Seeding Logic</h3>
+    <a href="vscode://file/Users/jay/work/nostra-server/api/src/services/OrderSeedService.ts" class="file-link">📁
+      api/src/services/OrderSeedService.ts</a>
+    <div class="diff-grid">
+      <div class="diff-col">
+        <h4 class="before">❌ Before (Imprecise Rounding)</h4>
+        <pre>// Floating point math
+const shares = usdcAmount / price;
+// Ambiguous rounding might create price > target price
+makerAmount = Math.ceil(shares).toString();</pre>
+      </div>
+      <div class="diff-col">
+        <h4 class="after">✅ After (Directional Rounding)</h4>
+        <pre>// BigInt Math with Directional Rounding
+// For SELL: Round Up (Ceil) -> Ensures Implied Price <= Target Price
+const sharesBigInt = (usdcAmount * precision + priceScaled - 1n) / priceScaled;
+makerAmount = sharesBigInt.toString();</pre>
+      </div>
+    </div>
+
+    <!-- 4. Batch -->
+    <h2>4. Batch Improvement: Multi-Order Cancellation</h2>
+    <span class="tag tag-feat">Gas Optimization</span> <span class="tag tag-ui">Batch Processing</span>
+
+    <div class="problem-box">
+      <strong>Problem:</strong> Cancelling multiple orders required signing and submitting separate transactions for
+      each one.
+    </div>
+
+    <h3>Code Comparison: Cancellation Logic</h3>
+    <a href="vscode://file/Users/jay/work/nostra-server/web/src/app/my-positions/page.tsx" class="file-link">📁
+      web/src/app/my-positions/page.tsx</a>
+    <div class="diff-grid">
+      <div class="diff-col">
+        <h4 class="before">❌ Before (Sequential / N Transactions)</h4>
+        <pre>for (const order of orders) {
+  // User signs N times
+  await exchange.cancelOrder(order);
+  await tx.wait(); // Wait N blocks
+}</pre>
+      </div>
+      <div class="diff-col">
+        <h4 class="after">✅ After (Batch / 1 Transaction)</h4>
+        <pre>// Encode all calls
+const calls = orders.map(o => 
+  exchange.interface.encodeFunctionData("cancelOrder", [o])
+);
+
+// User signs ONCE
+console.log(`Submitting batch cancel for ${calls.length} orders...`);
+const tx = await exchange.multicall(calls);
+await tx.wait();</pre>
+      </div>
+    </div>
+
+    <!-- 5. UI -->
+    <h2>5. UI Refinement: Compact Position Cards</h2>
+    <span class="tag tag-ui">UI / UX</span>
+    <div class="problem-box">
+      Default ShadCN Card padding (24px) was too large, wasting screen space.
+    </div>
+
+    <h3>Code Comparison: UI Styling</h3>
+    <a href="vscode://file/Users/jay/work/nostra-server/web/src/components/my-positions/PositionsList.tsx"
+      class="file-link">📁 web/src/components/my-positions/PositionsList.tsx</a>
+    <div class="diff-grid">
+      <div class="diff-col">
+        <h4 class="before">❌ Before (Default Large Padding)</h4>
+        <pre>&lt;Card className=""&gt;
+  {/* Inherits py-6 gap-6 (24px) */}
+  &lt;div className="p-6"&gt;
+     Content
+  &lt;/div&gt;
+&lt;/Card&gt;</pre>
+      </div>
+      <div class="diff-col">
+        <h4 class="after">✅ After (Override & Compact)</h4>
+        <pre>&lt;Card className="py-0 gap-0"&gt;
+  {/* Stripped defaults */}
+  &lt;div className="px-4 py-3"&gt;
+     {/* Reduced 50% vertical space */}
+     Content
+  &lt;/div&gt;
+&lt;/Card&gt;</pre>
+      </div>
+    </div>
+
+  </div>
+</body>
+
+</html>

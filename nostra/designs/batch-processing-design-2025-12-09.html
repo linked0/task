@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Batch Processing Design - December 9, 2025</title>
+    <style>
+        :root {
+            --primary: #3b82f6;
+            --success: #22c55e;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --bg: #f8fafc;
+            --card-bg: #ffffff;
+            --text: #1e293b;
+            --text-muted: #64748b;
+            --border: #e2e8f0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary), #1d4ed8);
+            color: white;
+            padding: 2rem;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+        }
+
+        header h1 {
+            font-size: 1.75rem;
+            margin-bottom: 0.5rem;
+        }
+
+        header p {
+            opacity: 0.9;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--border);
+        }
+
+        .card h2 {
+            color: var(--primary);
+            font-size: 1.25rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--border);
+        }
+
+        .card h3 {
+            font-size: 1rem;
+            margin: 1rem 0 0.5rem;
+            color: var(--text);
+        }
+
+        .status-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+        }
+
+        .status-table th,
+        .status-table td {
+            padding: 0.75rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .status-table th {
+            background: var(--bg);
+            font-weight: 600;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .badge-success {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .badge-danger {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .badge-warning {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .badge-info {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+
+        .priority-high {
+            border-left: 4px solid var(--danger);
+        }
+
+        .priority-medium {
+            border-left: 4px solid var(--warning);
+        }
+
+        pre {
+            background: #1e293b;
+            color: #e2e8f0;
+            padding: 1rem;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-size: 0.875rem;
+            margin: 1rem 0;
+        }
+
+        code {
+            font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+        }
+
+        .inline-code {
+            background: var(--bg);
+            padding: 0.125rem 0.375rem;
+            border-radius: 4px;
+            font-size: 0.875rem;
+            color: var(--danger);
+        }
+
+        .flow-diagram {
+            background: var(--bg);
+            padding: 1.5rem;
+            border-radius: 8px;
+            font-family: monospace;
+            white-space: pre;
+            overflow-x: auto;
+            line-height: 1.4;
+        }
+
+        .issue-item {
+            background: var(--bg);
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 0.75rem 0;
+        }
+
+        .issue-item strong {
+            color: var(--danger);
+        }
+
+        .recommendation-list {
+            list-style: none;
+        }
+
+        .recommendation-list li {
+            padding: 0.75rem;
+            margin: 0.5rem 0;
+            background: var(--bg);
+            border-radius: 8px;
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+        }
+
+        .recommendation-list .icon {
+            font-size: 1.25rem;
+        }
+
+        footer {
+            text-align: center;
+            color: var(--text-muted);
+            padding: 2rem;
+            font-size: 0.875rem;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <h1>Batch Processing Implementation Design</h1>
+            <p>Task-1 Review: Order/Trade Batch Processing Architecture</p>
+            <p style="margin-top: 0.5rem; font-size: 0.875rem;">December 9, 2025</p>
+        </header>
+
+        <!-- Current State Analysis -->
+        <div class="card">
+            <h2>1. Current Architecture Analysis</h2>
+
+            <h3>Order Flow (Limit Orders)</h3>
+            <div class="flow-diagram">User signs EIP-712 Order
+                |
+                v
+                POST /api/orders/user/create
+                |
+                +---> Save to Database
+                |
+                +---> Attempt Auto-Match
+                |
+                v
+                If match found: Server executes matchOrders()</div>
+
+            <h3>Trade Flow (Market Orders / Sweeping)</h3>
+            <div class="flow-diagram">User wants to buy 100 tokens (sweep multiple orders)
+                |
+                v
+                FOR EACH maker order in orderbook:
+                |
+                +---> User signs taker order (EIP-712) <-- Multiple signatures! | +---> POST /api/trade/execute
+                    |
+                    +---> Server executes matchOrders() <-- Separate TX each time! | v Loop continues until filled</div>
+
+                        <h3>Batch Cancel (Working Example)</h3>
+                        <div class="flow-diagram">User selects multiple orders to cancel
+                            |
+                            v
+                            Prepare multicall data: [cancelOrder, cancelOrder, ...]
+                            |
+                            v
+                            Single TX: CTFExchange.multicall(calls)
+                            |
+                            v
+                            All orders cancelled atomically</div>
+            </div>
+
+            <!-- Issues Identified -->
+            <div class="card priority-high">
+                <h2>2. Issues Identified</h2>
+
+                <div class="issue-item">
+                    <strong>Issue #1: Multiple Signatures Required</strong>
+                    <p style="margin-top: 0.5rem;">
+                        <span class="inline-code">useTrade.ts:executeTrade()</span> lines 230-260
+                    </p>
+                    <p style="margin-top: 0.5rem;">
+                        User must sign each order separately in a sweep. Poor UX - buying 100 tokens
+                        from 5 different orders requires 5 MetaMask signature popups.
+                    </p>
+                </div>
+
+                <div class="issue-item">
+                    <strong>Issue #2: No Transaction Batching</strong>
+                    <p style="margin-top: 0.5rem;">
+                        <span class="inline-code">trade.ts</span> - matchOrders route
+                    </p>
+                    <p style="margin-top: 0.5rem;">
+                        Each order match is a separate blockchain transaction. 5 orders = 5 TXs = 5x gas fees.
+                        No atomicity - if TX #3 fails, user has partial fill with no easy recovery.
+                    </p>
+                </div>
+
+                <div class="issue-item">
+                    <strong>Issue #3: Database Save Timing</strong>
+                    <p style="margin-top: 0.5rem;">
+                        <span class="inline-code">orders.ts</span> - order creation
+                    </p>
+                    <p style="margin-top: 0.5rem;">
+                        Orders saved to DB before blockchain confirmation. Can cause DB/blockchain state mismatch
+                        if TX fails after DB write.
+                    </p>
+                </div>
+            </div>
+
+
+            <!-- Resolved Critical Issue -->
+            <div class="card" style="border-left: 4px solid var(--success);">
+                <h2>2a. Resolved Critical Issue: Limit Order Matching</h2>
+
+                <div class="issue-item">
+                    <strong>Problem: Execution Reverted (NotCrossing)</strong>
+                    <p style="margin-top: 0.5rem;">
+                        Legacy floating-point math in seeding caused "dust" pricing (e.g., Ask at $0.51000005) which
+                        failed
+                        to cross with precise Limit Bids at $0.51, causing the smart contract to revert.
+                    </p>
+                </div>
+
+                <h3>Solution Architecture</h3>
+                <ul class="recommendation-list">
+                    <li>
+                        <span class="icon">✅</span>
+                        <div>
+                            <strong>Directional Seeding Math</strong>
+                            <p style="color: var(--text-muted); font-size: 0.875rem;">
+                                Updated <code>OrderSeedService</code> to use integer-based directional rounding.
+                                <br>• <strong>Sells (Asks):</strong> Round Shares UP (Ceil) → Price slightly LOWER
+                                (Taker
+                                friendly).
+                                <br>• <strong>Buys (Bids):</strong> Round Shares DOWN (Floor) → Price slightly HIGHER
+                                (Maker
+                                friendly).
+                            </p>
+                        </div>
+                    </li>
+                    <li>
+                        <span class="icon">🛡️</span>
+                        <div>
+                            <strong>Strict Off-Chain Price Check</strong>
+                            <p style="color: var(--text-muted); font-size: 0.875rem;">
+                                Backend <code>matchOrders</code> logic now performs explicit BigInt cross-multiplication
+                                (<code>UserPrice vs MakerPrice</code>) to verify mathematical crossing <em>before</em>
+                                submitting the transaction.
+                            </p>
+                        </div>
+                    </li>
+                    <li>
+                        <span class="icon">🔄</span>
+                        <div>
+                            <strong>Robust Matching Loop</strong>
+                            <p style="color: var(--text-muted); font-size: 0.875rem;">
+                                Instead of attempting only the top order, the matcher now iterates through the order
+                                book,
+                                skipping incompatible "dust" orders and executing against valid liquidity without
+                                crashing.
+                            </p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Comparison Table -->
+            <div class="card">
+                <h2>3. Current vs Proposed UX Comparison</h2>
+
+                <table class="status-table">
+                    <thead>
+                        <tr>
+                            <th>Aspect</th>
+                            <th>Current</th>
+                            <th>Proposed</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>User signs order</td>
+                            <td>EIP-712 typed data</td>
+                            <td>Same</td>
+                            <td><span class="badge badge-success">OK</span></td>
+                        </tr>
+                        <tr>
+                            <td>Server submits to blockchain</td>
+                            <td>Yes (operator wallet)</td>
+                            <td>Same</td>
+                            <td><span class="badge badge-success">OK</span></td>
+                        </tr>
+                        <tr>
+                            <td>Error handling & retry</td>
+                            <td>None</td>
+                            <td>Auto-retry queue</td>
+                            <td><span class="badge badge-danger">Missing</span></td>
+                        </tr>
+                        <tr>
+                            <td>Signatures per sweep</td>
+                            <td>One per order</td>
+                            <td>Single signature</td>
+                            <td><span class="badge badge-danger">Missing</span></td>
+                        </tr>
+                        <tr>
+                            <td>Transaction batching</td>
+                            <td>Only for cancel</td>
+                            <td>All operations</td>
+                            <td><span class="badge badge-warning">Partial</span></td>
+                        </tr>
+                        <tr>
+                            <td>DB synchronization</td>
+                            <td>Save before TX</td>
+                            <td>Save after confirmation</td>
+                            <td><span class="badge badge-danger">Missing</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Implementation Recommendations -->
+            <div class="card priority-high">
+                <h2>4. Implementation Recommendations</h2>
+
+                <h3>Priority 1: Transaction Queue with Status Tracking</h3>
+                <p>Add a queue system to track pending transactions and enable retry logic.</p>
+
+                <pre><code>// New Prisma model
+model TransactionQueue {
+  id           String   @id @default(uuid())
+  type         String   // 'order' | 'trade' | 'cancel'
+  signedData   Json     // The signed order/trade data
+  status       String   @default("pending") // pending | submitted | confirmed | failed
+  txHash       String?
+  retryCount   Int      @default(0)
+  errorMessage String?
+  userId       String
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+// Transaction states
+// pending    -> waiting to be submitted
+// submitted  -> TX sent, waiting for confirmation
+// confirmed  -> TX confirmed on-chain
+// failed     -> TX failed after max retries</code></pre>
+
+                <h3>Priority 2: Batch Order Matching with Multicall</h3>
+                <p>Use the same pattern as <span class="inline-code">handleBatchCancel()</span> for order matching.</p>
+
+                <pre><code>// Server-side batch matching (api/src/routes/trade.ts)
+router.post('/execute-batch', async (req, res) => {
+  const { orderPairs } = req.body; // Array of {takerOrder, makerOrder}
+
+  // Encode all matchOrders calls
+  const calls = orderPairs.map(({ taker, maker }) =>
+    ctfExchange.interface.encodeFunctionData(
+      "matchOrders",
+      [taker, [maker], taker.takerAmount, maker.makerAmount, 0]
+    )
+  );
+
+  // Single atomic transaction
+  const tx = await ctfExchange.multicall(calls);
+  const receipt = await tx.wait();
+
+  // Save all trades to DB after confirmation
+  await prisma.trade.createMany({
+    data: orderPairs.map(pair => ({
+      // ... trade details
+      txHash: receipt.transactionHash,
+      status: 'confirmed'
+    }))
+  });
+
+  return res.json({ success: true, txHash: receipt.transactionHash });
+});</code></pre>
+
+                <h3>Priority 3: Single Signature for Sweep Operations</h3>
+                <p>User signs once for entire trade amount, server splits as needed.</p>
+
+                <pre><code>// Frontend: useTrade.ts
+const executeSweep = async (side: 'BUY' | 'SELL', totalAmount: bigint) => {
+  // Sign a single "intent" order for total amount
+  const sweepIntent = {
+    maker: userAddress,
+    side: side,
+    tokenId: outcomeTokenId,
+    makerAmount: side === 'BUY' ? totalUSDCNeeded : totalTokensToSell,
+    takerAmount: side === 'BUY' ? totalTokensExpected : totalUSDCExpected,
+    nonce: Date.now(),
+    expiration: Math.floor(Date.now() / 1000) + 3600,
+  };
+
+  // Single signature
+  const signature = await signer.signTypedData(domain, ORDER_TYPES, sweepIntent);
+
+  // Server handles splitting into sub-orders for matching
+  const response = await fetch(`${API_URL}/api/trade/sweep`, {
+    method: 'POST',
+    body: JSON.stringify({
+      intent: sweepIntent,
+      signature,
+      maxSlippage: 0.01 // 1% slippage tolerance
+    })
+  });
+
+  return response.json();
+};</code></pre>
+
+                <h3>Priority 4: Background Transaction Processor</h3>
+                <p>A worker that processes the transaction queue with retry logic.</p>
+
+                <pre><code>// api/src/workers/transactionProcessor.ts
+class TransactionProcessor {
+  private readonly MAX_RETRIES = 3;
+  private readonly RETRY_DELAY_MS = 5000;
+
+  async processQueue() {
+    // Get pending transactions
+    const pending = await prisma.transactionQueue.findMany({
+      where: { status: 'pending' },
+      orderBy: { createdAt: 'asc' },
+      take: 10
+    });
+
+    for (const tx of pending) {
+      try {
+        // Update to submitted
+        await prisma.transactionQueue.update({
+          where: { id: tx.id },
+          data: { status: 'submitted' }
+        });
+
+        // Execute based on type
+        const result = await this.executeTransaction(tx);
+
+        // Update to confirmed
+        await prisma.transactionQueue.update({
+          where: { id: tx.id },
+          data: {
+            status: 'confirmed',
+            txHash: result.transactionHash
+          }
+        });
+
+      } catch (error) {
+        await this.handleError(tx, error);
+      }
+    }
+  }
+
+  private async handleError(tx: TransactionQueue, error: Error) {
+    const newRetryCount = tx.retryCount + 1;
+
+    if (newRetryCount >= this.MAX_RETRIES) {
+      await prisma.transactionQueue.update({
+        where: { id: tx.id },
+        data: {
+          status: 'failed',
+          errorMessage: error.message,
+          retryCount: newRetryCount
+        }
+      });
+      // Notify user of failure
+      await this.notifyUser(tx.userId, 'Transaction failed after retries');
+    } else {
+      // Reset to pending for retry
+      await prisma.transactionQueue.update({
+        where: { id: tx.id },
+        data: {
+          status: 'pending',
+          retryCount: newRetryCount,
+          errorMessage: error.message
+        }
+      });
+    }
+  }
+}</code></pre>
+            </div>
+
+            <!-- Implementation Steps -->
+            <div class="card">
+                <h2>5. Suggested Implementation Order</h2>
+
+                <ul class="recommendation-list">
+                    <li>
+                        <span class="icon">1️⃣</span>
+                        <div>
+                            <strong>Add TransactionQueue model</strong>
+                            <p style="color: var(--text-muted); font-size: 0.875rem;">
+                                Prisma schema update + migration. Foundation for all other changes.
+                            </p>
+                        </div>
+                    </li>
+                    <li>
+                        <span class="icon">2️⃣</span>
+                        <div>
+                            <strong>Create /api/trade/execute-batch endpoint</strong>
+                            <p style="color: var(--text-muted); font-size: 0.875rem;">
+                                Server-side multicall for batch order matching. Reuse pattern from handleBatchCancel.
+                            </p>
+                        </div>
+                    </li>
+                    <li>
+                        <span class="icon">3️⃣</span>
+                        <div>
+                            <strong>Update useTrade.ts to use batch endpoint</strong>
+                            <p style="color: var(--text-muted); font-size: 0.875rem;">
+                                Modify executeTrade() to collect all orders, then single API call.
+                            </p>
+                        </div>
+                    </li>
+                    <li>
+                        <span class="icon">4️⃣</span>
+                        <div>
+                            <strong>Implement TransactionProcessor worker</strong>
+                            <p style="color: var(--text-muted); font-size: 0.875rem;">
+                                Background job for retry logic. Can use node-cron or similar.
+                            </p>
+                        </div>
+                    </li>
+                    <li>
+                        <span class="icon">5️⃣</span>
+                        <div>
+                            <strong>Add sweep intent signature (optional enhancement)</strong>
+                            <p style="color: var(--text-muted); font-size: 0.875rem;">
+                                Single signature for entire sweep. More complex but best UX.
+                            </p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Files Reference -->
+            <div class="card">
+                <h2>6. Files to Modify</h2>
+
+                <table class="status-table">
+                    <thead>
+                        <tr>
+                            <th>File</th>
+                            <th>Changes</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="inline-code">prisma/schema.prisma</span></td>
+                            <td>Add TransactionQueue model</td>
+                        </tr>
+                        <tr>
+                            <td><span class="inline-code">api/src/routes/trade.ts</span></td>
+                            <td>Add /execute-batch endpoint with multicall</td>
+                        </tr>
+                        <tr>
+                            <td><span class="inline-code">api/src/routes/orders.ts</span></td>
+                            <td>Update to save after TX confirmation</td>
+                        </tr>
+                        <tr>
+                            <td><span class="inline-code">api/src/workers/transactionProcessor.ts</span></td>
+                            <td>New file - background queue processor</td>
+                        </tr>
+                        <tr>
+                            <td><span class="inline-code">web/src/hooks/useTrade.ts</span></td>
+                            <td>Update executeTrade() for batch API</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <footer>
+                <p>Design Document for Nostra Prediction Market</p>
+                <p>Generated: December 9, 2025</p>
+            </footer>
+        </div>
+</body>
+
+</html>

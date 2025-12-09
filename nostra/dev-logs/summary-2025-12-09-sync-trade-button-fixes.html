@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dev Log: Sync & Trade Button Fixes - Dec 9, 2025</title>
+  <style>
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.6; color: #333; padding: 2rem; background-color: #f9fafb; }
+    h1 { border-bottom: 2px solid #e5e7eb; padding-bottom: 1rem; color: #111827; }
+    h2 { color: #1f2937; margin-top: 2rem; border-left: 4px solid #3b82f6; padding-left: 1rem; }
+    h3 { color: #374151; margin-top: 1.5rem; font-size: 1.1em; }
+    code { background-color: #f3f4f6; padding: 0.2rem 0.4rem; border-radius: 4px; font-family: 'Menlo', 'Monaco', monospace; font-size: 0.9em; color: #e11d48; }
+    pre { background-color: #1e293b; color: #e2e8f0; padding: 1rem; border-radius: 8px; overflow-x: auto; font-size: 0.85em; margin: 0.5rem 0; white-space: pre; }
+    .file-link { background-color: #dbeafe; color: #1e40af; padding: 0.3rem 0.6rem; border-radius: 4px; font-size: 0.85rem; font-family: 'Menlo', monospace; text-decoration: none; display: inline-block; margin: 0.5rem 0; }
+    .file-link:hover { background-color: #bfdbfe; }
+    .problem-box { background-color: #fef2f2; border-left: 4px solid #ef4444; padding: 1rem; margin: 1rem 0; }
+    .before-label { color: #ef4444; font-weight: 600; margin-top: 1rem; }
+    .after-label { color: #22c55e; font-weight: 600; margin-top: 1rem; }
+    .tag { display: inline-block; padding: 0.25rem 0.75rem; border-radius: 9999px; font-size: 0.75rem; font-weight: 600; text-transform: uppercase; margin-right: 0.5rem; }
+    .tag-fix { background-color: #d1fae5; color: #065f46; }
+    .tag-ui { background-color: #fce7f3; color: #9d174d; }
+    hr { border: none; border-top: 1px solid #e5e7eb; margin: 2rem 0; }
+  </style>
+</head>
+<body>
+  <h1>Dev Log: Sync & Trade Button Fixes</h1>
+  <p><strong>Date:</strong> December 9, 2025</p>
+
+  <h2>1. Fixed <code>eth_getLogs</code> Block Range Limit Error</h2>
+  <span class="tag tag-fix">Critical Fix</span>
+
+  <a class="file-link" href="vscode://file/Users/jay/work/nostra-server/api/src/services/SyncService.ts">📁 api/src/services/SyncService.ts</a>
+
+  <div class="problem-box">
+    <strong>Problem:</strong> Periodic sync failing - querying from block 0 to latest exceeds RPC's 10,000 block limit.
+  </div>
+
+  <p class="before-label">❌ Before:</p>
+  <pre>const events = await this.conditionalTokens.queryFilter('TransferSingle', startBlock, currentBlock);</pre>
+
+  <p class="after-label">✅ After:</p>
+  <pre>const MAX_BLOCK_RANGE = 9999;
+const effectiveStartBlock = startBlock === 0 ? Math.max(0, currentBlock - 50000) : startBlock;
+let chunkStart = effectiveStartBlock;
+
+while (chunkStart <= currentBlock) {
+  const chunkEnd = Math.min(chunkStart + MAX_BLOCK_RANGE, currentBlock);
+  const events = await this.conditionalTokens.queryFilter('TransferSingle', chunkStart, chunkEnd);
+  // process events...
+  chunkStart = chunkEnd + 1;
+}</pre>
+
+  <hr>
+
+  <h2>2. Fixed Trade Button Not Disabling During Limit Order</h2>
+  <span class="tag tag-fix">Bug Fix</span>
+
+  <a class="file-link" href="vscode://file/Users/jay/work/nostra-server/web/src/hooks/useTrade.ts">📁 web/src/hooks/useTrade.ts</a>
+
+  <div class="problem-box">
+    <strong>Problem:</strong> <code>placeLimitOrder</code> didn't set <code>isTrading(true)</code> so button remained clickable during processing.
+  </div>
+
+  <p class="before-label">❌ Before:</p>
+  <pre>const placeLimitOrder = async (params: TradeParams) => {
+  try {
+    console.log(`[Limit Order] Placing...`);</pre>
+
+  <p class="after-label">✅ After:</p>
+  <pre>const placeLimitOrder = async (params: TradeParams) => {
+  setIsTrading(true);
+  setStatus('idle');
+  setError(null);
+
+  try {
+    console.log(`[Limit Order] Placing...`);</pre>
+
+  <hr>
+
+  <h2>3. Fixed <code>totalShares.toFixed is not a function</code> Error</h2>
+  <span class="tag tag-fix">Bug Fix</span>
+
+  <a class="file-link" href="vscode://file/Users/jay/work/nostra-server/api/src/routes/trade.ts:648">📁 api/src/routes/trade.ts:648</a>
+  <a class="file-link" href="vscode://file/Users/jay/work/nostra-server/api/src/routes/redemption.ts:111">📁 api/src/routes/redemption.ts:111</a>
+
+  <div class="problem-box">
+    <strong>Problem:</strong> Prisma returns Decimal objects, not numbers. Calling <code>.toFixed()</code> directly fails.
+  </div>
+
+  <p class="before-label">❌ Before:</p>
+  <pre>console.log(`Total: ${totalShares.toFixed(2)} shares`);</pre>
+
+  <p class="after-label">✅ After:</p>
+  <pre>console.log(`Total: ${Number(totalShares).toFixed(2)} shares`);</pre>
+
+  <hr>
+
+  <h2>4. Removed Dollar Signs from Quick Amount Buttons</h2>
+  <span class="tag tag-ui">UI</span>
+
+  <a class="file-link" href="vscode://file/Users/jay/work/nostra-server/web/src/app/market/[id]/page.tsx:1157">📁 web/src/app/market/[id]/page.tsx</a>
+
+  <p class="before-label">❌ Before:</p>
+  <pre>{orderType === 'limit' ? '+1' : '+$1'}</pre>
+
+  <p class="after-label">✅ After:</p>
+  <pre>+1</pre>
+
+</body>
+</html>
