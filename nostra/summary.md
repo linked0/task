@@ -62,5 +62,5 @@ Fix the "Limit Order Buy" failing to match with existing Sell orders (auto-match
 ## Task-1: Limit Order does not work
 This is happening when a user places a limit order buying 70 amount of Brazil 51c Yes Token.
 
-Result: ![alt text](images/image-1209-03.png)
+Result: ![alt text](../images/image-1209-03.png)
 51c bid part of result screen shot means that the limit order does not work. I think buying action should remove the 51c asks and list the remaining asks as bids.

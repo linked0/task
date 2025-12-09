@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Journey into zk-SNARKs</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <!-- MathJax for rendering LaTeX -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: #1e293b;
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --accent: #38bdf8;
+            --accent-gradient: linear-gradient(135deg, #38bdf8 0%, #818cf8 100%);
+            --border: #334155;
+            --code-bg: #0f1115;
+            --success: #4ade80;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 60px;
+            padding: 40px 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin: 0;
+            background: var(--accent-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -0.02em;
+        }
+
+        h2 {
+            font-size: 2rem;
+            margin-top: 60px;
+            margin-bottom: 20px;
+            color: var(--accent);
+            border-left: 4px solid var(--accent);
+            padding-left: 16px;
+        }
+
+        h3 {
+            font-size: 1.4rem;
+            margin-top: 30px;
+            color: var(--text-primary);
+        }
+
+        p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            margin-bottom: 24px;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 30px;
+            border: 1px solid var(--border);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            transition: transform 0.2s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-2px);
+            border-color: var(--accent);
+        }
+
+        .math-block {
+            background: var(--code-bg);
+            border-radius: 8px;
+            padding: 20px;
+            overflow-x: auto;
+            margin: 20px 0;
+            border: 1px solid var(--border);
+        }
+
+        code {
+            font-family: 'JetBrains Mono', monospace;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.9em;
+            color: #e2e8f0;
+        }
+
+        .step-diagram {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 40px 0;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .step {
+            flex: 1;
+            background: var(--card-bg);
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            border: 1px solid var(--border);
+            min-width: 150px;
+        }
+
+        .step-label {
+            font-weight: 700;
+            color: var(--accent);
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            letter-spacing: 0.05em;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .arrow {
+            color: var(--text-secondary);
+            font-size: 1.5rem;
+        }
+
+        .interactive-box {
+            border: 1px dashed var(--accent);
+            background: rgba(56, 189, 248, 0.05);
+            padding: 20px;
+            border-radius: 12px;
+            margin-top: 20px;
+        }
+
+        button {
+            background: var(--accent-gradient);
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            font-family: 'Inter', sans-serif;
+            transition: opacity 0.2s;
+        }
+
+        button:hover {
+            opacity: 0.9;
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>The Math of zk-SNARKs</h1>
+        <p>A Visual Journey from Computation to Cryptographic Proof</p>
+    </header>
+
+    <div class="card">
+        <h3>The High-Level Pipeline</h3>
+        <p>To prove you ran a computation correctly without revealing the inputs (zk), we transform a computer program into a mathematical object that can be probabilistically checked.</p>
+        
+        <div class="step-diagram">
+            <div class="step">
+                <span class="step-label">Step 1</span>
+                Code
+            </div>
+            <div class="arrow">→</div>
+            <div class="step">
+                <span class="step-label">Step 2</span>
+                Arithmetic Circuit
+            </div>
+            <div class="arrow">→</div>
+            <div class="step">
+                <span class="step-label">Step 3</span>
+                R1CS
+            </div>
+            <div class="arrow">→</div>
+            <div class="step">
+                <span class="step-label">Step 4</span>
+                QAP
+            </div>
+            <div class="arrow">→</div>
+            <div class="step">
+                <span class="step-label">Step 5</span>
+                Elliptic Curve Proof
+            </div>
+        </div>
+    </div>
+
+    <section id="arithmetization">
+        <h2>1. Arithmetic Circuits</h2>
+        <p>
+            Computers use boolean logic (AND, XOR). SNARKs work over <strong>Fields</strong> (numbers modulo a prime \(p\)).
+            We must flatten code into steps that only use Addition (+) and Multiplication (*).
+        </p>
+        
+        <div class="card">
+            <h3>Example: \(y = x^3 + x + 5\)</h3>
+            <p>Suppose we want to prove we know an \(x\) such that \(x^3 + x + 5 = 35\). (Witness \(x=3\)).</p>
+            <p>We break this down into elementary operations (gates):</p>
+            
+            <div class="math-block">
+                $$
+                \begin{align}
+                sym_1 &= x \times x \\
+                y &= sym_1 \times x \\
+                out &= y + x + 5
+                \end{align}
+                $$
+            </div>
+            <p>This is a circuit! To represent this mathematically, we move to R1CS.</p>
+        </div>
+    </section>
+
+    <section id="r1cs">
+        <h2>2. Rank-1 Constraint System (R1CS)</h2>
+        <p>
+            R1CS is a system of equations where each equation looks like:
+        </p>
+        <div class="math-block">
+            $$(A \cdot \mathbf{s}) \times (B \cdot \mathbf{s}) = (C \cdot \mathbf{s})$$
+        </div>
+        <p>
+            Here \(\mathbf{s}\) is our <strong>Solution Vector</strong> comprising all variables: \([1, out, x, sym_1, y]\).
+            <br>
+            <em>Note: The 1 is necessary for constant additions.</em>
+        </p>
+
+        <div class="card interactive-box">
+            <h3>Interactive Visualization</h3>
+            <p>Let's map our witness \(x=3\) to the vector \(\mathbf{s}\).</p>
+            <p>
+                \(x = 3\) <br>
+                \(sym_1 = x \cdot x = 9\) <br>
+                \(y = sym_1 \cdot x = 27\) <br>
+                \(out = 35\)
+            </p>
+            <p><strong>Vector s:</strong> <span style="font-family: monospace; color: var(--accent);">[1, 35, 3, 9, 27]</span></p>
+            
+            <button onclick="document.getElementById('r1cs-detail').classList.toggle('hidden')">Show Matrix Transformation</button>
+            
+            <div id="r1cs-detail" class="hidden" style="margin-top:20px; border-top:1px solid var(--border); padding-top:20px;">
+                <p>For the first gate \(x \cdot x = sym_1\):</p>
+                <ul>
+                    <li>Left input (A): select \(x\) -> \([0, 0, 1, 0, 0]\)</li>
+                    <li>Right input (B): select \(x\) -> \([0, 0, 1, 0, 0]\)</li>
+                    <li>Output (C): select \(sym_1\) -> \([0, 0, 0, 1, 0]\)</li>
+                </ul>
+                <p>Check: \((x) * (x) = (sym_1)\) -> \(3 * 3 = 9\). Correct.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="qap">
+        <h2>3. Quadratic Arithmetic Programs (QAP)</h2>
+        <p>Checking thousands of constraints (R1CS) is slow. We want to check <strong>Polynomials</strong> instead.</p>
+        <p>Using <strong>Lagrange Interpolation</strong>, we convert the matrices \(A, B, C\) into polynomials \(A(z), B(z), C(z)\).</p>
+        
+        <div class="card">
+            <h3>The Master Equation</h3>
+            <div class="math-block">
+                $$A(z) \cdot B(z) - C(z) = H(z) \cdot Z(z)$$
+            </div>
+            <p>
+                where \(Z(z)\) is the "Vanishing Polynomial" \((z-1)(z-2)...(z-n)\), which is zero at every logic gate step.
+                If the equation divides cleanly by \(Z(z)\), it means <strong>all constraints</strong> are satisfied simultaneously.
+            </p>
+        </div>
+    </section>
+
+    <section id="crypto">
+        <h2>4. The Moon Math (Cryptographic Check)</h2>
+        <p>
+            The verifier picks a secret random point \(\tau\) (tau). The prover must evaluate the polynomials at \(\tau\).
+            To prevent the prover from cheating or learning \(\tau\), we compute everything <strong>inside Elliptic Curve points</strong>.
+        </p>
+
+        <div class="card">
+            <h3>Homomorphic Hiding & Pairings</h3>
+            <p>We use a generator \(G\) on an Elliptic Curve. We encrypt values as \(G^x\).</p>
+            <p>The Prover computes \(G^{A(\tau)}, G^{B(\tau)}, G^{C(\tau)}\) and sends them to the Verifier.</p>
+            <p>The Verifier checks the QAP equation using a <strong>Bilinear Pairing</strong> \(e(g, g)\):</p>
+            
+            <div class="math-block">
+                $$e(G^A, G^B) / e(G^C, G) \stackrel{?}{=} e(G^H, G^Z)$$
+            </div>
+            
+            <p>Because \(e(G^a, G^b) = e(G, G)^{ab}\), this checks multiplication in the exponent!</p>
+        </div>
+    </section>
+
+    <footer style="text-align: center; margin-top: 60px; color: var(--text-secondary); padding-bottom: 40px;">
+        <p>Created by Antigravity for User Study</p>
+    </footer>
+</div>
+
+</body>
+</html>
