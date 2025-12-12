@@ -1,415 +1,292 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Design: Market Creation Improvements</title>
+    <title>Nostra - Design Analysis</title>
     <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            line-height: 1.6;
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 40px;
-            color: #1a1a1a;
-        }
-
-        h1,
-        h2,
-        h3 {
-            color: #111;
-            border-bottom: 1px solid #eaeaea;
-            padding-bottom: 10px;
-        }
-
-        h1 {
-            font-size: 2.5em;
-            margin-bottom: 20px;
-        }
-
-        h2 {
-            font-size: 1.8em;
-            margin-top: 40px;
-        }
-
-        h3 {
-            font-size: 1.3em;
-            margin-top: 30px;
-            font-weight: 600;
-        }
-
-        p {
-            margin-bottom: 15px;
-            color: #444;
-        }
-
-        code {
-            background: #f4f4f4;
-            padding: 2px 5px;
-            border-radius: 4px;
-            font-family: 'Monaco', 'Consolas', monospace;
-            font-size: 0.9em;
-        }
-
-        pre {
-            background: #f4f4f4;
-            padding: 15px;
-            border-radius: 8px;
-            overflow-x: auto;
-            border: 1px solid #ddd;
-        }
-
-        .feature-block {
-            background: #f8f9fa;
-            padding: 20px;
-            border-radius: 8px;
-            border-left: 5px solid #007bff;
-            margin-bottom: 25px;
-        }
-
-        .comparison {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-            margin-bottom: 20px;
-        }
-
-        .col {
-            background: #fff;
-            border: 1px solid #eee;
-            padding: 15px;
-            border-radius: 8px;
-        }
-
-        .col h4 {
-            margin-top: 0;
-            color: #555;
-        }
-
-        .tag {
-            display: inline-block;
-            padding: 4px 8px;
-            border-radius: 4px;
-            font-size: 0.8em;
-            font-weight: bold;
-        }
-
-        .tag.ui {
-            background: #e3f2fd;
-            color: #0d47a1;
-        }
-
-        .tag.logic {
-            background: #e8f5e9;
-            color: #1b5e20;
-        }
-
-        .tag.api {
-            background: #fff3e0;
-            color: #e65100;
-        }
-
-        .tag.db {
-            background: #f3e5f5;
-            color: #7b1fa2;
-        }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.6; padding: 20px; background: #f5f5f5; }
+        h1, h2, h3 { color: #333; }
+        h1 { border-bottom: 2px solid #e74c3c; padding-bottom: 10px; }
+        h2 { color: #e74c3c; margin-top: 30px; }
+        h3 { color: #2c3e50; }
+        .error-box { background: #fce4e4; border-left: 4px solid #e74c3c; padding: 15px; margin: 20px 0; }
+        .solution-box { background: #e8f5e9; border-left: 4px solid #4caf50; padding: 15px; margin: 20px 0; }
+        .warning-box { background: #fff3e0; border-left: 4px solid #ff9800; padding: 15px; margin: 20px 0; }
+        .info-box { background: #e3f2fd; border-left: 4px solid #2196f3; padding: 15px; margin: 20px 0; }
+        .code-block { background: #1e1e1e; color: #d4d4d4; padding: 15px; border-radius: 5px; overflow-x: auto; font-family: 'Fira Code', monospace; font-size: 13px; white-space: pre; }
+        .code-block .comment { color: #6a9955; }
+        .code-block .keyword { color: #569cd6; }
+        .code-block .string { color: #ce9178; }
+        .code-block .function { color: #dcdcaa; }
+        .file-path { font-family: monospace; background: #e0e0e0; padding: 2px 6px; border-radius: 3px; }
+        .inline-code { font-family: monospace; background: #e8e8e8; padding: 2px 6px; border-radius: 3px; }
+        table { border-collapse: collapse; width: 100%; margin: 20px 0; }
+        th, td { border: 1px solid #ddd; padding: 12px; text-align: left; }
+        th { background: #333; color: white; }
+        tr:nth-child(even) { background: #f9f9f9; }
+        .flow-diagram { background: white; padding: 20px; border-radius: 8px; margin: 20px 0; }
+        .step { display: inline-block; background: #3498db; color: white; padding: 8px 16px; border-radius: 20px; margin: 5px; }
+        .step-error { background: #e74c3c; }
+        .step-success { background: #4caf50; }
+        .arrow { display: inline-block; margin: 0 10px; color: #666; }
+        .version-compare { display: flex; gap: 20px; }
+        .version-compare > div { flex: 1; }
     </style>
 </head>
-
 <body>
 
-    <h1>Design: Market Creation Improvements</h1>
-    <p>This document outlines the design changes required for the <strong>Create Market</strong> page
-        (`/create-market`), aiming to align its functionality with the backend provision scripts and improve user
-        experience.</p>
+<h1>Task-1: Claim "Not Resolved" Error Analysis</h1>
+<p><strong>Date:</strong> December 12, 2025</p>
+<p><strong>Error Message:</strong> <code>Failed to claim: execution reverted: "Not resolved"</code></p>
 
-    <h2>1. UI/UX Refinements</h2>
+<h2>1. Error Analysis</h2>
 
-    <div class="feature-block">
-        <h3><span class="tag ui">UI</span> <span class="tag api">API</span> Dynamic Navigation Bar</h3>
-        <p><strong>Requirement:</strong> The top navigation bar (Trending, Breaking, Sports, etc.) must be dynamically
-            populated from the `Category` table, rather than being hardcoded.</p>
-        <p><strong>Implementation:</strong></p>
-        <ul>
-            <li><strong>Component:</strong> `Navigation` or `Header` component must fetch data from `GET
-                /api/categories`.</li>
-            <li><strong>Ordering:</strong> Categories should probably include a `priority` or `order` field in the
-                database to control display order (e.g., Trending first).</li>
-            <li><strong>Dynamic Routing:</strong> Clicking a tab should route to `/markets?category=slug`.</li>
-        </ul>
-    </div>
+<div class="error-box">
+    <h3>Error Origin</h3>
+    <p>The error occurs in <span class="file-path">ConditionalTokens.sol:160</span></p>
+    <div class="code-block"><span class="keyword">function</span> <span class="function">redeemPositions</span>(...) <span class="keyword">external</span> {
+    Condition <span class="keyword">storage</span> condition = conditions[conditionId];
+    <span class="keyword">require</span>(condition.isResolved, <span class="string">"Not resolved"</span>);  <span class="comment">// &lt;-- Line 160</span>
+    ...
+}</div>
+    <p>The <code>redeemPositions</code> function checks if the condition has been resolved on-chain before allowing token redemption.</p>
+</div>
 
-    <div class="feature-block">
-        <h3><span class="tag ui">UI</span> Visual Presentation & Terminology</h3>
-        <p>Current placeholders and terminology need adjustment to be more professional and generic.</p>
+<h2>2. Root Cause: Uncommitted Code Regression</h2>
 
-        <div class="comparison">
-            <div class="col">
-                <h4>Current State (To Change)</h4>
-                <ul>
-                    <li><strong>Inputs:</strong> Pre-filled with "Who will win MVP...", "Sports", etc.</li>
-                    <li><strong>Labels:</strong> "Players", "Add Player".</li>
-                    <li><strong>Button:</strong> "Create 3 Markets & Provide Liquidity".</li>
-                </ul>
-            </div>
-            <div class="col">
-                <h4>Target State</h4>
-                <ul>
-                    <li><strong>Inputs:</strong> Empty fields with <em>ghost/placeholder</em> text (e.g.,
-                        `placeholder="Who will win..."`).</li>
-                    <li><strong>Labels:</strong> "Outcomes", "Add Outcome".</li>
-                    <li><strong>Button:</strong> "Create Market Group".</li>
-                </ul>
-            </div>
-        </div>
-        <p><strong>Implementation Detail:</strong> Update React state initialization to empty strings. Move example text
-            to the `placeholder` attribute in Input components.</p>
-    </div>
+<div class="info-box">
+    <h3>Key Discovery: Committed Code is Correct</h3>
+    <p>The <strong>committed code (HEAD)</strong> uses the correct function <code>adminFinalizeResolution()</code>.</p>
+    <p>The <strong>uncommitted changes</strong> introduced a broken function call <code>resolveMarket()</code> which does NOT exist in the contract ABI.</p>
+</div>
 
-    <div class="feature-block">
-        <h3><span class="tag ui">UI</span> <span class="tag api">API</span> Category Selection</h3>
-        <p>Users should select from existing categories rather than typing free text.</p>
-        <p><strong>Requirement:</strong> A new API endpoint `GET /api/categories` is needed. To support this, we will
-            introduce a `Category` table in the database.</p>
-        <p><strong>Proposed Schema (Prisma):</strong></p>
-        <pre>
-model Category {
-  id          String   @id @default(uuid())
-  name        String   @unique // e.g., "Sports"
-  slug        String   @unique // e.g., "sports"
-  description String?
-  imageUrl    String?  @map("image_url")
-  createdAt   DateTime @default(now()) @map("created_at")
-  updatedAt   DateTime @updatedAt @map("updated_at")
+<h3>Version Comparison</h3>
+<table>
+    <tr>
+        <th>Version</th>
+        <th>Function Called</th>
+        <th>Status</th>
+    </tr>
+    <tr style="background: #e8f5e9;">
+        <td><strong>Committed (HEAD)</strong></td>
+        <td><code>adminFinalizeResolution(questionId, outcomeSlotCount, payouts)</code></td>
+        <td style="color: #4caf50; font-weight: bold;">CORRECT</td>
+    </tr>
+    <tr style="background: #fce4e4;">
+        <td><strong>Uncommitted (working)</strong></td>
+        <td><code>resolveMarket(questionId, payoutIndex)</code></td>
+        <td style="color: #e74c3c; font-weight: bold;">BROKEN</td>
+    </tr>
+</table>
 
-  // Relations
-  markets      Market[]
-  marketGroups MarketGroup[]
+<h3>Committed Code (Working)</h3>
+<div class="code-block"><span class="comment">// Committed version - CORRECT</span>
+<span class="keyword">const</span> outcomeSlotCount = mkt.outcomes.length; <span class="comment">// 2 for binary markets</span>
+<span class="keyword">const</span> tx = <span class="keyword">await</span> resolutionOracle.<span class="function">adminFinalizeResolution</span>(
+    mkt.questionId,
+    outcomeSlotCount,
+    payouts
+);
+<span class="keyword">await</span> tx.wait();
+txHashes.push(tx.hash);</div>
 
-  @@map("categories")
-}
+<h3>Uncommitted Code (Broken)</h3>
+<div class="code-block"><span class="comment">// Uncommitted changes - BROKEN (resolveMarket does NOT exist!)</span>
+<span class="keyword">try</span> {
+    <span class="keyword">const</span> tx = <span class="keyword">await</span> resolutionOracle.<span class="function">resolveMarket</span>(mkt.questionId, payoutIndex);
+    <span class="keyword">await</span> tx.wait();
+    txHashes.push(tx.hash);
+} <span class="keyword">catch</span> (e: any) {
+    console.warn(<span class="string">`On-chain resolution failed: ${e.message}`</span>);
+    <span class="comment">// Silently continues - DB updated but on-chain NOT resolved!</span>
+}</div>
 
-// Updates to Market and MarketGroup models:
-// - Add `categoryId String?` field
-// - Add relation `category Category? @relation(fields: [categoryId], references: [id])`
-        </pre>
-    </div>
+<h2>3. The Problem with Uncommitted Changes</h2>
 
-    <div class="feature-block">
-        <h3><span class="tag ui">UI</span> Default Resolution Date</h3>
-        <p>The resolution date should default to exactly one month from the current date.</p>
-        <pre>
-// Helper function
-const getOneMonthFromNow = () => {
-  const d = new Date();
-  d.setMonth(d.getMonth() + 1);
-  return d.toISOString().split('T')[0];
-};
-        </pre>
-    </div>
+<div class="error-box">
+    <h3>Why the Uncommitted Code Fails</h3>
+    <ol>
+        <li><code>resolveMarket()</code> does NOT exist in the ResolutionOracle contract ABI</li>
+        <li>The call throws an error, caught by try/catch</li>
+        <li>Code continues and updates DB to <code>RESOLVED</code></li>
+        <li>On-chain <code>condition.isResolved</code> remains <code>false</code></li>
+        <li>User tries to claim → <code>redeemPositions()</code> reverts with "Not resolved"</li>
+    </ol>
+</div>
 
-    <h2>2. Functional & Logic Alignment</h2>
+<h3>Available Functions in ResolutionOracle</h3>
+<table>
+    <tr>
+        <th>Function</th>
+        <th>Parameters</th>
+        <th>Access</th>
+        <th>Description</th>
+    </tr>
+    <tr>
+        <td><code>proposeResolution</code></td>
+        <td>questionId, outcomeSlotCount, payouts[]</td>
+        <td>onlyResolver</td>
+        <td>Proposes resolution, starts dispute period</td>
+    </tr>
+    <tr>
+        <td><code>finalizeResolution</code></td>
+        <td>questionId, outcomeSlotCount</td>
+        <td>onlyResolver</td>
+        <td>Finalizes after dispute period (1 day)</td>
+    </tr>
+    <tr style="background: #e8f5e9;">
+        <td><strong><code>adminFinalizeResolution</code></strong></td>
+        <td>questionId, outcomeSlotCount, payouts[]</td>
+        <td>onlyOwner</td>
+        <td><strong>Immediate resolution - bypasses dispute period (CORRECT FUNCTION)</strong></td>
+    </tr>
+    <tr style="background: #fce4e4;">
+        <td><s><code>resolveMarket</code></s></td>
+        <td>-</td>
+        <td>-</td>
+        <td><strong>DOES NOT EXIST</strong></td>
+    </tr>
+</table>
 
-    <div class="feature-block">
-        <h3><span class="tag logic">Logic</span> Streamlining the "Create" Action</h3>
-        <p><strong>Goal:</strong> The "Create" button should function similarly to the `fifa-world-cup-2026/create.ts`
-            script. This implies separating "Market Creation" from "Manual Liquidity Provision".</p>
+<h2>4. Execution Flow Comparison</h2>
 
-        <p><strong>Analysis of Script (`create.ts`):</strong></p>
-        <ul>
-            <li>Creates Market Group in DB.</li>
-            <li>Creates Binary Markets on-chain.</li>
-            <li><strong>Liquidity:</strong> Does NOT require manual signing of orders. Instead, it sets `liquidityMode:
-                'ACTIVE_ORDERS'` in the database config, delegating liquidity provision to a bot/market maker service.
-            </li>
-        </ul>
+<div class="flow-diagram">
+    <h3>Uncommitted Code Flow (BROKEN)</h3>
+    <span class="step">Admin clicks Resolve</span>
+    <span class="arrow">&#8594;</span>
+    <span class="step step-error">resolveMarket() throws error</span>
+    <span class="arrow">&#8594;</span>
+    <span class="step">catch: console.warn()</span>
+    <span class="arrow">&#8594;</span>
+    <span class="step">DB Updated (RESOLVED)</span>
+    <span class="arrow">&#8594;</span>
+    <span class="step">User clicks Claim</span>
+    <span class="arrow">&#8594;</span>
+    <span class="step step-error">redeemPositions() REVERTS</span>
+</div>
 
-        <p><strong>Proposed Frontend Flow:</strong></p>
-        <ol>
-            <li><strong>User fills form:</strong> Details, Category, Outcomes.</li>
-            <li><strong>User clicks "Create Market Group":</strong>
-                <ul>
-                    <li><strong>Step A (Blockchain):</strong> Frontend iterates and asks User to sign
-                        `marketFactory.createBinaryMarket` transactions (User pays gas).</li>
-                    <li><strong>Step B (Database):</strong> Frontend calls `POST /api/markets/grouped`.</li>
-                </ul>
-            </li>
-            <li><strong>Crucial Change:</strong> Remove the mandatory "Mint Tokens" and "Sign Orders" steps from this
-                immediate flow.</li>
-            <li><strong>New Payload:</strong> Send `liquidityMode: 'ACTIVE_ORDERS'` (or similar flag) to the backend.
-            </li>
-        </ol>
+<div class="flow-diagram">
+    <h3>Committed Code Flow (CORRECT)</h3>
+    <span class="step">Admin clicks Resolve</span>
+    <span class="arrow">&#8594;</span>
+    <span class="step step-success">adminFinalizeResolution()</span>
+    <span class="arrow">&#8594;</span>
+    <span class="step step-success">reportPayouts() called</span>
+    <span class="arrow">&#8594;</span>
+    <span class="step step-success">condition.isResolved = true</span>
+    <span class="arrow">&#8594;</span>
+    <span class="step">DB Updated (RESOLVED)</span>
+    <span class="arrow">&#8594;</span>
+    <span class="step">User clicks Claim</span>
+    <span class="arrow">&#8594;</span>
+    <span class="step step-success">redeemPositions() SUCCESS</span>
+</div>
 
-        <p><strong>API Update (`POST /api/markets/grouped`):</strong></p>
-        <pre>
-// Adjusted Body
-{
-  "name": "Market Title",
-  "categoryId": "uuid...", // Changed from "category" string
-  "imageUrl": "...",
-  "liquidityConfig": {
-    "mode": "ACTIVE_ORDERS", // Bot will pick this up
-    "initialLiquidity": 100 // Amount per market
-  },
-  "markets": [
-    {
-      "question": "Outcome A?",
-      "questionId": "0x...",
-      "conditionId": "0x...",
-      "outcomes": [...]
-      // No "orders" array needed if using Bot Mode
-    }
-  ]
-}
-        </pre>
-    </div>
+<h2>5. Solution</h2>
 
-    <h2>3. Implementation Roadmap</h2>
+<div class="solution-box">
+    <h3>Option 1: Discard Uncommitted Changes (Recommended)</h3>
+    <p>If the uncommitted changes to <code>admin.ts</code> are not needed, simply restore the committed version:</p>
+    <div class="code-block">git checkout api/src/routes/admin.ts</div>
+    <p>This will restore the working <code>adminFinalizeResolution()</code> calls.</p>
+</div>
+
+<div class="warning-box">
+    <h3>Option 2: Fix the Uncommitted Changes</h3>
+    <p>If the uncommitted changes contain other necessary modifications, replace the broken <code>resolveMarket()</code> calls:</p>
+    <div class="code-block"><span class="comment">// Replace this (BROKEN):</span>
+<span class="keyword">const</span> tx = <span class="keyword">await</span> resolutionOracle.<span class="function">resolveMarket</span>(mkt.questionId, payoutIndex);
+
+<span class="comment">// With this (CORRECT):</span>
+<span class="keyword">const</span> outcomeSlotCount = 2;
+<span class="keyword">const</span> payouts = payoutIndex === 0 ? [100, 0] : [0, 100];
+<span class="keyword">const</span> tx = <span class="keyword">await</span> resolutionOracle.<span class="function">adminFinalizeResolution</span>(
+    mkt.questionId,
+    outcomeSlotCount,
+    payouts
+);</div>
+</div>
+
+<h2>6. Payout Array Format</h2>
+
+<div class="info-box">
+    <h3>Important: Payouts Array</h3>
+    <p>The <code>adminFinalizeResolution</code> function requires a payouts array, not just an index:</p>
+    <table>
+        <tr>
+            <th>Winning Outcome</th>
+            <th>payoutIndex</th>
+            <th>payouts Array</th>
+        </tr>
+        <tr>
+            <td>YES (first outcome)</td>
+            <td>0</td>
+            <td><code>[100, 0]</code></td>
+        </tr>
+        <tr>
+            <td>NO (second outcome)</td>
+            <td>1</td>
+            <td><code>[0, 100]</code></td>
+        </tr>
+    </table>
+    <p>The values represent percentage (100 = full payout to that outcome, 0 = no payout).</p>
+</div>
+
+<h2>7. Markets Affected</h2>
+
+<div class="warning-box">
+    <h3>Markets Resolved with Broken Code</h3>
+    <p>Any markets resolved while running the uncommitted code are in an inconsistent state:</p>
     <ul>
-        <li><strong>Step 1 (DB):</strong> Create migration for `Category` model and update `Market`/`MarketGroup`. Seed
-            initial categories.</li>
-        <li><strong>Step 2 (API):</strong> Implement `GET /api/categories` and update `POST /api/markets/grouped` to
-            handle `categoryId` and `liquidityConfig`.</li>
-        <li><strong>Step 3 (Frontend):</strong> Refactor `create-market/page.tsx`:
-            <ul>
-                <li>Clear state initializers.</li>
-                <li>Replace "Players" array with "Outcomes".</li>
-                <li>Implement Category Dropdown (fetching from API).</li>
-                <li>Remove `ConditionalTokens` and `CTFExchange` interaction from the main submit handler.</li>
-                <li>Only keep `MarketFactory` interaction.</li>
-            </ul>
-        </li>
+        <li><strong>Database:</strong> status = 'RESOLVED'</li>
+        <li><strong>On-Chain:</strong> condition.isResolved = false</li>
     </ul>
+    <p><strong>To fix these markets:</strong></p>
+    <ol>
+        <li>Identify all markets with <code>status: 'RESOLVED'</code> in the database</li>
+        <li>For each market, call <code>adminFinalizeResolution</code> manually or via a migration script</li>
+        <li>Verify on-chain resolution using <code>conditionalTokens.conditions(conditionId).isResolved</code></li>
+    </ol>
+</div>
 
-    <h2>4. Script Migration Strategy</h2>
-    <div class="feature-block">
-        <h3><span class="tag logic">Scripts</span> Update `fresh-start` & Provisioning</h3>
-        <p>The user requested updating the `fresh-start` pipeline. The introduction of the `Category` table impacts all
-            market creation scripts.</p>
+<h2>8. Summary</h2>
 
-        <p><strong>Affected Scripts:</strong></p>
-        <ul>
-            <li>`api/package.json` -> `fresh-start`</li>
-            <li>`api/scripts/create-all-markets.ts` (Main driver)</li>
-            <li>Individual market scripts (e.g., `api/scripts/fifa-world-cup-2026/create.ts`,
-                `api/scripts/world-series-mvp/create.ts`)</li>
-        </ul>
+<table>
+    <tr>
+        <th>Aspect</th>
+        <th>Details</th>
+    </tr>
+    <tr>
+        <td><strong>Root Cause</strong></td>
+        <td>Uncommitted changes introduced broken <code>resolveMarket()</code> call</td>
+    </tr>
+    <tr>
+        <td><strong>Committed Code</strong></td>
+        <td>Correct - uses <code>adminFinalizeResolution()</code></td>
+    </tr>
+    <tr>
+        <td><strong>Fix</strong></td>
+        <td>Discard changes or fix <code>resolveMarket</code> → <code>adminFinalizeResolution</code></td>
+    </tr>
+    <tr>
+        <td><strong>Restart Required</strong></td>
+        <td>Yes - API server restart needed after fix</td>
+    </tr>
+</table>
 
-        <p><strong>Migration Plan:</strong></p>
-        <ol>
-            <li><strong>Seed Categories:</strong> Create a new script `api/scripts/seed-categories.ts` (or part of
-                `prisma/seed.ts`) to insert standard categories: 'Sports', 'Politics', 'Crypto', etc.</li>
-            <li><strong>Refactor `create.ts` scripts:</strong>
-                <ul>
-                    <li>Locate `marketGroupRepository.create()` and `marketRepository.create()` calls.</li>
-                    <li>Replace the string `category: 'Sports'` with logic to find the `CategoryId` (e.g., `const
-                        sportsCat = await prisma.category.findUnique({ where: { name: 'Sports' } })`).</li>
-                </ul>
-            </li>
-            <li><strong>Update `fresh-start`:</strong> Include the category seeding step before `create:all`.</li>
-        </ol>
-    </div>
+<h2>9. Git Commands Reference</h2>
 
-    <h2>5. Critical Fixes (Immediate Feedback)</h2>
-    <div class="feature-block">
-        <h3><span class="tag ui">UI</span> Fixes based on User Feedback</h3>
-        <ul>
-            <li><strong>Question Phrasing:</strong> The generated question "Will Choo Mi-ae 2026 Gyeonggi... win?" is
-                awkward.
-                <strong>Fix:</strong> Simplify to just the Outcome Name (e.g., "Choo Mi-ae") or a standard "Will
-                [Outcome] win?" dependent on the specific template. The User prefers just the Outcome Name in the list.
-            </li>
-            <li><strong>Image Logo:</strong> The uploaded image isn't appearing on the final page.
-                <strong>Fix:</strong> Ensure `imageUrl` is correctly passed from Frontend -> API -> Database
-                (MarketGroup) -> Frontend Display. Check `POST /api/markets/grouped` handler.
-            </li>
-            <li><strong>Empty Order Book:</strong> "Asks" and "Bids" are empty.
-                <strong>Fix:</strong> Verify that the `liquidityConfig` sent to the API actually triggers the Bot to
-                place orders. The Bot might be running locally but not picking up the new market immediately.
-            </li>
-        </ul>
-    </div>
+<div class="code-block"><span class="comment"># View current changes</span>
+git diff api/src/routes/admin.ts
 
-    <h2>6. Async Batch Processing (Future Architecture)</h2>
-    <div class="feature-block">
-        <h3><span class="tag infra">Infra</span> Batch Market Creation</h3>
-        <p><strong>Problem:</strong> Creating a market group with 10+ outcomes requires 10+ separate blockchain
-            transactions. Doing this sequentially on the Client (Browser) is slow (30-60s), fragile (browser close =
-            failure), and annoying for the user.</p>
+<span class="comment"># Discard uncommitted changes to admin.ts (restore working version)</span>
+git checkout api/src/routes/admin.ts
 
-        <p><strong>Proposed Architecture:</strong></p>
-        <ol>
-            <li><strong>Client:</strong> User fills form and clicks "Create".
-                <ul>
-                    <li>Client sends <strong>ONE</strong> payload to `POST /api/markets/batch`.</li>
-                    <li>Client receives `202 Accepted` and shows "Market Creation Queued".</li>
-                </ul>
-            </li>
-            <li><strong>API (Server):</strong>
-                <ul>
-                    <li>Validates request.</li>
-                    <li>Creates a `Job` record (status: `PENDING`).</li>
-                    <li>Returns immediate response.</li>
-                </ul>
-            </li>
-            <li><strong>Worker (Background Process):</strong>
-                <ul>
-                    <li>Picks up `PENDING` jobs.</li>
-                    <li>Executes blockchain transactions (using <strong>Server Wallet</strong>, not User Wallet).
-                        <em>Note: This requires Server Wallet to have funds/authority.</em>
-                    </li>
-                    <li>Updates Database.</li>
-                    <li>Triggers Liquidity Bot.</li>
-                    <li>Updates Job status to `COMPLETED`.</li>
-                </ul>
-            </li>
-        </ol>
-        <p><strong>UI Implication:</strong> Need a "Creation Status" dashboard or notification system.</p>
-    </div>
-
-    <h2>7. Notification System Design</h2>
-    <div class="feature-block">
-        <h3><span class="tag infra">Infra</span> Real-time Updates via WebSocket</h3>
-        <p><strong>Goal:</strong> Notify the user immediately when their batch market creation job succeeds or fails,
-            even if they navigated away.</p>
-
-        <p><strong>Architecture:</strong></p>
-        <ul>
-            <li><strong>Existing Capability:</strong> The API already has a `WebSocketService` on `/ws`.</li>
-            <li><strong>Backend Flow:</strong>
-                <ul>
-                    <li>Background Worker finishes processing.</li>
-                    <li>Calls <code>webSocketService.broadcast('job_update', { jobId, status: 'COMPLETED' })</code>.
-                    </li>
-                </ul>
-            </li>
-            <li><strong>Frontend Flow:</strong>
-                <ul>
-                    <li><strong>Global Listener:</strong> A `NotificationContext` connects to `ws://api/ws`.</li>
-                    <li><strong>Event Handling:</strong> When a `job_update` message is received, trigger a
-                        <strong>Toast</strong> (e.g., "Market Group Created Successfully").</li>
-                    <li><strong>Status Refresh:</strong> If the user is on the "My Requests" page, automatically refresh
-                        the list.</li>
-                </ul>
-            </li>
-        </ul>
-        <pre>
-// Example Message Payload
-{
-  "type": "job_update",
-  "data": {
-    "jobId": "123-abc",
-    "status": "COMPLETED",
-    "marketGroupId": "xyz-789",
-    "message": "Successfully created 4 markets."
-  }
-}
-        </pre>
-    </div>
+<span class="comment"># Or selectively stage other changes and reset admin.ts</span>
+git stash
+git checkout api/src/routes/admin.ts
+git stash pop</div>
 
 </body>
-
-</html>
-
 </html>

@@ -9,42 +9,8 @@ Check the following checkbox whether the task I'm requesting is just a design or
 
 # Tasks 
 ## Task-1: Advanced Design about AI Boost Market Creation 
-We roughly designed the AI boost market creation in the future-plan.html file. You can add more details to the design. Here's my requirements.
-
-- [x] **Fix Market Resolution via Admin API**
-  - **Issue:** "Not resolved" error when claiming winnings.
-  - **Root Cause:** Admin API was using `ConditionalTokens` directly, but the market oracle was set to `ResolutionOracle` (verified via debug script `0x30f4...` match).
-  - **Fix:** Reverted Admin API to use `ResolutionOracle` wrapper, which correctly proxies to the ConditionalTokens contract.
-  - **Status:** Verified Oracle address match. Ready for user testing.
-- [x] **Fix Market Creation Liquidity**
-  - **Issue:** "Minting failed" during batch creation.
-  - **Root Cause:** Server Wallet ran out of USDC to split into positions (inventory).
-  - **Fix:** Added auto-minting logic to `BatchProcessor` to ensure sufficient USDC balance before splitting positions.
-  - **Status:** Implemented and deployed.on.
-
-1. The edit box that will be submitted into the LLM server is located bottom of the page that is right before the "create" button.
-
-2. The LLM Server would be the ChatGPT at first that the web app would connect to. The web app will send the edit box content to the LLM server with API Key. 
-
-3. The request would be a simple text like "I want to create a market for best character of the manga, Slam Dunk". And then the LLM server would return the market data to the web app. It would be like like some json data like this:
-{
-    title: "Best Character of Slam Dunk",
-    description: "Best Character of Slam Dunk",
-    category: "Sports",
-    outcomes: [
-        {
-            name: "Sakuragi Hanamichi",
-            description: "Genius but not skillful yet"
-        },
-        { 
-            name: "Rukawa Kaede",
-            description: "Handsome and calm"
-        }
-    ]
-}
-I think this LLM should be finetuned to make this kind of data. So you should the steps to finetune the LLM model using a platform like Huggingface or something.
-
-4. Show me some related code.
+![alt text](/images/image-1212-01.png)
+It's error occurred when a user try to claim their winning amount in the My Position page. It worked before the current update which is not committed yet. I think it's related to some batch related code. Can you check it? Let's talk about the cause.
 
 ## After changing any code while coworking with me 
 You should say whether I should rerun api server or not. That goes the same for web server.
