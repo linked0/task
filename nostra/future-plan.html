@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nostra Future Plan</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem;
+            background-color: #FAFAFA;
+        }
+
+        h1 {
+            border-bottom: 2px solid #eaecef;
+            padding-bottom: 0.3em;
+            margin-bottom: 24px;
+            color: #1a202c;
+        }
+
+        h2 {
+            border-bottom: 1px solid #eaecef;
+            padding-bottom: 0.3em;
+            margin-top: 36px;
+            color: #2d3748;
+        }
+
+        .item {
+            background: #fff;
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        }
+
+        .tag {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: bold;
+            margin-right: 6px;
+            text-transform: uppercase;
+        }
+
+        .tag-optimization {
+            background-color: #ebf8ff;
+            color: #3182ce;
+        }
+
+        /* Blue */
+        .tag-feature {
+            background-color: #f0fff4;
+            color: #38a169;
+        }
+
+        /* Green */
+        .tag-infra {
+            background-color: #faf5ff;
+            color: #805ad5;
+        }
+
+        /* Purple */
+
+        pre {
+            background-color: #2d3748;
+            color: #f7fafc;
+            padding: 12px;
+            border-radius: 6px;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>🚀 Nostra Future Plan</h1>
+    <p>This document tracks planned improvements, technical debt to address, and future feature ideas.</p>
+    <p>Don't do anything in this document unless I ask you to do so.</p>
+    <h2>Infrastructure & Performance</h2>
+
+    <div class="item">
+        <h3><span class="tag tag-optimization">Optimization</span> Replace Polling Sync with Subgraph</h3>
+        <p><strong>Current State:</strong> The `SyncService` currently polls the blockchain every 30 seconds, iterating
+            through <em>all</em> markets to update prices. This is inefficient and will hit RPC limits as the number of
+            markets grows.</p>
+        <p><strong>Proposal:</strong> Integrate <strong>The Graph</strong> (Subgraph) or a real-time Indexer.</p>
+        <ul>
+            <li><strong>Why:</strong> Subgraphs listen to events and index data efficiently. The API allows querying
+                exactly what changed, or using WebSockets to get pushed updates only when an event occurs.</li>
+            <li><strong>Benefit:</strong> drastically reduces RPC calls and server load. Real-time updates for users.
+            </li>
+        </ul>
+        <pre><code>// Future Flow
+Graph Node -> Indexes 'Trade' events -> Updates DB Table via Webhook OR API queries the Graph instead of direct RPC loop.</code></pre>
+    </div>
+
+    <h2>Feature Logic & UX</h2>
+
+    <div class="item">
+        <h3><span class="tag tag-feature">Feature</span> Localization (Hangul Version)</h3>
+        <p><strong>Goal:</strong> Provide a fully localized experience for Korean users to increase adoption in the
+            region.</p>
+        <p><strong>Proposal:</strong> Implement Internationalization (i18n) across the stack.</p>
+        <ul>
+            <li><strong>Frontend:</strong> Use <code>next-intl</code> to manage UI strings (Buttons, Labels, Errors).
+            </li>
+            <li><strong>Content:</strong> Database schema updates to support multi-language content (e.g.,
+                `question_ko`, `description_ko`).</li>
+            <li><strong>URL Structure:</strong> Support <code>/ko/market/...</code> and <code>/en/market/...</code>
+                routing.</li>
+        </ul>
+    </div>
+
+    <div class="item">
+        <h3><span class="tag tag-feature">Feature</span> Dynamic Feeds: Trending, Breaking, New</h3>
+        <p><strong>Problem:</strong> Currently, "Trending", "Breaking", and "New" are seeded as static Categories in the
+            database. This is incorrect because a market belongs to a topic (e.g., Sports), but can <em>become</em>
+            Trending or Breaking dynamically.</p>
+        <p><strong>Proposal:</strong> Remove them from the `Category` table and implement them as
+            <strong>Filters/Sorts</strong>:
+        </p>
+        <ul>
+            <li><strong>🔥 Trending:</strong> Calculated feed based on 24h Volume or Trade Count.</li>
+            <li><strong>✨ New:</strong> Simple query: `GET /api/markets?sort=createdAt&order=desc`.</li>
+            <li><strong>🚨 Breaking:</strong> A boolean flag `isBreaking` on the Market model, or a high-velocity
+                algorithmic trigger.</li>
+        </ul>
+        <pre><code>// Proposed API Structure
+GET /api/feeds/trending  -> Returns top 10 vol markets
+GET /api/feeds/breaking  -> Returns markets flagged 'breaking'
+GET /api/feeds/new       -> Returns recent markets</code></pre>
+    </div>
+
+    <div class="item">
+        <h3><span class="tag tag-feature">Feature</span> <a href="designs/2025-12-11-ai-boost-design.html"
+                style="text-decoration: none; color: inherit;">🤖 AI Boost Market Creation</a></h3>
+        <p><strong>Goal:</strong> Simplify the complex market creation form by using Generative AI to auto-fill fields
+            from a simple natural language prompt.</p>
+        <p><strong>Concept:</strong> "Magic Fill" - A user chats with an AI assistant to describe the market they want
+            (e.g., <em>"I want the market that who is the best character in the Slamdunk"</em>), and the AI populates
+            the title, description, outcomes, and resolution details automatically.</p>
+
+        <h4>Technical Requirements:</h4>
+        <ul>
+            <li><strong>LLM Provider:</strong> OpenAI (GPT-4o) or Anthropic (Claude 3.5 Sonnet) via API Key.</li>
+            <li><strong>Framework:</strong> LangChain or Vercel AI SDK for managing prompts and structured output.</li>
+            <li><strong>Backend:</strong> New endpoint <code>POST /api/ai/generate-market</code>.
+                <ul>
+                    <li>Input: User prompt string.</li>
+                    <li>Output: JSON object in <code>CreateMarketSchema</code> format.</li>
+                </ul>
+            </li>
+            <li><strong>Prompt Engineering:</strong> Dedicated system prompt to enforce JSON structure and generate
+                reasonable outcomes (e.g. knowing Slamdunk characters).</li>
+        </ul>
+
+        <h4>Implementation Steps:</h4>
+        <ol>
+            <li><strong>Setup:</strong> Configure OpenAI/Anthropic API Key in `.env`.</li>
+            <li><strong>Backend:</strong> Create a service that accepts a string and returns structured JSON (Title,
+                Category, Outcomes[], Resolution Rules).</li>
+            <li><strong>UI/UX:</strong> Add a "✨ AI Auto-Fill" button to the creation page.</li>
+            <li><strong>Interaction:</strong> Opening a modal or chat drawer where the user types their idea.</li>
+            <li><strong>Integration:</strong> On success, map the JSON response to the React Hook Form state.</li>
+        </ol>
+
+        <h4>UI Wireframe (Concept):</h4>
+        <pre><code>---------------------------------------------------------
+|  Create New Market                                    |
+|                                                       |
+|  [ Title Input ]                                      |
+|  [ Category Select ]                                  |
+|                                                       |
+|  +-------------------------------------------------+  |
+|  |  🤖 AI Assistant (Magic Fill)                [x]|  |
+|  |-------------------------------------------------|  |
+|  |  User: "Make a market for Slamdunk characters"  |  |
+|  |                                                 |  |
+|  |  AI: "Sure! Generating outcomes..."             |  |
+|  |                                                 |  |
+|  |  [ PREVIEW GENERATED DATA ]                     |  |
+|  |  Title: Who is the best character in Slamdunk?  |  |
+|  |  Outcomes: [Sakuragi, Rukawa, Mitsui, Akagi...] |  |
+|  |                                                 |  |
+|  |  [ Apply to Form ]  [ Try Again ]               |  |
+|  +-------------------------------------------------+  |
+|                                                       |
+|  [ Outcomes List (Auto-filled) ]                      |
+|  [ ... ]                                              |
+---------------------------------------------------------</code></pre>
+    </div>
+
+    <h2>Security & Authorization</h2>
+
+    <div class="item">
+        <h3><span class="tag tag-feature">Feature</span> Creator Fee & Revenue Share Policy</h3>
+        <p><strong>Goal:</strong> Incentivize users to create engaging markets by providing a revenue share from trading
+            fees.</p>
+        <p><strong>Policy:</strong> When a user creates a market (even if the Admin provides the liquidity), the creator
+            is entitled to a portion of the trading fees generated by that market.</p>
+
+        <h4>Algorithm:</h4>
+        <ul>
+            <li><strong>Total Trading Fee:</strong> e.g., 2% of transaction volume.</li>
+            <li><strong>Fee Distribution:</strong>
+                <ul>
+                    <li><strong>Liquidity Provider (Admin):</strong> 50% (Reward for capital risk)</li>
+                    <li><strong>Platform (Treasury):</strong> 30% (Operational costs)</li>
+                    <li><strong>Creator (User):</strong> 20% (Incentive for market idea and promotion)</li>
+                </ul>
+            </li>
+            <li><strong>Mechanics:</strong>
+                <ul>
+                    <li>The <code>Market</code> table will store the <code>creatorWalletAddress</code>.</li>
+                    <li>On every trade execution, the fee is calculated and credited to a
+                        <code>pendingCreatorFees</code> ledger.
+                    </li>
+                    <li>Creators can claim their accumulated fees via a dashboard.</li>
+                </ul>
+            </li>
+        </ul>
+        <p><em>Note: Since the Creator does not provide the initial liquidity, they do not receive the "remaining
+                inventory" at market resolution. That capital is returned to the Admin (Liquidity Provider).</em></p>
+    </div>
+
+    <div class="item">
+        <h3><span class="tag tag-infra">Hardening</span> EIP-712 User Authorization for Batch Creation</h3>
+        <p><strong>Context:</strong> Currently, Batch Market Creation is "Gasless" and uses the Server Wallet to sign
+            transactions. Authentication relies on API session/token, but there is no cryptographic proof that the User
+            explicitly authorized the specific market parameters.</p>
+        <p><strong>Proposal:</strong> Implement EIP-712 Signature Verification.</p>
+        <ul>
+            <li><strong>Frontend:</strong> User signs a typed message (e.g. "Create Market: [Title] with Liquidity:
+                [Amount]") using their wallet (Metamask/Rabby).</li>
+            <li><strong>Backend:</strong> The API receives the signature + payload. It runs
+                <code>ethers.verifyTypedData</code> to recover the address.
+            </li>
+            <li><strong>Validation:</strong> Ensure recovered address matches the authenticated Session User.</li>
+            <li><strong>Execution:</strong> Continue with Server-Side Batch creation (Gasless), but store the signature
+                as proof of authorization.</li>
+        </ul>
+    </div>
+
+</body>
+
+</html>

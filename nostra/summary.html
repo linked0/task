@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Summary: Market Creation & Category Implementation (2025-12-11)</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem;
+            background-color: #f9f9fab0;
+        }
+
+        h1 {
+            border-bottom: 2px solid #eaecef;
+            padding-bottom: 0.3em;
+            margin-bottom: 24px;
+            color: #1a202c;
+        }
+
+        h2 {
+            border-bottom: 1px solid #eaecef;
+            padding-bottom: 0.3em;
+            margin-top: 36px;
+            color: #2d3748;
+        }
+
+        h3 {
+            margin-top: 24px;
+            color: #4a5568;
+        }
+
+        code {
+            background-color: #e2e8f0;
+            padding: 0.2em 0.4em;
+            border-radius: 4px;
+            font-family: ui-monospace, SFMono-Regular, SF Mono, Menlo, Consolas, Liberation Mono, monospace;
+            font-size: 85%;
+        }
+
+        pre {
+            background-color: #2d3748;
+            color: #f7fafc;
+            padding: 16px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 16px 0;
+        }
+
+        pre code {
+            background-color: transparent;
+            color: inherit;
+            padding: 0;
+            font-size: 14px;
+        }
+
+        .diff-container {
+            display: flex;
+            gap: 20px;
+            margin-top: 10px;
+        }
+
+        .diff-block {
+            flex: 1;
+            background: #fff;
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+            padding: 16px;
+        }
+
+        .diff-title {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 8px;
+            color: #718096;
+            text-transform: uppercase;
+            font-size: 0.8em;
+        }
+
+        .status-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .status-list li {
+            position: relative;
+            padding-left: 28px;
+            margin-bottom: 8px;
+        }
+
+        .status-list li.completed::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #38a169;
+            font-weight: bold;
+        }
+
+        .tag {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: bold;
+            margin-right: 6px;
+        }
+
+        .tag-blue {
+            background-color: #ebf8ff;
+            color: #3182ce;
+        }
+
+        .tag-green {
+            background-color: #f0fff4;
+            color: #38a169;
+        }
+
+        .tag-purple {
+            background-color: #faf5ff;
+            color: #805ad5;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Summary: Market Creation & Category Implementation (2025-12-11)</h1>
+
+    <h2>Overview</h2>
+    <p>Successfully overhauled the Market Creation feature to align with the backend's automated liquidity capabilities
+        and improved the Data Model by introducing a dedicated <code>Category</code> system. This shift removes manual
+        operational burden from users during market creation.</p>
+
+    <h2>Key Changes</h2>
+
+    <h3>1. Database Schema (<code>prisma/schema.prisma</code>)</h3>
+    <p>Moved from free-text strings to a relational model for robust categorization.</p>
+
+    <div class="diff-container">
+        <div class="diff-block">
+            <span class="diff-title">Before</span>
+            <pre><code>model MarketGroup {
+  // ...
+  category String
+}</code></pre>
+        </div>
+        <div class="diff-block">
+            <span class="diff-title">After</span>
+            <pre><code>model Category {
+  id       String  @id @default(uuid())
+  name     String
+  slug     String  @unique
+  priority Int     @default(0)
+  icon     String?
+}
+
+model MarketGroup {
+  // ...
+  category    String 
+  categoryId  String?
+  categoryRel Category? @relation(...)
+}</code></pre>
+        </div>
+    </div>
+
+    <h3>2. Frontend Refactor (<code>create-market/page.tsx</code>)</h3>
+    <p>Refactored the submission logic to delegate liquidity provision to the backend Bot via the
+        <code>ACTIVE_ORDERS</code> flag.
+    </p>
+
+    <div class="diff-container">
+        <div class="diff-block">
+            <span class="diff-title">Before</span>
+            <ul>
+                <li>Manual Category Input</li>
+                <li>Manual "Players" Input</li>
+                <li>Complex Submission:
+                    <br><small>Approve USDC &rarr; Mint Tokens &rarr; Sign Orders</small>
+                </li>
+            </ul>
+            <pre><code>// 3+ Wallet Confirmations
+await usdc.approve(...);
+await conditionalTokens.splitPosition(...);
+await signer.signTypedData(...);</code></pre>
+        </div>
+        <div class="diff-block">
+            <span class="diff-title">After</span>
+            <ul>
+                <li><span class="tag tag-blue">Category Dropdown</span> from API</li>
+                <li>"Outcomes" Terminology</li>
+                <li>Simplified Submission:
+                    <br><small>Create Market (On-chain) &rarr; API Config</small>
+                </li>
+            </ul>
+            <pre><code>// 1 Wallet Confirmation
+await marketFactory.createBinaryMarket(...);
+
+// API handles the rest
+const payload = {
+  liquidityConfig: {
+    mode: 'ACTIVE_ORDERS',
+    initialLiquidity: liquidityAmount
+  }
+};</code></pre>
+        </div>
+    </div>
+
+    <h3>3. API Updates</h3>
+    <ul>
+        <li><span class="tag tag-green">NEW</span> <strong>GET /api/categories</strong>: Serves filtered and sorted
+            categories.</li>
+        <li><span class="tag tag-purple">UPDATED</span> <strong>POST /api/markets/grouped</strong>: Now handles
+            <code>categoryId</code> linking and <code>liquidityConfig</code> for automated order generation.
+        </li>
+    </ul>
+
+    <h3>4. Scripts & Seeding</h3>
+    <p>Created <code>api/scripts/seed-categories.ts</code> to populate the DB with the following categories,
+        prioritizing the design:</p>
+    <p>
+        Trending 🔥, Breaking 🚨, New ✨, Politics ⚖️, Sports ⚽, Finance 📈, Crypto ₿, Geopolitics 🌍, People 👥, Tech
+        💻, Culture 🎨, World 🌐
+    </p>
+
+    <h2>Technical Discussions</h2>
+    <div class="diff-block">
+        <span class="diff-title">Performance Optimization</span>
+        <p><strong>Topic:</strong> <code>SyncService</code> currently polls every market every 30 seconds to update
+            prices.</p>
+        <p><strong>Decision:</strong> While functional for MVP/Testing, this is not scalable. Added to <strong><a
+                    href="future-plan.html">Future Plan</a></strong> to replace this with an Event-Driven architecture
+            (Subgraph/Indexer) to reduce RPC load and latency.</p>
+    </div>
+
+    <div class="diff-block">
+        <span class="diff-title">Localization Strategy</span>
+        <p><strong>Topic:</strong> Support for Korean (Hangul) language.</p>
+        <p><strong>Decision:</strong> Added to <strong><a href="future-plan.html">Future Plan</a></strong>. Will require
+            `next-intl` for frontend and schema updates for multi-lingual content.</p>
+    </div>
+
+    <div class="diff-block">
+        <span class="diff-title">Dynamic Feeds Logic</span>
+        <p><strong>Topic:</strong> Treatment of "Trending", "Breaking", "New" as Categories.</p>
+        <p><strong>Decision:</strong> These are filters/states, not topical categories. <strong><a
+                    href="future-plan.html">Future Plan</a></strong> updated: Implement these as dynamic API endpoints
+            (e.g., sort by volume for Trending) rather than DB records.</p>
+    </div>
+
+    <h2>Implementation Status</h2>
+    <ul class="status-list">
+        <li class="completed">Database Schema Migration</li>
+        <li class="completed">Category Seeding</li>
+        <li class="completed">API Endpoints (Get Categories, Create Group)</li>
+        <li class="completed">Frontend Refactor (UI & Logic)</li>
+        <li class="completed">Script Updates (World Cup scripts using Category ID)</li>
+    </ul>
+
+    <h3>5. Market Creation Scripts (Hotfix)</h3>
+    <p>Reverted the batch API creation logic back to direct Database/Blockchain interaction for flexibility in local
+        development, as requested.</p>
+
+    <div class="diff-container">
+        <div class="diff-block">
+            <span class="diff-title">Before (API Attempt)</span>
+            <pre><code>// client-side style fetch 
+await fetch(`${API_URL}/api/batch...`)</code></pre>
+        </div>
+        <div class="diff-block">
+            <span class="diff-title">After (Direct Script)</span>
+            <ul>
+                <li>Direct Ethers.js & Prisma calls</li>
+                <li><strong>Dual Image Copying:</strong> Copies thumbnails to both `web/public` and `api/uploads` to
+                    ensure consistency.</li>
+                <li><strong>DB Path Fix:</strong> Sets DB `imageUrl` to `/uploads/filename` matching the API static
+                    serve path.</li>
+            </ul>
+            <pre><code>// Copy to both locations
+fs.copyFileSync(src, webPublicDir);
+fs.copyFileSync(src, apiUploadsDir);
+
+// DB Record
+imageUrl: `/uploads/${folderName}-${file}`</code></pre>
+        </div>
+    </div>
+
+    <h3>6. Design Documents</h3>
+    <p>Created detailed design specifications for upcoming features.</p>
+    <ul>
+        <li><a href="designs/2025-12-11-ai-boost-design.html"><strong>AI Boost Market Creation Design</strong></a>:
+            Comprehensive plan including UI wireframes, System Architecture, and LLM integration strategy (JSON
+            Mode/Fine-tuning).</li>
+    </ul>
+
+</body>
+
+</html>

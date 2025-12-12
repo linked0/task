@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        :root {
+            --bg-color: #ffffff;
+            --text-color: #333333;
+            --accent-color: #2563eb;
+            --border-color: #e5e7eb;
+            --code-bg: #f3f4f6;
+            --correct-color: #16a34a;
+            --correction-bg: #dcfce7;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg-color: #1e1e1e;
+                --text-color: #e5e7eb;
+                --border-color: #374151;
+                --code-bg: #2d2d2d;
+                --correction-bg: #064e3b;
+            }
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .correction-card {
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            background-color: var(--bg-color);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .original {
+            font-style: italic;
+            color: #6b7280;
+            margin-bottom: 0.5rem;
+        }
+
+        .corrected {
+            font-weight: 500;
+            color: var(--correct-color);
+            background-color: var(--correction-bg);
+            padding: 0.5rem;
+            border-radius: 4px;
+            margin-bottom: 0.5rem;
+        }
+
+        .explanation {
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+        }
+
+        code {
+            font-family: 'Menlo', 'Monaco', 'Courier New', monospace;
+            background-color: var(--code-bg);
+            padding: 0.2rem 0.4rem;
+            border-radius: 3px;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="correction-card">
+        <div class="original">"Why does the finalization fail in only the created market from the page"</div>
+        <div class="corrected">"Why does finalization fail only for markets created via the page?"</div>
+        <div class="explanation">
+            <ul>
+                <li>"fail in only the created market" -> "fail only for markets created" (better preposition: for).</li>
+                <li>"created market from the page" -> "markets created via the page" (idiomatic).</li>
+            </ul>
+        </div>
+    </div>
+    </ul>
+    </div>
+    </div>
+    <div class="original">"So did you fix the bug?"</div>
+    <div class="corrected">"So, have you fixed the bug?"</div>
+    <div class="explanation">
+        <ul>
+            <li>"So did you" -> "So, have you" (comma for pause, present perfect for current status).</li>
+            <li>"did you fix" is also valid, but "have you fixed" emphasizes the completion state.</li>
+        </ul>
+    </div>
+    </div>
+    <div class="original">"Remove any title like "English Correction" in the file, I want just the content.: check
+        it again"</div>
+    <div class="corrected">"Remove any title like 'English Correction' from the file; I want just the content.
+        Please check it again."</div>
+    <div class="explanation">
+        <ul>
+            <li>"check it again" -> "Please check it again" (politeness).</li>
+            <li>Combined the user's instruction with the specific request.</li>
+        </ul>
+    </div>
+    </div>
+
+    <div class="correction-card">
+        <div class="original">"The market created by the creation page doesn't work but other markets created in script
+            work very well in trading yes token."</div>
+        <div class="corrected">"Markets created via the creation page don't work, but other markets created via scripts
+            work very well for trading YES tokens."</div>
+        <div class="explanation">
+            <ul>
+                <li>"market created by the creation page" -> "Markets created via the creation page" (plural
+                    generalization).</li>
+                <li>"created in script" -> "created via scripts".</li>
+                <li>"in trading yes token" -> "for trading YES tokens".</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="correction-card">
+        <div class="original">"Why>"</div>
+        <div class="corrected">"Why is this happening?" or "Why?"</div>
+        <div class="explanation">
+            <ul>
+                <li>"Why>" appears to be a typo for "Why?".</li>
+                <li>In context of an error, "Why is this happening?" is a natural way to ask for the cause.</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="correction-card">
+        <div class="original">"Check the last eng라도"</div>
+        <div class="corrected">"Check the last English correction at least."</div>
+        <div class="explanation">
+            <ul>
+                <li>"eng라도" (eng-rado) means "English at least" or "even just English".</li>
+                <li>"Check the last" is incomplete without specifying what to check.</li>
+                <li>Full sentence: "Please check the last English correction, at least."</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="correction-card">
+        <div class="original">"Why you don't 지키다 to this rule..."</div>
+        <div class="corrected">"Why aren't you following this rule..."</div>
+        <div class="explanation">
+            <ul>
+                <li>"Why you don't" -> "Why aren't you".</li>
+                <li>"지키다 (jikida)" -> "following" or "keeping".</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="correction-card">
+        <div class="original">"We need to establish the fee policy so can you add to
+            /Users/jay/work/task/nostra/future-plan.html about that with current implementation."</div>
+        <div class="corrected">"We need to establish the fee policy. Could you add the current implementation details
+            regarding this to `/Users/jay/work/task/nostra/future-plan.html`?"</div>
+        <div class="explanation">
+            <ul>
+                <li>Split into two sentences for better flow.</li>
+                <li>"add to [file] about that" -> "add ... details regarding this to [file]".</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="correction-card">
+        <div class="original">"A creator would have some fee?"</div>
+        <div class="corrected">"Would a creator receive some kind of fee?"</div>
+        <div class="explanation">
+            <ul>
+                <li>Phrased as a complete question for better clarity.</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="correction-card">
+        <div class="original">"I'm just asking the process after admin resolving the market a user creates. Admin
+            creates a market on behalf of a user so user don't pay any fee for creating a market. So when the market is
+            finalized, all the remaining tokens converts to USDC and goes to the admin. I want the algorithm. Just
+            asking I tell you algain"</div>
+        <div class="corrected">"I'm asking about the process after an admin resolves a market created by a user. Since
+            the admin creates the market on the user's behalf (so the user doesn't pay a fee), is it true that when the
+            market is finalized, all remaining tokens are converted to USDC and returned to the admin? I'd like to
+            confirm the algorithm. I'm just asking to clarify."</div>
+        <div class="explanation">
+            <ul>
+                <li>"resolving the market a user creates" -> "resolves a market created by a user".</li>
+                <li>"user don't pay" -> "user doesn't pay".</li>
+                <li>"tokens converts" -> "tokens are converted".</li>
+                <li>"tell you algain" -> "tell you again" (typo) or rephrased for clarity ("just asking to clarify").
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="correction-card">
+        <div class="original">"I'm running the script now. I just want to know why the three markets don't show the logo
+            images"</div>
+        <div class="corrected">"I'm running the script now. I'd just like to know why those three markets aren't showing
+            their logo images."</div>
+        <div class="explanation">
+            <ul>
+                <li>"why the three markets don't show" -> "why those three markets aren't showing" (more natural ongoing
+                    state).</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="correction-card">
+        <div class="original">"what should I do. restart api server?"</div>
+        <div class="corrected">"What should I do? Should I restart the API server?"</div>
+        <div class="explanation">
+            <ul>
+                <li>Added capitalization and question marks.</li>
+                <li>Clarified the second part as a full question.</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="correction-card">
+        <div class="original">"Check the file creating the markets. I think the uploads folder have image files
+            normally"</div>
+        <div class="corrected">"Please check the market creation script. I believe the image files are usually in the
+            uploads folder."</div>
+        <div class="explanation">
+            <ul>
+                <li>"file creating the markets" -> "market creation script" (more precise).</li>
+                <li>"uploads folder have" -> "uploads folder has" (singular subject congruence) or "files are in the
+                    uploads folder".</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="correction-card">
+        <div class="original">"Advanced Design about AI Boost Market Creation..."</div>
+        <div class="corrected">"Advanced Design for AI Boost Market Creation..."</div>
+        <div class="explanation">
+            <ul>
+                <li>(Previous correction retained for history, moved down)</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="correction-card">
+        <div class="original">"Add this to future plan: I want the AI boosting market creation..."</div>
+        <div class="corrected">"Add this to the future plan: I want an AI-boosted market creation feature..."</div>
+        <div class="explanation">
+            <ul>
+                <li>(Previous correction retained for history, moved down)</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="correction-card">
+        <div class="original">"Hey, but do we need to remove all files in the thumbnails folder too?..."</div>
+        <div class="corrected">"Hey, but do we need to remove all the files in the thumbnails folder too..."</div>
+        <div class="explanation">
+            <ul>
+                <li>(Previous correction retained for history, moved down)</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="correction-card">
+        <div class="original">"I move all the thumbnail files to folder opf..."</div>
+        <div class="corrected">"I've moved all the thumbnail files to the folders in..."</div>
+        <div class="explanation">
+            <ul>
+                <li>(Previous correction retained for history, moved down)</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="correction-card">
+        <div class="original">"Move the files in the thumbnails folder to each relating folder..."</div>
+        <div class="corrected">"Move the files from the thumbnails folder to their corresponding folders..."</div>
+        <div class="explanation">
+            <ul>
+                <li>(Previous correction retained for history, moved down)</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="correction-card">
+        <div class="original">"But you did not user original thumbnail files for each market..."</div>
+        <div class="corrected">"But you did not use the original thumbnail files for each market..."</div>
+        <div class="explanation">
+            <ul>
+                <li>(Previous correction retained for history, moved down)</li>
+            </ul>
+        </div>
+    </div>
+
+</body>
+
+</html>

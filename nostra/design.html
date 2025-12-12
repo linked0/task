@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Design: Market Creation Improvements</title>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px;
+            color: #1a1a1a;
+        }
+
+        h1,
+        h2,
+        h3 {
+            color: #111;
+            border-bottom: 1px solid #eaeaea;
+            padding-bottom: 10px;
+        }
+
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            font-size: 1.8em;
+            margin-top: 40px;
+        }
+
+        h3 {
+            font-size: 1.3em;
+            margin-top: 30px;
+            font-weight: 600;
+        }
+
+        p {
+            margin-bottom: 15px;
+            color: #444;
+        }
+
+        code {
+            background: #f4f4f4;
+            padding: 2px 5px;
+            border-radius: 4px;
+            font-family: 'Monaco', 'Consolas', monospace;
+            font-size: 0.9em;
+        }
+
+        pre {
+            background: #f4f4f4;
+            padding: 15px;
+            border-radius: 8px;
+            overflow-x: auto;
+            border: 1px solid #ddd;
+        }
+
+        .feature-block {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 5px solid #007bff;
+            margin-bottom: 25px;
+        }
+
+        .comparison {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .col {
+            background: #fff;
+            border: 1px solid #eee;
+            padding: 15px;
+            border-radius: 8px;
+        }
+
+        .col h4 {
+            margin-top: 0;
+            color: #555;
+        }
+
+        .tag {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.8em;
+            font-weight: bold;
+        }
+
+        .tag.ui {
+            background: #e3f2fd;
+            color: #0d47a1;
+        }
+
+        .tag.logic {
+            background: #e8f5e9;
+            color: #1b5e20;
+        }
+
+        .tag.api {
+            background: #fff3e0;
+            color: #e65100;
+        }
+
+        .tag.db {
+            background: #f3e5f5;
+            color: #7b1fa2;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Design: Market Creation Improvements</h1>
+    <p>This document outlines the design changes required for the <strong>Create Market</strong> page
+        (`/create-market`), aiming to align its functionality with the backend provision scripts and improve user
+        experience.</p>
+
+    <h2>1. UI/UX Refinements</h2>
+
+    <div class="feature-block">
+        <h3><span class="tag ui">UI</span> <span class="tag api">API</span> Dynamic Navigation Bar</h3>
+        <p><strong>Requirement:</strong> The top navigation bar (Trending, Breaking, Sports, etc.) must be dynamically
+            populated from the `Category` table, rather than being hardcoded.</p>
+        <p><strong>Implementation:</strong></p>
+        <ul>
+            <li><strong>Component:</strong> `Navigation` or `Header` component must fetch data from `GET
+                /api/categories`.</li>
+            <li><strong>Ordering:</strong> Categories should probably include a `priority` or `order` field in the
+                database to control display order (e.g., Trending first).</li>
+            <li><strong>Dynamic Routing:</strong> Clicking a tab should route to `/markets?category=slug`.</li>
+        </ul>
+    </div>
+
+    <div class="feature-block">
+        <h3><span class="tag ui">UI</span> Visual Presentation & Terminology</h3>
+        <p>Current placeholders and terminology need adjustment to be more professional and generic.</p>
+
+        <div class="comparison">
+            <div class="col">
+                <h4>Current State (To Change)</h4>
+                <ul>
+                    <li><strong>Inputs:</strong> Pre-filled with "Who will win MVP...", "Sports", etc.</li>
+                    <li><strong>Labels:</strong> "Players", "Add Player".</li>
+                    <li><strong>Button:</strong> "Create 3 Markets & Provide Liquidity".</li>
+                </ul>
+            </div>
+            <div class="col">
+                <h4>Target State</h4>
+                <ul>
+                    <li><strong>Inputs:</strong> Empty fields with <em>ghost/placeholder</em> text (e.g.,
+                        `placeholder="Who will win..."`).</li>
+                    <li><strong>Labels:</strong> "Outcomes", "Add Outcome".</li>
+                    <li><strong>Button:</strong> "Create Market Group".</li>
+                </ul>
+            </div>
+        </div>
+        <p><strong>Implementation Detail:</strong> Update React state initialization to empty strings. Move example text
+            to the `placeholder` attribute in Input components.</p>
+    </div>
+
+    <div class="feature-block">
+        <h3><span class="tag ui">UI</span> <span class="tag api">API</span> Category Selection</h3>
+        <p>Users should select from existing categories rather than typing free text.</p>
+        <p><strong>Requirement:</strong> A new API endpoint `GET /api/categories` is needed. To support this, we will
+            introduce a `Category` table in the database.</p>
+        <p><strong>Proposed Schema (Prisma):</strong></p>
+        <pre>
+model Category {
+  id          String   @id @default(uuid())
+  name        String   @unique // e.g., "Sports"
+  slug        String   @unique // e.g., "sports"
+  description String?
+  imageUrl    String?  @map("image_url")
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  // Relations
+  markets      Market[]
+  marketGroups MarketGroup[]
+
+  @@map("categories")
+}
+
+// Updates to Market and MarketGroup models:
+// - Add `categoryId String?` field
+// - Add relation `category Category? @relation(fields: [categoryId], references: [id])`
+        </pre>
+    </div>
+
+    <div class="feature-block">
+        <h3><span class="tag ui">UI</span> Default Resolution Date</h3>
+        <p>The resolution date should default to exactly one month from the current date.</p>
+        <pre>
+// Helper function
+const getOneMonthFromNow = () => {
+  const d = new Date();
+  d.setMonth(d.getMonth() + 1);
+  return d.toISOString().split('T')[0];
+};
+        </pre>
+    </div>
+
+    <h2>2. Functional & Logic Alignment</h2>
+
+    <div class="feature-block">
+        <h3><span class="tag logic">Logic</span> Streamlining the "Create" Action</h3>
+        <p><strong>Goal:</strong> The "Create" button should function similarly to the `fifa-world-cup-2026/create.ts`
+            script. This implies separating "Market Creation" from "Manual Liquidity Provision".</p>
+
+        <p><strong>Analysis of Script (`create.ts`):</strong></p>
+        <ul>
+            <li>Creates Market Group in DB.</li>
+            <li>Creates Binary Markets on-chain.</li>
+            <li><strong>Liquidity:</strong> Does NOT require manual signing of orders. Instead, it sets `liquidityMode:
+                'ACTIVE_ORDERS'` in the database config, delegating liquidity provision to a bot/market maker service.
+            </li>
+        </ul>
+
+        <p><strong>Proposed Frontend Flow:</strong></p>
+        <ol>
+            <li><strong>User fills form:</strong> Details, Category, Outcomes.</li>
+            <li><strong>User clicks "Create Market Group":</strong>
+                <ul>
+                    <li><strong>Step A (Blockchain):</strong> Frontend iterates and asks User to sign
+                        `marketFactory.createBinaryMarket` transactions (User pays gas).</li>
+                    <li><strong>Step B (Database):</strong> Frontend calls `POST /api/markets/grouped`.</li>
+                </ul>
+            </li>
+            <li><strong>Crucial Change:</strong> Remove the mandatory "Mint Tokens" and "Sign Orders" steps from this
+                immediate flow.</li>
+            <li><strong>New Payload:</strong> Send `liquidityMode: 'ACTIVE_ORDERS'` (or similar flag) to the backend.
+            </li>
+        </ol>
+
+        <p><strong>API Update (`POST /api/markets/grouped`):</strong></p>
+        <pre>
+// Adjusted Body
+{
+  "name": "Market Title",
+  "categoryId": "uuid...", // Changed from "category" string
+  "imageUrl": "...",
+  "liquidityConfig": {
+    "mode": "ACTIVE_ORDERS", // Bot will pick this up
+    "initialLiquidity": 100 // Amount per market
+  },
+  "markets": [
+    {
+      "question": "Outcome A?",
+      "questionId": "0x...",
+      "conditionId": "0x...",
+      "outcomes": [...]
+      // No "orders" array needed if using Bot Mode
+    }
+  ]
+}
+        </pre>
+    </div>
+
+    <h2>3. Implementation Roadmap</h2>
+    <ul>
+        <li><strong>Step 1 (DB):</strong> Create migration for `Category` model and update `Market`/`MarketGroup`. Seed
+            initial categories.</li>
+        <li><strong>Step 2 (API):</strong> Implement `GET /api/categories` and update `POST /api/markets/grouped` to
+            handle `categoryId` and `liquidityConfig`.</li>
+        <li><strong>Step 3 (Frontend):</strong> Refactor `create-market/page.tsx`:
+            <ul>
+                <li>Clear state initializers.</li>
+                <li>Replace "Players" array with "Outcomes".</li>
+                <li>Implement Category Dropdown (fetching from API).</li>
+                <li>Remove `ConditionalTokens` and `CTFExchange` interaction from the main submit handler.</li>
+                <li>Only keep `MarketFactory` interaction.</li>
+            </ul>
+        </li>
+    </ul>
+
+    <h2>4. Script Migration Strategy</h2>
+    <div class="feature-block">
+        <h3><span class="tag logic">Scripts</span> Update `fresh-start` & Provisioning</h3>
+        <p>The user requested updating the `fresh-start` pipeline. The introduction of the `Category` table impacts all
+            market creation scripts.</p>
+
+        <p><strong>Affected Scripts:</strong></p>
+        <ul>
+            <li>`api/package.json` -> `fresh-start`</li>
+            <li>`api/scripts/create-all-markets.ts` (Main driver)</li>
+            <li>Individual market scripts (e.g., `api/scripts/fifa-world-cup-2026/create.ts`,
+                `api/scripts/world-series-mvp/create.ts`)</li>
+        </ul>
+
+        <p><strong>Migration Plan:</strong></p>
+        <ol>
+            <li><strong>Seed Categories:</strong> Create a new script `api/scripts/seed-categories.ts` (or part of
+                `prisma/seed.ts`) to insert standard categories: 'Sports', 'Politics', 'Crypto', etc.</li>
+            <li><strong>Refactor `create.ts` scripts:</strong>
+                <ul>
+                    <li>Locate `marketGroupRepository.create()` and `marketRepository.create()` calls.</li>
+                    <li>Replace the string `category: 'Sports'` with logic to find the `CategoryId` (e.g., `const
+                        sportsCat = await prisma.category.findUnique({ where: { name: 'Sports' } })`).</li>
+                </ul>
+            </li>
+            <li><strong>Update `fresh-start`:</strong> Include the category seeding step before `create:all`.</li>
+        </ol>
+    </div>
+
+    <h2>5. Critical Fixes (Immediate Feedback)</h2>
+    <div class="feature-block">
+        <h3><span class="tag ui">UI</span> Fixes based on User Feedback</h3>
+        <ul>
+            <li><strong>Question Phrasing:</strong> The generated question "Will Choo Mi-ae 2026 Gyeonggi... win?" is
+                awkward.
+                <strong>Fix:</strong> Simplify to just the Outcome Name (e.g., "Choo Mi-ae") or a standard "Will
+                [Outcome] win?" dependent on the specific template. The User prefers just the Outcome Name in the list.
+            </li>
+            <li><strong>Image Logo:</strong> The uploaded image isn't appearing on the final page.
+                <strong>Fix:</strong> Ensure `imageUrl` is correctly passed from Frontend -> API -> Database
+                (MarketGroup) -> Frontend Display. Check `POST /api/markets/grouped` handler.
+            </li>
+            <li><strong>Empty Order Book:</strong> "Asks" and "Bids" are empty.
+                <strong>Fix:</strong> Verify that the `liquidityConfig` sent to the API actually triggers the Bot to
+                place orders. The Bot might be running locally but not picking up the new market immediately.
+            </li>
+        </ul>
+    </div>
+
+    <h2>6. Async Batch Processing (Future Architecture)</h2>
+    <div class="feature-block">
+        <h3><span class="tag infra">Infra</span> Batch Market Creation</h3>
+        <p><strong>Problem:</strong> Creating a market group with 10+ outcomes requires 10+ separate blockchain
+            transactions. Doing this sequentially on the Client (Browser) is slow (30-60s), fragile (browser close =
+            failure), and annoying for the user.</p>
+
+        <p><strong>Proposed Architecture:</strong></p>
+        <ol>
+            <li><strong>Client:</strong> User fills form and clicks "Create".
+                <ul>
+                    <li>Client sends <strong>ONE</strong> payload to `POST /api/markets/batch`.</li>
+                    <li>Client receives `202 Accepted` and shows "Market Creation Queued".</li>
+                </ul>
+            </li>
+            <li><strong>API (Server):</strong>
+                <ul>
+                    <li>Validates request.</li>
+                    <li>Creates a `Job` record (status: `PENDING`).</li>
+                    <li>Returns immediate response.</li>
+                </ul>
+            </li>
+            <li><strong>Worker (Background Process):</strong>
+                <ul>
+                    <li>Picks up `PENDING` jobs.</li>
+                    <li>Executes blockchain transactions (using <strong>Server Wallet</strong>, not User Wallet).
+                        <em>Note: This requires Server Wallet to have funds/authority.</em>
+                    </li>
+                    <li>Updates Database.</li>
+                    <li>Triggers Liquidity Bot.</li>
+                    <li>Updates Job status to `COMPLETED`.</li>
+                </ul>
+            </li>
+        </ol>
+        <p><strong>UI Implication:</strong> Need a "Creation Status" dashboard or notification system.</p>
+    </div>
+
+    <h2>7. Notification System Design</h2>
+    <div class="feature-block">
+        <h3><span class="tag infra">Infra</span> Real-time Updates via WebSocket</h3>
+        <p><strong>Goal:</strong> Notify the user immediately when their batch market creation job succeeds or fails,
+            even if they navigated away.</p>
+
+        <p><strong>Architecture:</strong></p>
+        <ul>
+            <li><strong>Existing Capability:</strong> The API already has a `WebSocketService` on `/ws`.</li>
+            <li><strong>Backend Flow:</strong>
+                <ul>
+                    <li>Background Worker finishes processing.</li>
+                    <li>Calls <code>webSocketService.broadcast('job_update', { jobId, status: 'COMPLETED' })</code>.
+                    </li>
+                </ul>
+            </li>
+            <li><strong>Frontend Flow:</strong>
+                <ul>
+                    <li><strong>Global Listener:</strong> A `NotificationContext` connects to `ws://api/ws`.</li>
+                    <li><strong>Event Handling:</strong> When a `job_update` message is received, trigger a
+                        <strong>Toast</strong> (e.g., "Market Group Created Successfully").</li>
+                    <li><strong>Status Refresh:</strong> If the user is on the "My Requests" page, automatically refresh
+                        the list.</li>
+                </ul>
+            </li>
+        </ul>
+        <pre>
+// Example Message Payload
+{
+  "type": "job_update",
+  "data": {
+    "jobId": "123-abc",
+    "status": "COMPLETED",
+    "marketGroupId": "xyz-789",
+    "message": "Successfully created 4 markets."
+  }
+}
+        </pre>
+    </div>
+
+</body>
+
+</html>
+
+</html>

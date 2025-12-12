@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Big Ideas 2026: Part 1 - a16z</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem;
+            background-color: #f9f9f9;
+        }
+
+        .container {
+            background-color: #ffffff;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #1a1a1a;
+            border-bottom: 2px solid #eaeaea;
+            padding-bottom: 15px;
+            margin-bottom: 30px;
+        }
+
+        h2 {
+            color: #2c3e50;
+            margin-top: 40px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+        }
+
+        h3 {
+            color: #34495e;
+            margin-top: 30px;
+        }
+
+        p {
+            margin-bottom: 1.5em;
+        }
+
+        .author {
+            font-weight: bold;
+            color: #555;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .meta {
+            color: #777;
+            font-size: 0.9em;
+            margin-bottom: 30px;
+            font-style: italic;
+        }
+
+        .section-tag {
+            display: inline-block;
+            background-color: #e1f5fe;
+            color: #0277bd;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.85em;
+            font-weight: bold;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+        }
+
+        blockquote {
+            border-left: 4px solid #3498db;
+            padding-left: 15px;
+            color: #555;
+            font-style: italic;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <h1>Big Ideas 2026: Part 1</h1>
+        <div class="meta">
+            The biggest problems builders will tackle in 2026, according to a16z partners<br>
+            Source: A16Z NEW MEDIA - DEC 9
+        </div>
+
+        <p>Our job as investors is to immerse ourselves in the ins-and-outs of every corner of the tech industry in
+            order to understand where things are moving next. So every December, we ask our investing teams to share one
+            big idea they think tech builders will tackle in the year to come.</p>
+
+        <p>Today, we’re sharing ideas from our Infrastructure, Growth, Bio + Health, and Speedrun teams. Stay tuned for
+            takes from our other teams tomorrow.</p>
+
+        <h2>Infrastructure</h2>
+
+        <h3>Jennifer Li: Startups tame the chaos of multimodal data</h3>
+        <p>Unstructured, multimodal data has been enterprises’ biggest bottleneck and their biggest untapped treasure.
+            Every company is drowning in PDFs, screenshots, videos, logs, emails, and semi-structured sludge. Models
+            keep getting smarter but the inputs keep getting messier, which causes RAG systems to hallucinate, agents to
+            break in subtle, expensive ways, and critical workflows to still heavily rely on human QA. The limiting
+            factor for AI companies is now data entropy: the steady decay of freshness, structured, and truth inside the
+            unstructured universe where 80% of corporate knowledge now lives.</p>
+        <p>That’s why untangling unstructured data becomes a generational opportunity. Enterprises need a continuous way
+            to clean, structure, validate and govern their multimodal data so downstream AI workloads actually work. The
+            use cases are everywhere: contract analysis, onboarding flows, claims handling, compliance, support,
+            procurement, engineering search, sales enablement, analytics pipelines, and every agent workflow that
+            depends on reliable context. Startups that build the platform that extracts structure from documents,
+            images, and videos; reconciles conflicts; repairs pipelines; or keeps data fresh and retrievable hold the
+            key to the kingdom of enterprise knowledge and process.</p>
+
+        <h3>Joel de la Garza: AI revives cybersecurity hiring</h3>
+        <p>For the better part of the last decade, the biggest challenge CISOs faced was hiring. From 2013 to 2021, the
+            number of unfilled cybersecurity jobs grew from under 1M to 3M. That’s because security teams hire highly
+            skilled technicians to spend their days doing soul-crushing level 1 security work like reviewing logs, and
+            no one wants to do this work. The problem is that cybersecurity teams create that drudgery by buying
+            products that detect everything, which means that their teams need to review everything—which, in turn,
+            creates false labor scarcity. It’s a vicious cycle.</p>
+        <p>In 2026, AI will break this cycle and close this hiring gap by automating much of this repetitive and
+            redundant work for cybersecurity teams. Anyone who has ever spent time working on a large security team
+            knows that half the work is easily solved with automation, but it’s impossible to figure out what to
+            automate when you’re drowning in work. AI-native tools that figure this out for security teams will finally
+            free them up to do what they want to do: chase down bad guys, build new systems, and fix vulnerabilities.
+        </p>
+
+        <h3>Malika Aubakirova: Agent-native infrastructure becomes table stakes</h3>
+        <p>In 2026, the biggest infrastructure shock won’t come from outside companies, but from within. We’re shifting
+            from human-speed traffic that’s predictable and low concurrency to “agent-speed” workloads that’re
+            recursive, bursty, and massive.</p>
+        <p>The enterprise backend of today was built for a 1:1 ratio of human action-to-system response. It’s not
+            architected for a single agentic “goal” to trigger a recursive fan-out of 5,000 sub-tasks, database queries,
+            and internal API calls in under milliseconds. When an agent attempts to refactor a codebase or remediate a
+            security log, it doesn’t look like a user. To a legacy database or rate-limiter, it looks like a DDoS
+            attack.</p>
+        <p>Building for agents in 2026 means re-architecting the control plane. We’ll see the rise of “agent-native”
+            infrastructure. The next generation must treat “thundering herd” patterns as the default state. Cold starts
+            must shrink, latency variance must collapse, and concurrency limits must jump by orders of magnitude. The
+            bottleneck becomes coordination: routing, locking, state management, and policy enforcement across massive
+            parallel execution. The winning platforms will be the only ones capable of surviving the deluge of tool
+            execution that follows.</p>
+
+        <h3>Justine Moore: Creative tools go multimodal</h3>
+        <p>We now have the building blocks to tell stories with AI: generative voices, music, images, and video. But for
+            anything beyond a one-off clip, it’s often time-consuming and frustrating—if not impossible—to get the
+            outputs you want, especially if you want anywhere near the level of control that a traditional director
+            would have.</p>
+        <p>Why can’t we feed a model a 30 second video and ask it to continue the scene with a new character created
+            from a reference image and voice? Or reshoot a clip so we can see a scene from a different angle, or make
+            the motion match a reference video?</p>
+        <p>2026 is the year AI goes multimodal. Give a model whatever form of reference content you have and work with
+            it to make something new or edit an existing scene. We’ve started to see some early products here, like
+            Kling O1 and Runway Aleph. But there’s a lot more to be done—and we need innovation at both the model and
+            application layers.</p>
+        <p>Content creation is one of the killer use cases of AI, and I expect we’ll see multiple successful products
+            across use cases and types of customers from meme makers to Hollywood directors.</p>
+
+        <h3>Jason Cui: The AI-native data stack continues to evolve</h3>
+        <p>We’ve seen a lot of consolidation in the “modern data stack” in the past year as data companies have moved
+            from specialization across ingestion (ETL), transformation, and compute towards bundling and unified
+            platforms. See: the Fivetran/dbt merger and continued rise of unified platforms like Databricks.</p>
+        <p>While the ecosystem feels notably more mature, we’re still in the early days of a truly AI-native data
+            architecture. We’re excited by ways AI can continue to transform multiple parts of the data stack, and we’re
+            beginning to see how data and AI infrastructure are becoming inextricably linked.</p>
+        <p>A few ideas we’re excited by:</p>
+        <ul>
+            <li>How data will continue to flow into performant vector databases alongside traditional structured data
+            </li>
+            <li>How AI agents navigate “the context problem”: continuously accessing the right data context and semantic
+                layers in order to build robust applications, like chatting with your data, that always have the correct
+                business definitions across multiple systems of record</li>
+            <li>How traditional BI tools and spreadsheets will change as data workflows become more agentic and
+                automated</li>
+        </ul>
+
+        <h3>Yoko Li: The year we step inside video</h3>
+        <p>In 2026, video stops behaving like something we passively watch and starts feeling like a place we can
+            actually step into. Video models can finally understand time, remember what they’ve already shown us, react
+            when we do something, and hold together with the kind of quiet consistency we expect from the physical
+            world. Instead of producing a few seconds of disconnected imagery, these systems sustain characters,
+            objects, and physics long enough for actions to matter and for consequences to unfold. This shift turns
+            video into a medium we can build on: a space where robots can practice, games can evolve, designers can
+            prototype, and agents can learn by doing. What emerges is less like a clip and more like a living
+            environment, one that starts to close the gap between perception and action. For the first time, it feels
+            like we can inhabit the videos we generate.</p>
+
+        <h2>Growth</h2>
+
+        <h3>Sarah Wang: Systems of record lose ground</h3>
+        <p>In 2026, the real disruption in enterprise software is that the system of record will finally start to lose
+            primacy. AI is collapsing the distance between intent and execution: models can now read, write, and reason
+            directly across operational data, turning ITSM and CRM systems from passive databases into autonomous
+            workflow engines. And as recent advances in reasoning models and agentic workflows compound, these systems
+            gain the ability not just to respond, but to anticipate, coordinate, and execute end-to-end processes. The
+            interface becomes a dynamic agent layer, while the traditional system of record slips into the background as
+            a commodity persistence tier—its strategic leverage ceded to whoever controls the intelligent execution
+            environment employees actually use.</p>
+
+        <h3>Alex Immerman: Vertical AI evolves from information retrieval and reasoning to multiplayer</h3>
+        <p>AI has driven vertical software to unprecedented growth. Healthcare, legal, and housing companies reached
+            $100M+ ARR within a few years; finance and accounting are close behind. The evolution was first information
+            retrieval: finding, extracting, and summarizing the right information. 2025 brought reasoning: Hebbia
+            analyzing financial statements and building models, Basis reconciling trial balances across systems, EliseAI
+            diagnoses maintenance issues and dispatches the right vendors.</p>
+        <p>2026 unlocks multiplayer mode. Vertical software benefits from domain-specific interfaces, data, and
+            integrations. But vertical work is inherently multi-party. If agents are going to represent labor, they need
+            to collaborate. From buyers and sellers, to tenants, advisors and vendors, each party has distinct
+            permissions, workflows and compliance requirements that only vertical software understands.</p>
+        <p>Today, each party uses AI in isolation, which creates handoffs without authority. The AI analyzing purchase
+            agreements doesn’t talk to the CFO for its model adjustments. The maintenance AI does not know what the
+            onsite staff promised the tenant. Multiplayer changes by coordinating across stakeholders: routing to
+            functional specialists, maintaining context, syncing changes. Counterparty AIs negotiate within parameters
+            and flag asymmetries for human review. The senior partner’s markup trains the system for the entire firm.
+            Tasks performed by AI will be completed with higher success rates.</p>
+        <p>And when value increases from multi-human and multi-agent collaboration, switching costs rise. Here we’ll see
+            the network effects that have eluded AI applications: the collaboration layer becomes the moat.</p>
+
+        <h3>Stephenie Zhang: Creating for agents, not humans</h3>
+        <p>In 2026, people will start interfacing with the web through their agents. And what mattered for human
+            consumption won’t matter the same way for agent consumption.</p>
+        <p>For years, we’ve optimized for predictable human behavior: rank high on Google, appear among the first few
+            items on Amazon, lead with a TL;DR. When I took a journalism class in high school, we were taught the 5Ws +
+            H for news, and to start with a hook for features. Maybe a human would miss the deeply relevant, insightful
+            statement buried on page five, but the agent won’t.</p>
+        <p>This shift is about software, too. Apps were designed for human eyes and clicks, and optimization meant good
+            UI and intuitive flows. As agents take over retrieval and interpretation, visual design becomes less central
+            to comprehension. Instead of engineers staring at Grafana dashboards, AI SREs can interpret telemetry and
+            post insights in Slack. Instead of sales teams combing through CRMs, agents can surface patterns and
+            summaries automatically.</p>
+        <p>We’re no longer designing for humans, but for agents. The new optimization isn’t for visual hierarchy, but
+            for machine legibility—and that will change the way we create and the tools we use to do it.</p>
+
+        <h3>Santiago Rodriguez: The end of the screen time KPI in AI applications</h3>
+        <p>For the last 15 years, screen time has been the best indicator of value delivery in both consumer and
+            business applications. We’ve been living in a paradigm focused on hours of Netflix streaming, mouse clicks
+            in a healthcare EHR UX (to demonstrate meaningful use), or even time spent on chatGPT as the key performance
+            indicator. As we move to a future based on outcome-based pricing that perfectly aligns incentives between
+            vendors and users, we’ll first move away from screen time reporting.</p>
+        <p>We’re already seeing this in practice. When I run DeepResearch queries on ChatGPT, I capture an enormous
+            amount of value despite almost no screen time. When Abridge magically captures the patient-provider
+            conversation and automates downstream activities, the doctor barely looks at the screen. When Cursor
+            develops entire applications end-to-end, the engineer is planning the next feature development cycle. And
+            when Hebbia drafts a pitch deck from hundreds of public filings, the investment banker is getting well
+            deserved sleep.</p>
+        <p>This presents a unique challenge: how much an application can charge per user requires a more complex method
+            of measuring ROI. Doctor satisfaction, developer productivity, financial analyst wellbeing and consumer
+            happiness all increase with AI applications. The companies that tell the simplest sales pitch on ROI will
+            continue to outpace their competitors.</p>
+
+        <h2>Bio + Health</h2>
+
+        <h3>Julie Yoo: Healthy MAUs</h3>
+        <p>In 2026, a new healthcare customer segment will take center stage: the “healthy MAUs.”</p>
+        <p>The traditional healthcare system has primarily served three main user segments: (a) “sick MAUs”: people with
+            spiky, high-cost needs; (b) “sick DAUs*”: like those in intensive, long-term care; and (c) “healthy YAUs*”:
+            relatively healthy individuals who rarely see a doctor. Healthy YAUs are at risk of becoming Sick MAUs/DAUs,
+            and preventive care could slow that shift. But our reaction-pilled healthcare reimbursement system rewards
+            treatment over prevention, so access to proactive check-ins and monitoring services are not prioritized, and
+            insurance rarely covers them anyway.</p>
+        <p>Enter Healthy MAUs: consumers who aren’t actively sick but want to monitor and understand their health on a
+            recurring basis—and also represent the potentially largest portion of the consumer population. We expect a
+            wave of companies—both AI-native upstarts, and repackaged versions of incumbents—to start offering recurring
+            services to serve this user base.</p>
+        <p>With AI’s potential to reduce the cost structure of care delivery, the advent of novel health insurance
+            products focused on prevention, and consumers more comfortable paying for subscription-based models out of
+            pocket, “healthy MAUs” represent the next high-potential customer segment for healthtech: continuously
+            engaged, data-informed, and prevention oriented.</p>
+
+        <h2>Speedrun</h2>
+
+        <h3>Jon Lai: World models take the spotlight in storytelling</h3>
+        <p>In 2026, AI-powered world models will revolutionize storytelling through interactive virtual worlds and
+            digital economies. Technologies like Marble (World Labs) and Genie 3 (DeepMind) already generate full 3D
+            environments from text prompts, allowing users to explore them as if in a game. As creators adopt these
+            tools, entirely new storytelling formats will emerge, potentially culminating in a “generative Minecraft,”
+            where players co-create vast, evolving universes. These worlds could blend game mechanics with natural
+            language programming, such as commanding, “create a paintbrush that changes the color of anything I touch to
+            pink.”</p>
+        <p>Such models will blur the boundary between player and creator, transforming users into co-authors of dynamic
+            shared realities. This evolution could spawn interconnected generative multiverses, where diverse genres
+            like fantasy, horror, adventure can exist side by side. Within them, digital economies will flourish as
+            creators earn income crafting assets, guiding newcomers, or developing new interactive tools. Beyond
+            entertainment, these generative worlds will serve as rich simulation environments for training AI agents,
+            robots, and perhaps even AGI. The rise of world models thus signals not just a new genre of play, but an
+            entirely new creative medium and economic frontier.</p>
+
+        <h3>Josh Lu: “The year of me”</h3>
+        <p>2026 will become “the year of me”: the moment when products stop being mass-produced and start being made for
+            you.</p>
+        <p>We’re seeing it everywhere already.</p>
+        <p>In education, startups like Alphaschool are building AI tutors that adapt to each student’s pace and
+            curiosity, giving every kid an education that matches their pace and preferred method of learning. This
+            level of attention previously would not be possible without tens of thousands of tutoring dollars spent per
+            student.</p>
+        <p>In health, AI is designing daily supplement stacks, workout plans, and meal routines tailored to your
+            biology. No need for a trainer or a lab.</p>
+        <p>Even in media, AI lets creators remix news, shows, and stories into personalized feeds that match your exact
+            interests and tone.</p>
+        <p>The biggest companies of the last century won by finding the average consumer.<br>
+            The biggest companies of the next century will win by finding the individual inside the average.</p>
+        <p>2026 is the year the world stops optimizing for everyone and starts optimizing for you.</p>
+
+        <h3>Emily Bennett: The first AI-native university</h3>
+        <p>In 2026, I expect we’ll see the birth of the first AI-native university, an institution built from the ground
+            up around intelligent systems.</p>
+        <p>Over the past several years, universities have dabbled in AI-enabled grading, tutoring, and scheduling. But
+            what’s emerging now is deeper, an adaptive academic organism that learns and optimizes itself in real time.
+        </p>
+        <p>Picture an institution where courses, advising, research collaboration, and even building operations
+            continuously adapt based on data feedback loops. Schedules optimize themselves. Reading lists evolve nightly
+            and rewrite themselves as new research appears. Learning paths shift in real time to meet each student’s
+            pace and context.</p>
+        <p>We’re already seeing precursors. ASU’s campus-wide partnership with OpenAI produced hundreds of AI-driven
+            projects across teaching and administration. SUNY now embeds AI literacy into its general education
+            requirements. These are the building blocks for more foundational deployment.</p>
+        <p>In the AI-native university, professors become architects of learning, curating data, tuning models, and
+            teaching students how to interrogate machine reasoning</p>
+        <p>Assessment shifts, too. Detection tools and plagiarism bans give way to AI-aware evaluation, grading students
+            on how they use AI, not whether they used it. Transparency and tactful application replaces prohibition.</p>
+        <p>And as every industry struggles to hire people who can design, govern, and collaborate with AI systems, this
+            new university becomes the training ground, producing graduates fluent in orchestration who help augment a
+            rapidly shifting workforce.</p>
+        <p>This AI-native university will become the talent engine for a new economy.</p>
+
+    </div>
+
+</body>
+
+</html>

@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Design: AI Boost Market Creation</title>
+    <style>
+        :root {
+            --bg-primary: #ffffff;
+            --text-primary: #111827;
+            --text-secondary: #4b5563;
+            --border-color: #e5e7eb;
+            --code-bg: #f3f4f6;
+            --accent: #2563eb;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg-primary: #1f2937;
+                --text-primary: #f9fafb;
+                --text-secondary: #d1d5db;
+                --border-color: #374151;
+                --code-bg: #111827;
+                --accent: #3b82f6;
+            }
+        }
+
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            line-height: 1.6;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        h1,
+        h2,
+        h3 {
+            color: var(--text-primary);
+            margin-top: 2rem;
+        }
+
+        h1 {
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 0.5rem;
+        }
+
+        h2 {
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 0.5rem;
+        }
+
+        code {
+            background: var(--code-bg);
+            padding: 0.2rem 0.4rem;
+            border-radius: 4px;
+            font-family: monospace;
+            font-size: 0.9em;
+        }
+
+        pre {
+            background: var(--code-bg);
+            padding: 1rem;
+            border-radius: 8px;
+            overflow-x: auto;
+            border: 1px solid var(--border-color);
+        }
+
+        .wireframe {
+            border: 2px dashed var(--border-color);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            font-family: monospace;
+            white-space: pre;
+            overflow-x: auto;
+            background: var(--code-bg);
+            color: var(--text-primary);
+        }
+
+        .note {
+            background: rgba(37, 99, 235, 0.1);
+            border-left: 4px solid var(--accent);
+            padding: 1rem;
+            margin: 1rem 0;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Design: AI Boost Market Creation</h1>
+    <p><strong>Date:</strong> 2025-12-11</p>
+    <p><strong>Status:</strong> Draft</p>
+
+    <!-- 1. User Interface Design -->
+    <h2>1. UI/UX Design</h2>
+    <p>The AI input field will be positioned at the bottom of the creation form, acting as a "Magic Assistant" to
+        auto-fill the upper fields. This allows users to review and edit the generated content before submission.</p>
+
+    <h3>Locational Wireframe</h3>
+    <div class="wireframe">
+        +-------------------------------------------------------+
+        | PAGE: Create New Market |
+        | |
+        | [ Section 1: Basic Info (Manual or Auto-filled) ] |
+        | Label: Title |
+        | [_______________________________________________] |
+        | Label: Description |
+        | [_______________________________________________] |
+        | Label: Category |
+        | [ Dropdown v ] |
+        | |
+        | [ Section 2: Outcomes ] |
+        | Outcome 1: [__________] Outcome 2: [__________] |
+        | [ + Add Outcome ] |
+        | |
+        | =================================================== |
+        | 🤖 AI Magic Fill (Beta) |
+        | "Describe the market you want to create..." |
+        | +-------------------------------------------------+ |
+        | | I want a market for the best Slam Dunk char... | |
+        | | | |
+        | +-------------------------------------------------+ |
+        | [ ✨ Generate Market Data ] |
+        | =================================================== |
+        | |
+        | [ CREATE MARKET ] |
+        +-------------------------------------------------------+
+    </div>
+
+    <!-- 2. System Architecture -->
+    <h2>2. System Architecture</h2>
+    <p>To secure the API Key and handle validation logic, the interaction will be routed through a Next.js Server-Side
+        API Handler.</p>
+
+    <pre>
+[User Browser] 
+    |
+    | (1) POST /api/ai/generate-json 
+    |     Body: { prompt: "Slam Dunk characters..." }
+    v
+[Next.js Server (API Route)]
+    |
+    | (2) Authenticate Request (Session Check)
+    | (3) Insert System Prompt (JSON Enforcement)
+    | (4) Call LLM Provider
+    v
+[LLM Provider (OpenAI/Anthropic/HuggingFace)]
+    |
+    | (5) Return JSON structure
+    v
+[Next.js Server]
+    |
+    | (6) Validate JSON Schema (Zod)
+    v
+[User Browser]
+    | (7) React Hook Form: setValue('title', ...), setValue('outcomes', ...)
+    </pre>
+
+    <!-- 3. Fine-Tuning Strategy -->
+    <h2>3. LLM Strategy: Fine-Tuning vs. Few-Shot</h2>
+
+    <div class="note">
+        <strong>Expert Note:</strong> For structured JSON output, a <strong>Fine-Tuned Model</strong> works excellently
+        but requires maintenance. For MVP, <strong>GPT-4o with "JSON Mode"</strong> system prompts often yields equal
+        results with zero training cost. However, below are the steps for the requested Fine-Tuning approach.
+    </div>
+
+    <h3>Option A: GPT-4o JSON Mode (Recommended for MVP)</h3>
+    <p>Modern models like <strong>GPT-4o</strong> or <strong>Claude 3.5 Sonnet</strong> have built-in "JSON Mode" which
+        guarantees valid JSON output without fine-tuning, provided the system prompt is robust.</p>
+
+    <div class="note">
+        <strong>Why this is better for MVP:</strong> No training costs, instant iteration on prompts, and sufficient
+        accuracy for this use case.
+    </div>
+
+    <h4>Implementation Strategy:</h4>
+    <ul>
+        <li><strong>Model Selection:</strong> Use <code>gpt-4o</code> or <code>gpt-4-turbo</code>. These models are
+            trained to strictly adhere to JSON schemas when instructed.</li>
+        <li><strong>API Parameter:</strong> You MUST set <code>response_format: { type: "json_object" }</code> in the
+            API request. This constrains the model's output tokens to valid JSON syntax only.</li>
+        <li><strong>Key Requirement:</strong> The word "JSON" must appear in the system message, otherwise the API may
+            throw an error.</li>
+    </ul>
+
+    <h4>Example System Prompt:</h4>
+    <p>To ensure high quality, the system prompt should not only ask for JSON but provide the <em>exact TypeScript
+            interface</em> to match.</p>
+    <pre><code>You are an expert prediction market creator.
+Your task is to generate market details based on user input.
+You MUST output a valid JSON object.
+
+Follow this TypeScript Interface exactly:
+interface Market {
+  title: string; // concise question, e.g. "Who will win..."
+  description: string; // resolution criteria clarity
+  category: "Sports" | "Crypto" | "Politics" | "Tech";
+  outcomes: Array<{
+    name: string; // e.g. "Yes", "No", or candidate name
+    description?: string; // optional context
+  }>;
+}
+
+Constraints:
+- Title must be under 100 characters.
+- Provide at least 2 outcomes.
+- If the user input is vague, make reasonable assumptions but keep the scope clear.</code></pre>
+
+    <h3>Option B: Fine-Tuning (Advanced)</h3>
+    <p>As the dataset grows, fine-tuning a smaller, cheaper model (like GPT-3.5-turbo) can match GPT-4's performance at
+        a fraction of the latency and cost.</p>
+
+    <h4>Step-by-Step Guide to Fine-Tuning (OpenAI Example)</h4>
+    <p>To ensure the model always outputs the exact JSON format for Nostra prediction markets.</p>
+
+    <h4>Step 1: Data Preparation (JSONL format)</h4>
+    <p>Create a file <code>training_data.jsonl</code> containing at least 10-50 examples.</p>
+    <pre><code>{"messages": [{"role": "system", "content": "You are NostraAI, an assistant that generates prediction market data in JSON."}, {"role": "user", "content": "Create a market for Slam Dunk characters."}, {"role": "assistant", "content": "{\"title\": \"Who is the best character in Slam Dunk?\", \"category\": \"Sports\", \"outcomes\": [{\"name\": \"Sakuragi\", \"description\": \"...\"}, ...]}"}]}
+{"messages": [{"role": "system", "content": "You are NostraAI..."}, {"role": "user", "content": "Market for Bitcoin price end of 2025"}, {"role": "assistant", "content": "{\"title\": \"Will Bitcoin exceed $100k by Dec 2025?\", \"category\": \"Crypto\", \"outcomes\": [{\"name\": \"Yes\", \"description\": \"...\"}, {\"name\": \"No\", \"description\": \"...\"}]}"}]}</code></pre>
+
+    <h4>Step 2: Upload & Train</h4>
+    <p><strong>Platform:</strong> OpenAI Dashboard or Hugging Face AutoTrain.</p>
+    <pre><code class="language-typescript">// Using OpenAI Node SDK to start training
+import OpenAI from 'openai';
+const openai = new OpenAI();
+
+async function startFineTune() {
+  // 1. Upload File
+  const file = await openai.files.create({ 
+    file: fs.createReadStream("training_data.jsonl"), 
+    purpose: "fine-tune" 
+  });
+
+  // 2. Create Job
+  const job = await openai.fineTuning.jobs.create({
+    training_file: file.id,
+    model: "gpt-3.5-turbo-0125" // Efficient base model
+  });
+  
+  console.log("Training started:", job.id);
+}</code></pre>
+
+    <h4>Step 3: Use the Model</h4>
+    <p>Once trained, OpenAI provides a model ID (e.g., <code>ft:gpt-3.5-turbo:nostra::8xyz...</code>) which you use in
+        the API calls instead of "gpt-4".</p>
+
+    <!-- 4. Implementation Code -->
+    <h2>4. Code Implementation</h2>
+
+    <h3>Backend: <code>app/api/ai/generate/route.ts</code></h3>
+    <pre><code class="language-typescript">import { NextResponse } from 'next/server';
+import OpenAI from 'openai';
+import { z } from 'zod';
+
+const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
+
+// Validation Schema
+const MarketSchema = z.object({
+  title: z.string(),
+  description: z.string(),
+  category: z.string(),
+  outcomes: z.array(z.object({
+    name: z.string(),
+    description: z.string().optional()
+  }))
+});
+
+export async function POST(req: Request) {
+  try {
+    const { prompt } = await req.json();
+
+    const completion = await openai.chat.completions.create({
+      model: "gpt-4-turbo-preview", // Or your fine-tuned model ID
+      response_format: { type: "json_object" }, // Enforce JSON
+      messages: [
+        {
+          role: "system",
+          content: `You are a prediction market generator. 
+          Output correctly structured JSON matching this schema:
+          { title: string, description: string, category: string, outcomes: { name: string, description: string }[] }`
+        },
+        { role: "user", content: prompt }
+      ]
+    });
+
+    const rawContent = completion.choices[0].message.content;
+    const parsedData = JSON.parse(rawContent || "{}");
+    
+    // Validate structure
+    const validatedData = MarketSchema.parse(parsedData);
+
+    return NextResponse.json({ success: true, data: validatedData });
+
+  } catch (error) {
+    return NextResponse.json({ success: false, error: "Failed to generate market" }, { status: 500 });
+  }
+}</code></pre>
+
+    <h3>Frontend Component Snippet</h3>
+    <pre><code class="language-tsx">const handleAIGenerate = async () => {
+  setIsLoading(true);
+  try {
+    const res = await fetch('/api/ai/generate', {
+      method: 'POST',
+      body: JSON.stringify({ prompt: userInput })
+    });
+    const { data } = await res.json();
+    
+    // React Hook Form
+    setValue('title', data.title);
+    setValue('category', data.category);
+    setValue('description', data.description);
+    // Map outcomes...
+    
+  } catch (e) {
+    console.error(e);
+  } finally {
+    setIsLoading(false);
+  }
+};</code></pre>
+
+</body>
+
+</html>
