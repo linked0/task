@@ -1,0 +1,296 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Tasks & Docs Index</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="../https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="shortcut icon" href="../images/profile.jpg" type="image/jpeg">
+    <style>
+        :root {
+            --bg-color: #f8fafc;
+            --card-bg: #ffffff;
+            --text-primary: #0f172a;
+            --text-secondary: #475569;
+            --accent: #0ea5e9;
+            --accent-hover: #0284c7;
+            --border: #e2e8f0;
+            --success: #22c55e;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        header {
+            margin-bottom: 40px;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, #0ea5e9 0%, #6366f1 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .search-container {
+            margin: 30px auto;
+            max-width: 600px;
+            position: relative;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 12px 20px;
+            border-radius: 12px;
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            color: var(--text-primary);
+            font-size: 1rem;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .search-input:focus {
+            border-color: var(--accent);
+        }
+
+        .section {
+            margin-bottom: 40px;
+        }
+
+        .section-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--accent);
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-title::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--border);
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 16px;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 16px 20px;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+        }
+
+        .card:hover {
+            transform: translateY(-2px);
+            border-color: var(--accent);
+            background: #f1f5f9;
+        }
+
+        .card-title {
+            color: var(--text-primary);
+            font-weight: 500;
+            margin-bottom: 4px;
+        }
+
+        .card-path {
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            font-family: monospace;
+            word-break: break-all;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            margin-left: 8px;
+            font-weight: 600;
+        }
+
+        .badge-html {
+            background: rgba(234, 88, 12, 0.2);
+            color: #fb923c;
+        }
+
+        .badge-md {
+            background: rgba(56, 189, 248, 0.2);
+            color: #38bdf8;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 60px;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .empty-state {
+            text-align: center;
+            color: var(--text-secondary);
+            padding: 40px;
+            display: none;
+        }
+
+        .card-desc {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-top: 8px;
+            line-height: 1.4;
+            font-style: italic;
+            border-top: 1px dashed var(--border);
+            padding-top: 8px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <header>
+            <h1>Workspace Index</h1>
+            <p style="color: var(--text-secondary);">Documentation, Tasks, and Dev Logs</p>
+
+            <div class="search-container">
+                <input type="text" class="search-input" id="searchInput" placeholder="Search files...">
+            </div>
+        </header>
+
+        <div id="content">
+    <div style="margin-bottom: 20px;">
+        <a href="../index.html" style="color: var(--accent); text-decoration: none; font-weight: 500;">&larr; Back to Index</a>
+    </div>
+
+    <div class="section">
+                <h2 class="section-title">External Resources</h2>
+                <div class="grid">
+                    <a href="https://www.linkedin.com/pulse/best-films-tv-shows-2025-the-economist-r1vge/" class="card"
+                        target="_blank">
+                        <span class="card-title">Best Films & TV Shows 2025 <span class="badge badge-html"
+                                style="background: rgba(0, 119, 181, 0.2); color: #0077b5;">LN</span></span>
+                        <span class="card-path">linkedin.com/pulse/...</span>
+                    </a>
+                    <a href="https://medium.com/@cdcore/mcp-is-broken-and-anthropic-just-admitted-it-7eeb8ee41933"
+                        class="card" target="_blank">
+                        <span class="card-title">MCP is Broken (Anthropic Admitted) <span class="badge badge-html"
+                                style="background: rgba(0, 0, 0, 0.2); color: #000;">MED</span></span>
+                        <span class="card-path">medium.com/@cdcore/...</span>
+                    </a>
+                    <a href="https://www.economist.com/business/2025/12/08/how-ai-is-disrupting-shopping" class="card"
+                        target="_blank">
+                        <span class="card-title">How AI is Disrupting Shopping <span class="badge badge-html"
+                                style="background: rgba(227, 18, 11, 0.2); color: #e3120b;">ECON</span></span>
+                        <span class="card-path">economist.com/...</span>
+                    </a>
+                    <a href="https://www.youtube.com/watch?v=uzFOhkORVfk" class="card" target="_blank"
+                        style="grid-column: span 2;">
+                        <span class="card-title">Coding Agent PR Review (YouTube) <span class="badge badge-html"
+                                style="background: rgba(255, 0, 0, 0.2); color: #ff0000;">YT</span></span>
+                        <span class="card-path">youtube.com/watch?v=uzFOhkORVfk</span>
+                        <span class="card-desc">"The most impressive shift is that instead of reviewing code in PRs,
+                            with
+                            coding agents we review implementation plans and test cases."</span>
+                    </a>
+                    <a href="https://red.anthropic.com/2025/smart-contracts/" class="card" target="_blank">
+                        <span class="card-title">Anthropic: AI Agents & Exploits <span class="badge badge-html"
+                                style="background: rgba(239, 68, 68, 0.2); color: #ef4444;">WEB</span></span>
+                        <span class="card-path">red.anthropic.com/...</span>
+                    </a>
+                    <a href="https://www.youtube.com/watch?v=gKsRyd1fQfY" class="card" target="_blank">
+                        <span class="card-title">YouTube Video (gKsRyd1fQfY) <span class="badge badge-html"
+                                style="background: rgba(255, 0, 0, 0.2); color: #ff0000;">YT</span></span>
+                        <span class="card-path">youtube.com/watch?v=gKsRyd1fQfY</span>
+                    </a>
+                    <a href="https://www.youtube.com/watch?v=CEvIs9y1uog" class="card" target="_blank">
+                        <span class="card-title">YouTube Video (CEvIs9y1uog) <span class="badge badge-html"
+                                style="background: rgba(255, 0, 0, 0.2); color: #ff0000;">YT</span></span>
+                        <span class="card-path">youtube.com/watch?v=CEvIs9y1uog</span>
+                    </a>
+                    <a href="../zksnark_math.html" class="card">
+                        <span class="card-title">ZK-SNARKs Math <span class="badge badge-html">HTML</span></span>
+                        <span class="card-path">zksnark_math.html</span>
+                    </a>
+                </div>
+            </div>
+
+    <!-- Add logic for empty state if needed, though search JS handles it -->
+    <div id="no-results" class="empty-state">
+        No matching files found.
+    </div>
+
+<footer>
+                <p>Generated by Antigravity</p>
+            </footer>
+        </div>
+
+        <script>
+            const searchInput = document.getElementById('searchInput');
+            const sections = document.querySelectorAll('.section');
+            const cards = document.querySelectorAll('.card');
+            const noResults = document.getElementById('no-results');
+
+            searchInput.addEventListener('input', (e) => {
+                const term = e.target.value.toLowerCase();
+                let visibleCount = 0;
+
+                cards.forEach(card => {
+                    const title = card.querySelector('.card-title').innerText.toLowerCase();
+                    const path = card.querySelector('.card-path').innerText.toLowerCase();
+                    const match = title.includes(term) || path.includes(term);
+
+                    card.style.display = match ? 'flex' : 'none';
+                    if (match) visibleCount++;
+                });
+
+                // Hide empty sections
+                sections.forEach(section => {
+                    const visibleCards = section.querySelectorAll('.card[style="display: flex;"]');
+                    section.style.display = visibleCards.length > 0 || term === '' ? 'block' : 'none';
+                    // Actually checking if ANY card in this section is visible
+                    let hasVisible = false;
+                    section.querySelectorAll('.card').forEach(c => {
+                        if (c.style.display !== 'none') hasVisible = true;
+                    });
+                    section.style.display = hasVisible ? 'block' : 'none';
+                });
+
+                noResults.style.display = visibleCount === 0 ? 'block' : 'none';
+            });
+        </script>
+
+</body>
+
+</html>
