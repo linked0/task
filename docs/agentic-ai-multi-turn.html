@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agentic AI & Multi-turn Interactions</title>
+    <style>
+        :root {
+            --bg-color: #ffffff;
+            --text-color: #111827;
+            --sidebar-width: 280px;
+            --sidebar-bg: #f9fafb;
+            --border-color: #e5e7eb;
+            --link-color: #2563eb;
+            --code-bg: #f3f4f6;
+            --accent-color: #7c3aed;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg-color: #0f172a;
+                --text-color: #e2e8f0;
+                --sidebar-bg: #1e293b;
+                --border-color: #334155;
+                --link-color: #60a5fa;
+                --code-bg: #1e293b;
+            }
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        h1,
+        h2,
+        h3 {
+            color: var(--text-color);
+            line-height: 1.3;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, #2563eb, #9333ea);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero {
+            text-align: center;
+            padding: 4rem 0;
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 3rem;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            color: #6b7280;
+            max-width: 600px;
+            margin: 1rem auto 0;
+        }
+
+        .section {
+            margin-bottom: 4rem;
+        }
+
+        .card {
+            background-color: var(--sidebar-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .concept-tag {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            background-color: rgba(124, 58, 237, 0.1);
+            color: var(--accent-color);
+            margin-bottom: 1rem;
+        }
+
+        .diagram {
+            background-color: var(--code-bg);
+            padding: 2rem;
+            border-radius: 8px;
+            font-family: monospace;
+            white-space: pre;
+            overflow-x: auto;
+            margin: 1.5rem 0;
+            line-height: 1.4;
+            color: var(--text-color);
+            border: 1px solid var(--border-color);
+        }
+
+        code {
+            background-color: var(--code-bg);
+            padding: 0.2rem 0.4rem;
+            border-radius: 4px;
+            font-family: 'Menlo', 'Monaco', 'Courier New', monospace;
+            font-size: 0.9em;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            margin-bottom: 0.75rem;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        li::before {
+            content: "→";
+            position: absolute;
+            left: 0;
+            color: var(--accent-color);
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 2rem;
+            color: var(--link-color);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="hero">
+            <span class="concept-tag">AI Architecture</span>
+            <h1>Agentic AI & Multi-turn Interactions</h1>
+            <p>Moving beyond simple "prompt-response" models to autonomous, goal-oriented systems that maintain state
+                and iterate.</p>
+        </div>
+
+        <div class="section">
+            <h2>1. Agentic AI</h2>
+            <p><strong>Agentic AI</strong> refers to AI systems that act as agents—they don't just answer questions;
+                they perform actions to achieve a goal. They possess:</p>
+
+            <div class="card">
+                <h3>Core Characteristics</h3>
+                <ul>
+                    <li><strong>Autonomy:</strong> Ability to make decisions without constant human intervention.</li>
+                    <li><strong>Tool Use:</strong> Capability to use external tools (APIs, databases, code interpreters)
+                        to gather information or affect the world.</li>
+                    <li><strong>Planning:</strong> Breaking down complex goals into a sequence of executable steps
+                        (Chain of Thought).</li>
+                    <li><strong>Reflection:</strong> Reviewing outputs and self-correcting errors.</li>
+                    <li><strong>Memory:</strong> Maintaining context over long periods (Short-term & Long-term).</li>
+                </ul>
+            </div>
+
+            <div class="diagram">
+                Goal: "Deploy this app to Cloud Run"
+                |
+                v
+                [Agent Core]
+                |--> Plan: 1. Build Docker image -> 2. Push to GCR -> 3. Deploy
+                |--> Action: Run `docker build` (Tool: Shell)
+                | |
+                | (Error: Missing Dockerfile)
+                | |
+                |--> Reflection: "I need to create a Dockerfile first."
+                |--> Action: Create Dockerfile (Tool: FileSystem)
+                |--> Action: Run `docker build` again
+                |--> Action: Run `gcloud run deploy`
+                v
+                Result: Success
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>2. Multi-turn Interactions</h2>
+            <p><strong>Multi-turn</strong> capability allows an AI to maintain a coherent conversation over multiple
+                exchanges, remembering previous context, refining answers, and handling complex workflows that cannot be
+                solved in a single shot.</p>
+
+            <div class="card">
+                <h3>Comparison</h3>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
+                    <div>
+                        <h4>Single-turn (Stateless)</h4>
+                        <p>User: "Fix this code."</p>
+                        <p>AI: "Here is the fixed code."</p>
+                        <p><em>End of logic.</em></p>
+                    </div>
+                    <div>
+                        <h4>Multi-turn (Stateful)</h4>
+                        <p>User: "Fix this code."</p>
+                        <p>AI: "I see a bug. Fixing it..."</p>
+                        <p>User: "It's still failing test X."</p>
+                        <p>AI: "Ah, I missed that edge case. I recall you mentioned X earlier. Updating..."</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>3. Applied to Nostra (Our Context)</h2>
+            <p>How we leverage these concepts in the <strong>AI-Boosted Market Creation</strong> feature:</p>
+
+            <div class="card">
+                <h3>Workflow</h3>
+                <ul>
+                    <li><strong>User Intent:</strong> "Create a market for the election."</li>
+                    <li><strong>Agent Action:</strong> "I need more details. Which election? What candidates?"
+                        (Proactive questioning).</li>
+                    <li><strong>User Response:</strong> "2026 Seoul Mayor."</li>
+                    <li><strong>Agent Action:</strong> Uses <code>Search Tool</code> to find candidates (Oh Se-hoon,
+                        etc.).</li>
+                    <li><strong>Agent Action:</strong> Drafts market parameters (Title, Outcomes, Description).</li>
+                    <li><strong>User Feedback:</strong> "Add another candidate." (Multi-turn refinement).</li>
+                    <li><strong>Agent Action:</strong> Updates draft and executes <code>Create Market Tool</code>.</li>
+                </ul>
+            </div>
+        </div>
+
+        <a href="../index.html" class="back-link">← Back to Index</a>
+    </div>
+
+</body>
+
+</html>
